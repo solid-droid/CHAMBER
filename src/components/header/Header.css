@@ -1,7 +1,8 @@
 .header{
     position: relative;
-    background-color: #fffdfd;
-    height: 35px;
+    background-color: #424242;
+    color: #d3d3d3;
+    height: 25px;
     display:flex;
     align-items: center;
     box-shadow: 0 0 2px 1px #aaaaaa;
@@ -30,6 +31,7 @@
     font-size: 20px;
 }
 
+
 .controls{
     grid-gap:3px;
 }
@@ -41,21 +43,30 @@
 
 
 .MenuItem{
- width: 50px;
- font-size: 20px;
- border-left: solid 1px rgb(221, 221, 221);
+ width: 40px;
+ font-size: 14px;
+ border-right: solid 1px;
  height: 100%;
  display: flex;
  justify-content: center;
  align-items: center;
  cursor: pointer;
  transition: 0.3s;
+ border-color: #373737;
 }
 
 .MenuItem:hover{
-    background-color: #d8d8d8;
+    background-color: rgb(87, 87, 87);
 }
 
 .last{
-    border-right: solid 1px rgb(221, 221, 221);
+    border-left: solid 1px;
+    border-color: #373737;
+}
+
+.active{
+    background-color: rgb(81 81 81);
+    color: white;
+    text-shadow: 0px 0px 2px #ffffff;
+    border-color: #373737;
 }

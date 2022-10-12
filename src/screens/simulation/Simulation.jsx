@@ -1,6 +1,6 @@
- function Simulation() {
+ function Simulation(params) {
   return (
-    <div>Simulation</div>
+    <div class={params.class}>Simulation</div>
   )
 }
 

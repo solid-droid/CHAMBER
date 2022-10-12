@@ -1,4 +1,11 @@
 .body{
-    background-color: #ffffff;
-    height: calc(100vh - 55px);
+    background-color: #282828;
+    height: calc(100vh - 26px);
+    overflow: hidden;
+}
+
+.screen{
+    border: solid 1px;
+    width: 500px;
+    height: 100px;
 }

@@ -1,6 +1,6 @@
-function Debug() {
+function Debug(params) {
   return (
-    <div>Debug</div>
+    <div class={params.class}>Debug</div>
   )
 }
 
