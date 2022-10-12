@@ -34,9 +34,7 @@ function GraphEditor() {
   })
 
   return (
-    <div id="graphContainer" style='width:100%;height:100%'>
       <canvas id='graphCanvas'/>
-    </div>
   )
 }
 
