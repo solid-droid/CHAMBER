@@ -4,7 +4,7 @@ import "./Body.css"
 import {openMenu} from '../../scripts/store';
 import Workspace from '../../screens/workspace/Workspace'
 import Connections from '../../screens/connections/Connections'
-import GraphEditor from '../../screens/graphEditor/GraphEditor'
+import NodeEditor from '../../screens/nodeEditor/NodeEditor'
 import Simulation from '../../screens/simulation/Simulation'
 
 import Controls from '../../screens/controls/Controls'
@@ -30,7 +30,7 @@ export const Body = () => {
 
     registerWindow('Workspace' , 'workspace',  <Workspace/>);
     registerWindow('Connections' , 'connections',  <Connections/>);
-    registerWindow('Graph Editor' , 'graphEditor',  <GraphEditor/>);
+    registerWindow('Node Editor' , 'nodeEditor',  <NodeEditor/>);
     registerWindow('Simulator' , 'simulator',  <Simulation/>);
  
     registerWindow('Controls' , 'controls',  <Controls/>);
@@ -66,7 +66,7 @@ export const Body = () => {
   const menuItems = [
     'workspace',
     'connections',
-    'graphEditor',
+    'nodeEditor',
     'simulator',
     'controls',
     'debugger'
@@ -74,7 +74,7 @@ export const Body = () => {
   
   ['Workspace',
   'Connections',
-  'Graph Editor',
+  'Node Editor',
   'Simulator',
   'Controls',
   'Debugger'].forEach((name,i) =>

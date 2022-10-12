@@ -1,16 +1,17 @@
 import { createEffect, onMount } from 'solid-js';
 import {openMenu} from '../../scripts/store';
 
-function GraphEditor() {
+function NodeEditor() {
   const [menu] = openMenu;
   let graph;
   let graphCanvas;
   let editor;
  
   createEffect(async ()=>{
-    if(menu.graphEditor){
-        await new Promise(r => setTimeout(r, 50))
+    if(menu.nodeEditor){
+        await new Promise(r => setTimeout(r, 200))
         graphCanvas.setCanvas('graphCanvas');
+        graphCanvas.enableWebGL();
         graphCanvas.resize();
     }    
   })
@@ -20,7 +21,10 @@ function GraphEditor() {
     graphCanvas = new LGraphCanvas("#graphCanvas", graph ,{ 
       autoresize : true
      });
+
     editor = new Editor(graphCanvas, graph);
+
+    console.log(editor);
 
     let node_const = LiteGraph.createNode("basic/const");
     node_const.pos = [200,200];
@@ -44,4 +48,4 @@ function GraphEditor() {
   )
 }
 
-export default GraphEditor
+export default NodeEditor

@@ -14,11 +14,14 @@ export const Header = () => {
         <div class={menu.connections ? 'MenuItem active' : 'MenuItem'} title='Connections' onClick={() => setMenuState('connections')}>
           <i class="fa-solid fa-tower-broadcast"></i>
         </div>
-        <div class={menu.graphEditor ? 'MenuItem active' : 'MenuItem'} title='Graph Editor' onClick={() => setMenuState('graphEditor')}>
+        <div class={menu.nodeEditor ? 'MenuItem active' : 'MenuItem'} title='Node Editor' onClick={() => setMenuState('nodeEditor')}>
           <i class="fa-solid fa-diagram-project"></i>
         </div>
-        <div class={menu.simulator ? 'MenuItem active' : 'MenuItem'} title='3D Simulator' onClick={() => setMenuState('simulator')}>
+        <div class={menu.simulator ? 'MenuItem active' : 'MenuItem'} title='Simulator' onClick={() => setMenuState('simulator')}>
           <i class="fa-solid fa-cubes"></i>
+        </div>
+        <div class={menu.analytics ? 'MenuItem active' : 'MenuItem'} title='Analytics' onClick={() => setMenuState('analytics')}>
+        <i class="fa-solid fa-chart-pie"></i>
         </div>
       </div>  
 
