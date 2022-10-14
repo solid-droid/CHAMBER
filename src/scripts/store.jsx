@@ -6,7 +6,7 @@ const openMenu = createStore({
     nodeEditor : false,
     simulator: false,
     analytics:false,
-    controls: false,
+    controls: true,
     debugger : false
   })
 

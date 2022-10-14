@@ -1,7 +1,7 @@
 import { createEffect, onMount } from 'solid-js'
 import {openMenu} from '../../scripts/store';
 
-import { Simple3D, box3D, ground2D, utils } from '../../scripts/simple3D';
+import { Simple3D, box3D, ground2D, utils } from '../../plugins/Simple3D/simple3D';
 import * as TWEEN from '@tweenjs/tween.js';
 import { Vector3 } from '@babylonjs/core';
 

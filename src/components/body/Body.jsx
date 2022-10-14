@@ -71,24 +71,22 @@ export const Body = () => {
     'controls',
     'debugger'
   ];
-  
-  ['Workspace',
-  'Connections',
-  'Node Editor',
-  'Simulator',
-  'Controls',
-  'Debugger'].forEach((name,i) =>
-    createEffect(()=>{
-    if(menu[menuItems[i]]){
-      addWindow(name);
-    } else {
-      closeWindow(name);
-    }
-  }))
-
     
   onMount(() =>{
     beginLayout();
+    ['Workspace',
+    'Connections',
+    'Node Editor',
+    'Simulator',
+    'Controls',
+    'Debugger'].forEach((name,i) =>
+      createEffect(()=>{
+      if(menu[menuItems[i]]){
+        addWindow(name);
+      } else {
+        closeWindow(name);
+      }
+    }))
 
   });
 

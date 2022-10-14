@@ -22,9 +22,9 @@ function NodeEditor() {
       autoresize : true
      });
 
-    editor = new Editor(graphCanvas, graph);
+    // editor = new Editor(graphCanvas, graph);
 
-    console.log(editor);
+    // console.log(editor);
 
     let node_const = LiteGraph.createNode("basic/const");
     node_const.pos = [200,200];
