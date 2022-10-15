@@ -1,5 +1,4 @@
 import { createEffect, children, onMount } from "solid-js";
-import * as panzoom from "panzoom";
 import Guides from "@scena/guides";
 import "./FlowEditor.css";
 import interact from 'interactjs';
