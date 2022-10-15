@@ -1,0 +1,93 @@
+.FlowEditor-app {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  color: #333;
+  background: #fdfdfd;
+  overscroll-behavior: none;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+
+.FlowEditor-app .reset {
+  position: absolute !important;
+  background: #333;
+  width: 30px;
+  height: 30px;
+  z-index: 1;
+  border-right: 1px solid #444;
+  border-bottom: 1px solid #444;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  cursor: pointer;
+}
+
+.FlowEditor-app .guides {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  -webkit-transform: translateZ(1px);
+          transform: translateZ(1px);
+}
+
+.FlowEditor-app .guides.horizontal {
+  left: 30px;
+  width: calc(100% - 30px);
+  height: 30px !important;
+}
+
+.FlowEditor-app .guides.vertical {
+  top: 30px;
+  height: calc(100% - 30px);
+  width: 30px !important;
+}
+
+.FlowEditor-app .viewer {
+  position: absolute !important;
+  left: 30px;
+  top: 30px;
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+}
+
+.FlowEditor-app .viewport {
+  border: none;
+  padding: 31px;
+}
+
+.FlowEditor-app .FlowNode {
+  position: absolute;
+  width: 150px;
+  height: 100px;
+  border: solid;
+  background: white;
+}
+
+.FlowEditor-app .FlowNode .FN_head {
+  height: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.FlowEditor-app .FlowNode .FN_body {
+  height: calc(100% - 18px);
+  background-color: red;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 20% 60% 20%;
+      grid-template-columns: 20% 60% 20%;
+}
+
+.FlowEditor-app .FlowNode .FN_body .FN_inputs, .FlowEditor-app .FlowNode .FN_body .FN_content, .FlowEditor-app .FlowNode .FN_body .FN_output {
+  border: solid 1px;
+}
+/*# sourceMappingURL=FlowEditor.css.map */

@@ -3,9 +3,8 @@ import {FlowContainer, FlowNode , FlowConnection} from "../../plugins/FlowEditor
 const Controls = () => {
   return (
     <FlowContainer>
-      <FlowNode id="1"/>
-      <FlowNode id="2" />
-      <FlowConnection id="1" from="1" to="2" />
+      <FlowNode id="1" inputs={['a','b','c']} output={['out1']}/>
+      <FlowNode id="2" inputs={['inp1']} outputs={['out1' , 'out2']}/>
     </FlowContainer>
   )
 }

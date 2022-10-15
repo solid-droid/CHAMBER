@@ -1,55 +1,29 @@
 import { createEffect, children, onMount } from "solid-js";
-import InfiniteViewer from "infinite-viewer";
+import * as panzoom from "panzoom";
 import Guides from "@scena/guides";
-import "./FlowStyles.css";
+import "./FlowEditor.css";
+import interact from 'interactjs';
+
+import { nodeStore, connectionStore, layoutStore, nodeList } from "./FlowStore";
+
 
 const FlowContainer = (props) => {
-
+    let viewer, horizontalGuides, verticalGuides;
     const child = children(() => props.children);
-
-    let viewer, horizontalGuides, verticalGuides, flowchart;
-    let defaultFlowchartData = {
-        operators: {
-            operator1: {
-                top: 20,
-                left: 20,
-                properties: {
-                    title: 'Operator 1',
-                    inputs: {},
-                    outputs: {
-                        output_1: {
-                            label: 'Output 1',
-                        }
-                    }
-                }
-            },
-            operator2: {
-                top: 80,
-                left: 300,
-                properties: {
-                    title: 'Operator 2',
-                    inputs: {
-                        input_1: {
-                            label: 'Input 1',
-                        },
-                        input_2: {
-                            label: 'Input 2',
-                        },
-                    },
-                    outputs: {}
-                }
-            },
-        },
-        links: {
-            link_1: {
-                fromOperator: 'operator1',
-                fromConnector: 'output_1',
-                toOperator: 'operator2',
-                toConnector: 'input_2',
-            },
-        }
-    };
     
+    const [node, setNode] = nodeStore;
+    const [nodes, setNodes] = nodeList;
+    const [connection, setConnection] = connectionStore;
+    const [layout, setLayout] = layoutStore;
+
+    createEffect(()=>{
+        if(node.isDragging || connection.isDragging){
+            viewer?.pause();
+        } else {
+            viewer?.resume();
+        }
+    });
+
     const createGuides = () => {
         horizontalGuides = new Guides(document.querySelector("#FlowEditor-app .guides.horizontal"), {
             snapThreshold: 5,
@@ -70,44 +44,26 @@ const FlowContainer = (props) => {
         });
     }
 
-    const createInfiniteViewer = () => {
-        viewer = new InfiniteViewer(
-            document.querySelector("#FlowEditor-app .viewer"),
-            document.querySelector("#FlowEditor-app .viewport"),
-            {
-                // usePinch: true,
-                // pinchThreshold: 50,
-                useMouseDrag: true,
-                useWheelScroll: true,
-                useAutoZoom: true,
-                zoomRange: [0.1, 10],
-                maxPinchWheel: 10,
-            }
-        ).on("dragStart", e => {
-            const target = e.inputEvent.target;
+    const createPanZoomLayout = () => {
+        viewer =  panzoom(document.querySelector('#FlowEditor-app .viewport'));
+        viewer.on("pan", e => {
+            const transform = e.getTransform();
+            setLayout({
+                    x:transform.x,
+                    y:transform.y,
+            });
+            horizontalGuides.scroll(transform.x, transform.scale);
+            horizontalGuides.scrollGuides(transform.y, transform.scale);
     
-            if (target.nodeName === "A") {
-                e.stop();
-            }
-        }).on("scroll", e => {
-            const zoom = viewer.zoom;
-            horizontalGuides.scroll(e.scrollLeft, zoom);
-            horizontalGuides.scrollGuides(e.scrollTop, zoom);
-    
-            verticalGuides.scroll(e.scrollTop, zoom);
-            verticalGuides.scrollGuides(e.scrollLeft, zoom);
-        }).on("pinch", e => {
-            const zoom = Math.max(0.1, e.zoom);
-    
-            verticalGuides.zoom = zoom;
-            horizontalGuides.zoom = zoom;
+            verticalGuides.scroll(transform.y, transform.scale);
+            verticalGuides.scrollGuides(transform.x, transform.scale);
+        }).on("zoom", e => {
+            const transform = e.getTransform();
+            setLayout({ z:transform.scale });
+            verticalGuides.zoom = transform.scale;
+            horizontalGuides.zoom = transform.scale;
         });
-
-        requestAnimationFrame(() => {
-            viewer.scrollCenter();
-        });
-    
-    };
+    }
 
     const resizeObs = () => {
         new ResizeObserver(() => {
@@ -116,37 +72,45 @@ const FlowContainer = (props) => {
             }).observe(document.getElementById('FlowEditor-app'))
     }
 
-    const setupFlowChart = () => {
-         flowchart = $('#FlowEditor-viewport');
-         const dat = flowchart.flowchart({
-            data: defaultFlowchartData,
-            defaultSelectedLinkColor: '#000055',
-            grid: 10,
-            multipleLinksOnInput: true,
-            multipleLinksOnOutput: true
-        });
-        console.log(dat);
+    const createDraggableNodes = () => {
+        interact('.FlowNode').draggable({
+            listeners: {
+              start (event) {
+                setNode({isDragging:true});
+              },
+              move (event) {
+                const node = nodes[event.target.id];
+                setNodes(event.target.id , item => ({
+                    ...item,
+                    x: item.x + event.dx/layout.z,
+                    y: item.y + event.dy/layout.z
+                }))
+                event.target.style.transform =`translate(${node.x}px, ${node.y}px)`
+              },
+              end(event){
+                setNode({isDragging:false});
+              }
+            }
+          });
     }
 
     onMount(async ()=>{
     
         await new Promise(r => setTimeout(r, 50));
         createGuides();
-        createInfiniteViewer();
+        createPanZoomLayout();
         resizeObs();
-        setupFlowChart();
-
+        createDraggableNodes();
     });
 
 return (
-  <div id="FlowEditor-app"class="app" style="width: 100%;height: 100%;">
+  <div id="FlowEditor-app" class="FlowEditor-app" style="width: 100%;height: 100%;">
       <div class="reset" onClick={()=>viewer.scrollCenter()}></div>
       <div class="guides horizontal"></div>
       <div class="guides vertical"></div>
       <div class="scroll horizontal"></div>
-      <div class="viewer" style="width: 100%;height: 100%;">
-        <div id="FlowEditor-viewport" class="viewport">
-        </div>
+      <div class="viewport">
+            {child()}
       </div>
   </div>
 
