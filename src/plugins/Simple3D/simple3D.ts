@@ -1,4 +1,21 @@
-import * as BABYLON from '@babylonjs/core';
+import {
+    Engine, 
+    Light, 
+    Vector3, 
+    Scene, 
+    Color4, 
+    Color3,
+    ArcRotateCamera,
+    DefaultRenderingPipeline,
+    Quaternion,
+    ActionManager,
+    ExecuteCodeAction,
+    MeshBuilder,
+    Space,
+    StandardMaterial,
+    HemisphericLight,
+    AxesViewer
+} from '@babylonjs/core';
 import { GridMaterial } from '@babylonjs/materials/grid';
 import Stats from 'stats.js';
 
@@ -7,14 +24,14 @@ export class utils {
 	/**********Functions to Rotate and Scale based on a Pivot***************/
 	static rotateAroundPivot = (mesh:any , pivotPoint:any, axis:any, angle:any) => {
 		if(!mesh._rotationQuaternion) {
-			mesh._rq = BABYLON.Quaternion.RotationYawPitchRoll(mesh.rotation.y, mesh.rotation.x, mesh.rotation.z);
+			mesh._rq = Quaternion.RotationYawPitchRoll(mesh.rotation.y, mesh.rotation.x, mesh.rotation.z);
 		}		
-		const _p = new BABYLON.Quaternion(mesh.position.x - pivotPoint.x, mesh.position.y - pivotPoint.y, mesh.position.z - pivotPoint.z, 0);
+		const _p = new Quaternion(mesh.position.x - pivotPoint.x, mesh.position.y - pivotPoint.y, mesh.position.z - pivotPoint.z, 0);
 		axis.normalize();
-		const _q = BABYLON.Quaternion.RotationAxis(axis,angle);  //form quaternion rotation		
-		const _qinv = BABYLON.Quaternion.Inverse(_q);	
+		const _q = Quaternion.RotationAxis(axis,angle);  //form quaternion rotation		
+		const _qinv = Quaternion.Inverse(_q);	
 		const _pdash = _q.multiply(_p).multiply(_qinv);
-		mesh.position = new BABYLON.Vector3(pivotPoint.x + _pdash.x, pivotPoint.y + _pdash.y, pivotPoint.z + _pdash.z);
+		mesh.position = new Vector3(pivotPoint.x + _pdash.x, pivotPoint.y + _pdash.y, pivotPoint.z + _pdash.z);
 		mesh.rotationQuaternion = mesh._rq.multiply(_q);
 		mesh._rq = mesh.rotationQuaternion;
 	}
@@ -23,8 +40,8 @@ export class utils {
 		const _sx = sx / mesh.scaling.x;
 		const _sy = sy / mesh.scaling.y;
 		const _sz = sz / mesh.scaling.z;
-		mesh.scaling = new BABYLON.Vector3(sx, sy, sz);	
-		mesh.position = new BABYLON.Vector3(pivotPoint.x + _sx * (mesh.position.x - pivotPoint.x), pivotPoint.y + _sy * (mesh.position.y - pivotPoint.y), pivotPoint.z + _sz * (mesh.position.z - pivotPoint.z));
+		mesh.scaling = new Vector3(sx, sy, sz);	
+		mesh.position = new Vector3(pivotPoint.x + _sx * (mesh.position.x - pivotPoint.x), pivotPoint.y + _sy * (mesh.position.y - pivotPoint.y), pivotPoint.z + _sz * (mesh.position.z - pivotPoint.z));
 	}
 	/**********************************************************************/
 }
@@ -33,87 +50,87 @@ class domEvents {
     
     click(mesh:any, scene:any, callBack:()=>void){
         mesh.isPickable = true;
-        mesh.actionManager ??= new BABYLON.ActionManager(scene); 
+        mesh.actionManager ??= new ActionManager(scene); 
         mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnPickTrigger,
+            new ExecuteCodeAction(
+                ActionManager.OnPickTrigger,
                 callBack
             ));
     }
 
     leftClick(mesh:any, scene:any, callBack:()=>void){
         mesh.isPickable = true;
-        mesh.actionManager ??= new BABYLON.ActionManager(scene); 
+        mesh.actionManager ??= new ActionManager(scene); 
         mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnLeftPickTrigger,
+            new ExecuteCodeAction(
+                ActionManager.OnLeftPickTrigger,
                 callBack
             ));
     }
 
     rightClick(mesh:any, scene:any, callBack:()=>void){
         mesh.isPickable = true;
-        mesh.actionManager ??= new BABYLON.ActionManager(scene); 
+        mesh.actionManager ??= new ActionManager(scene); 
         mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnRightPickTrigger,
+            new ExecuteCodeAction(
+                ActionManager.OnRightPickTrigger,
                 callBack
             ));
     }
 
     centerClick(mesh:any, scene:any, callBack:()=>void){
         mesh.isPickable = true;
-        mesh.actionManager ??= new BABYLON.ActionManager(scene); 
+        mesh.actionManager ??= new ActionManager(scene); 
         mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnCenterPickTrigger,
+            new ExecuteCodeAction(
+                ActionManager.OnCenterPickTrigger,
                 callBack
             ));
     }
     doubleClick(mesh:any, scene:any, callBack:()=>void){
         mesh.isPickable = true;
-        mesh.actionManager ??= new BABYLON.ActionManager(scene); 
+        mesh.actionManager ??= new ActionManager(scene); 
         mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnDoublePickTrigger,
+            new ExecuteCodeAction(
+                ActionManager.OnDoublePickTrigger,
                 callBack
             ));
     }
 
     longClick(mesh:any, scene:any, callBack:()=>void){
         mesh.isPickable = true;
-        mesh.actionManager ??= new BABYLON.ActionManager(scene); 
+        mesh.actionManager ??= new ActionManager(scene); 
         mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnLongPressTrigger,
+            new ExecuteCodeAction(
+                ActionManager.OnLongPressTrigger,
                 callBack
             ));
     }
 
 
     mouseEnter(mesh:any, scene:any, callBack:()=>void){
-        mesh.actionManager ??= new BABYLON.ActionManager(scene); 
+        mesh.actionManager ??= new ActionManager(scene); 
         mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnPointerOverTrigger,
+            new ExecuteCodeAction(
+                ActionManager.OnPointerOverTrigger,
                 callBack
             ));
     }
 
     mouseExit(mesh:any, scene:any, callBack:()=>void){
-        mesh.actionManager ??= new BABYLON.ActionManager(scene); 
+        mesh.actionManager ??= new ActionManager(scene); 
         mesh.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(
-                BABYLON.ActionManager.OnPointerOutTrigger,
+            new ExecuteCodeAction(
+                ActionManager.OnPointerOutTrigger,
                 callBack
             ));
     }
 
     intersect(mesh1:any , mesh2:any, scene, callBack:()=>void , type : 'enter' | 'exit' = 'enter'){
-        mesh1.actionManager ??= new BABYLON.ActionManager(scene); 
-        const event = type == 'enter' ? BABYLON.ActionManager.OnIntersectionEnterTrigger : BABYLON.ActionManager.OnIntersectionEnterTrigger; 
+        mesh1.actionManager ??= new ActionManager(scene); 
+        const event = type == 'enter' ? ActionManager.OnIntersectionEnterTrigger : ActionManager.OnIntersectionEnterTrigger; 
         mesh1.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction( {
+            new ExecuteCodeAction( {
                 trigger: event, 
                 parameter: { 
                     mesh: mesh2, 
@@ -138,7 +155,7 @@ export class sphere3D {
     }={}) {
         this.diameter = params.diameter || 2;
         this.segments = params.segments || 16;
-        this.mesh = BABYLON.MeshBuilder.CreateSphere('sphere1', {
+        this.mesh = MeshBuilder.CreateSphere('sphere1', {
             diameter: this.diameter,
             segments: this.segments
         });
@@ -194,8 +211,8 @@ export class ground2D {
                 this.material.majorUnitFrequency  = 10;
                 this.material.useMaxLine=true;
 
-                this.material.mainColor = BABYLON.Color4.FromHexString(params.mainColor);
-                this.material.lineColor = BABYLON.Color4.FromHexString(params.lineColor);
+                this.material.mainColor = Color4.FromHexString(params.mainColor);
+                this.material.lineColor = Color4.FromHexString(params.lineColor);
                 this.material.opacity = params.opacity;
 
                 this.material.backFaceCulling = false;
@@ -210,7 +227,7 @@ export class ground2D {
         width?: number,
         height?: number,
     }={}) {
-       this.mesh = BABYLON.MeshBuilder.CreateGround(
+       this.mesh = MeshBuilder.CreateGround(
         params.name || 'ground1', {
             width: params.width || 10,
             height: params.height || 10,
@@ -336,14 +353,14 @@ export class box3D extends domEvents {
         showEdge: () => this.#showEdge,
         edgeColor: () => this.#edgeColor,
         edgeWidth: () => this.#edgeWidth,
-        corner: ():BABYLON.Vector3 => {
-            return new BABYLON.Vector3(
+        corner: ():Vector3 => {
+            return new Vector3(
                 this.mesh.position.x - this.mesh.scaling.x / 2, 
                 this.mesh.position.y - this.mesh.scaling.y / 2,
                 this.mesh.position.z - this.mesh.scaling.z / 2);
         },
-        center: ():BABYLON.Vector3 => {
-            return new BABYLON.Vector3(
+        center: ():Vector3 => {
+            return new Vector3(
                 this.mesh.position.x, 
                 this.mesh.position.y,
                 this.mesh.position.z);
@@ -363,11 +380,11 @@ export class box3D extends domEvents {
             this.z = z;
             return this;
         } ,
-        pivotRotate: (pivot:BABYLON.Vector3, axis:BABYLON.Vector3, angle:number ) => {
+        pivotRotate: (pivot:Vector3, axis:Vector3, angle:number ) => {
             utils.rotateAroundPivot(this.mesh, pivot, axis, angle);
             return this;
         },
-        rotation:(axis:BABYLON.Vector3, angle:number , space:any =BABYLON.Space.LOCAL)=> {
+        rotation:(axis:Vector3, angle:number , space:any =Space.LOCAL)=> {
             this.mesh.rotate(axis, angle, space);
             return this;
         },
@@ -388,7 +405,7 @@ export class box3D extends domEvents {
                 this.#edgeWidth = width;
                 this.mesh.enableEdgesRendering();
                 this.mesh.edgesWidth = width;
-                this.mesh.edgesColor = BABYLON.Color4.FromHexString(color);
+                this.mesh.edgesColor = Color4.FromHexString(color);
             } else {
                 this.#showEdge = false;
                 this.mesh.disableEdgesRendering();
@@ -439,8 +456,8 @@ export class box3D extends domEvents {
         this.#edgeWidth = params.edgeWidth || this.#edgeWidth;
 
         if(!params.material){
-            this.material = new BABYLON.StandardMaterial("mat");
-            this.material.diffuseColor = BABYLON.Color3.FromHexString(this.#color);
+            this.material = new StandardMaterial("mat");
+            this.material.diffuseColor = Color3.FromHexString(this.#color);
             this.material.alpha = params.opacity || 1;
         } else {
             this.material = params.material;
@@ -448,7 +465,7 @@ export class box3D extends domEvents {
 
         if(!params.mesh){
             params.height = params.height || 1;
-            this.mesh = BABYLON.MeshBuilder.CreateBox(this.#name);
+            this.mesh = MeshBuilder.CreateBox(this.#name);
             this.set.position(0.5, 0.5, 0.5);
             this.set.scale(params.width, params.height, params.depth);
         }   else {
@@ -484,19 +501,19 @@ export class box3D extends domEvents {
 export class Simple3D {
     canvasID: string;
     canvas: HTMLCanvasElement;
-    engine: BABYLON.Engine;
+    engine: Engine;
     scene: any;
     camera: any;
-    light: BABYLON.Light | undefined;
+    light: Light | undefined;
     stats: any;
     pipeline: any;
     localAxes: any;
     resizeObs :any;
   
     static pointer:any = {event:undefined,pickResult:undefined } ;
-    static yAxis = new BABYLON.Vector3(0, 1, 0);
-    static xAxis = new BABYLON.Vector3(1, 0, 0);
-    static zAxis = new BABYLON.Vector3(0, 0, 1);
+    static yAxis = new Vector3(0, 1, 0);
+    static xAxis = new Vector3(1, 0, 0);
+    static zAxis = new Vector3(0, 0, 1);
 
     static box3D:typeof box3D = box3D;
     static sphere3D:typeof sphere3D = sphere3D;
@@ -507,7 +524,7 @@ export class Simple3D {
     constructor(canvasID: string) {
         this.canvasID = canvasID;
         this.canvas = document.getElementById(this.canvasID) as HTMLCanvasElement;
-        this.engine = new BABYLON.Engine(this.canvas, true, {
+        this.engine = new Engine(this.canvas, true, {
             preserveDrawingBuffer: true, 
             stencil: true,
             premultipliedAlpha: false,
@@ -525,8 +542,8 @@ export class Simple3D {
     }
 
     createScene(): void {
-        this.scene = new BABYLON.Scene(this.engine);
-        this.scene.clearColor = new BABYLON.Color4(0,0,0,1).toLinearSpace();
+        this.scene = new Scene(this.engine);
+        this.scene.clearColor = new Color4(0,0,0,1).toLinearSpace();
         this.scene.onPointerDown = function (event, pickResult){
             Simple3D.pointer = {
                 event,
@@ -549,19 +566,19 @@ export class Simple3D {
     }
 
     createCamera(): void {
-        this.camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 0, new BABYLON.Vector3(0, 0, 0), this.scene);
+        this.camera = new ArcRotateCamera("Camera", 0, 0, 0, new Vector3(0, 0, 0), this.scene);
         this.camera.upperBetaLimit = Math.PI/2 - 0.2 ;
-        this.camera.panningAxis = new BABYLON.Vector3(1, 0, 0);
+        this.camera.panningAxis = new Vector3(1, 0, 0);
         this.camera.inertia = 0.9;
         this.camera.lowerRadiusLimit = 6;
         this.camera.upperRadiusLimit = 40;
-        this.camera.setPosition(new BABYLON.Vector3(10, 5, 15));
-        this.camera.setTarget(BABYLON.Vector3.Zero());
+        this.camera.setPosition(new Vector3(10, 5, 15));
+        this.camera.setTarget(Vector3.Zero());
         this.camera.attachControl(this.canvas, true);
     }
 
     createPostProcess(): void {
-        this.pipeline = new BABYLON.DefaultRenderingPipeline(
+        this.pipeline = new DefaultRenderingPipeline(
             "defaultPipeline", // The name of the pipeline
             false, // Do you want the pipeline to use HDR texture?
             this.scene, // The scene instance
@@ -573,7 +590,7 @@ export class Simple3D {
 
     }
     createLights(): void {
-        this.light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), this.scene);
+        this.light = new HemisphericLight('light1', new Vector3(0, 1, 0), this.scene);
         this.light.intensity = 0.7;
     }
 
@@ -583,7 +600,7 @@ export class Simple3D {
             this.localAxes = undefined;   
         }
         if(show){
-            this.localAxes = new BABYLON.AxesViewer(this.scene, size);
+            this.localAxes = new AxesViewer(this.scene, size);
         }
         return this;
 
