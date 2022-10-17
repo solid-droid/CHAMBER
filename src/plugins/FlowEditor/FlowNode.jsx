@@ -1,13 +1,10 @@
-import { onMount } from "solid-js";
-import { nodeList } from "./FlowStore";
+import { For, onMount } from "solid-js";
 
 const FlowNode = (props) => {
-  const [nodes , setNodes] = nodeList;
-
-
+  const [nodes , setNodes] = props.nodeList;
   onMount(async ()=>{
     setNodes({
-      [`FlowNode_${props.id}`]:{
+      [props.id]:{
         x:0,
         y:0
       }
@@ -15,19 +12,23 @@ const FlowNode = (props) => {
   });
 
   return (
-    <div id={`FlowNode_${props.id}`} class="FlowNode">
+    <div id={props.id} class="FlowNode">
       <div class="FN_head">
           testBox
       </div>
       <div class="FN_body">
           <div class="FN_inputs">
-            tt1
+          <For each={props.inputs}>
+              {(item) => <div class={item}>{item}</div>}
+          </For>
           </div>
           <div class="FN_content">
-            tt2
+            {props.children}
           </div>
           <div class="FN_outputs">
-            tt3
+          <For each={props.outputs}>
+              {(item) => <div class={item}>{item}</div>}
+          </For>
           </div>
       </div>
     </div>

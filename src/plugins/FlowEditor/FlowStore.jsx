@@ -1,34 +1,38 @@
 import { createStore } from "solid-js/store";
 
-const nodeStore = createStore({
-    selectedNode: null,
-    isDragging: false,
-  });
+const createFlowStores = () => {
+    const nodeStore = createStore({
+      selectedNode: null,
+      isDragging: false,
+    });
+    
+    const connectionStore = createStore({
+      selectedConnection: null,
+      isDragging : false
+    });
   
-  const connectionStore = createStore({
-    selectedConnection: null,
-    isDragging : false
-  })
+    const nodeList = createStore({ 
+      length: 0
+    });
 
-  const nodeList = createStore({ 
-    length:0
-  });
+    const connectionList = createStore({
+      connections:  []
+    });
+  
+    const layoutStore = createStore({
+      ready:false,
+      x:0,
+      y:0,
+      z:1
+    });
 
-  const connectionList = createStore({ 
-    length:0
-  });
+    return {
+      nodeStore,
+      connectionStore,
+      layoutStore,
+      nodeList,
+      connectionList
+    }
+}
 
-  const layoutStore = createStore({
-    ready:false,
-    x:0,
-    y:0,
-    z:1
-  })
-
-  export {
-    nodeStore,
-    connectionStore,
-    layoutStore,
-    nodeList,
-    connectionList
-  }
+export default createFlowStores;

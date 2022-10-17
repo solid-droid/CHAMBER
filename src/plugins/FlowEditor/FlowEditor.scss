@@ -60,7 +60,7 @@
 .FlowEditor-app .FlowNode {
         position: absolute;
         width: 150px;
-        height: 100px;
+        height: auto;
         border: solid;
         background: white;
 
@@ -75,19 +75,51 @@
             height: calc(100% - 18px);
             background-color: red;
             display: grid;
-            grid-template-columns: 20% 60% 20%;
+            grid-template-columns: auto 1fr auto;
 
             .FN_inputs,.FN_content,.FN_output{
                 border: solid 1px;
             }
             .FN_inputs{
+                display: grid;
+                align-items: center;
+                div{
+                    border:solid 1px;
+                    height: 30px;
+                    min-width: 30px;
+                    display: flex;
+                    align-items: center;
+                }
             }
 
             .FN_content{
             }
 
-            .FN_output{
-
+            .FN_outputs{
+                display: grid;
+                align-items: center;
+                div{
+                    border:solid 1px;
+                    height: 30px;
+                    min-width: 30px;
+                    display: flex;
+                    align-items: center;
+                }
             }
         }
 }
+
+.arrow {
+    pointer-events: none;
+  }
+  
+  .arrow__path {
+    stroke: #000;
+    fill: transparent;
+    stroke-dasharray: 4 2;
+  }
+  
+  .arrow__head line {
+    stroke: #000;
+    stroke-width: 1px;
+  }

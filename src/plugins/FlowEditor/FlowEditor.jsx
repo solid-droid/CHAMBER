@@ -1,14 +1,10 @@
 import FlowContainer from "./FlowContainer";
 import FlowNode from "./FlowNode";
-import FlowConnection from "./FlowConnection";
-import { nodeStore, connectionStore, layoutStore } from "./FlowStore";
+import createFlowStores from "./FlowStore";
 
 
 export {
   FlowContainer,
   FlowNode,
-  FlowConnection,
-  nodeStore,
-  connectionStore,
-  layoutStore
+  createFlowStores
 }

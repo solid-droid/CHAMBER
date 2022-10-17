@@ -6,11 +6,10 @@
   height: 100%;
   color: #333;
   background: #fdfdfd;
-  overscroll-behavior: none;
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
+  -ms-scroll-chaining: none;
+      overscroll-behavior: none;
+  transform-style: preserve-3d;
 }
-
 .FlowEditor-app .reset {
   position: absolute !important;
   background: #333;
@@ -19,31 +18,25 @@
   z-index: 1;
   border-right: 1px solid #444;
   border-bottom: 1px solid #444;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   cursor: pointer;
 }
-
 .FlowEditor-app .guides {
   position: absolute !important;
   top: 0;
   left: 0;
-  -webkit-transform: translateZ(1px);
-          transform: translateZ(1px);
+  transform: translateZ(1px);
 }
-
 .FlowEditor-app .guides.horizontal {
   left: 30px;
   width: calc(100% - 30px);
   height: 30px !important;
 }
-
 .FlowEditor-app .guides.vertical {
   top: 30px;
   height: calc(100% - 30px);
   width: 30px !important;
 }
-
 .FlowEditor-app .viewer {
   position: absolute !important;
   left: 30px;
@@ -51,7 +44,6 @@
   width: calc(100% - 30px);
   height: calc(100% - 30px);
 }
-
 .FlowEditor-app .viewport {
   border: none;
   padding: 31px;
@@ -60,34 +52,59 @@
 .FlowEditor-app .FlowNode {
   position: absolute;
   width: 150px;
-  height: 100px;
+  height: auto;
   border: solid;
   background: white;
 }
-
 .FlowEditor-app .FlowNode .FN_head {
   height: 18px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: end;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: end;
+  justify-content: center;
 }
-
 .FlowEditor-app .FlowNode .FN_body {
   height: calc(100% - 18px);
   background-color: red;
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 20% 60% 20%;
-      grid-template-columns: 20% 60% 20%;
+  grid-template-columns: auto 1fr auto;
 }
-
 .FlowEditor-app .FlowNode .FN_body .FN_inputs, .FlowEditor-app .FlowNode .FN_body .FN_content, .FlowEditor-app .FlowNode .FN_body .FN_output {
   border: solid 1px;
 }
-/*# sourceMappingURL=FlowEditor.css.map */
+.FlowEditor-app .FlowNode .FN_body .FN_inputs {
+  display: grid;
+  align-items: center;
+}
+.FlowEditor-app .FlowNode .FN_body .FN_inputs div {
+  border: solid 1px;
+  height: 30px;
+  min-width: 30px;
+  display: flex;
+  align-items: center;
+}
+.FlowEditor-app .FlowNode .FN_body .FN_outputs {
+  display: grid;
+  align-items: center;
+}
+.FlowEditor-app .FlowNode .FN_body .FN_outputs div {
+  border: solid 1px;
+  height: 30px;
+  min-width: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  pointer-events: none;
+}
+
+.arrow__path {
+  stroke: #000;
+  fill: transparent;
+  stroke-dasharray: 4 2;
+}
+
+.arrow__head line {
+  stroke: #000;
+  stroke-width: 1px;
+}/*# sourceMappingURL=FlowEditor.css.map */

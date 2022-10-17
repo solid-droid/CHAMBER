@@ -1,10 +1,31 @@
-import {FlowContainer, FlowNode , FlowConnection} from "../../plugins/FlowEditor/FlowEditor"
+import {FlowContainer, FlowNode, createFlowStores} from "../../plugins/FlowEditor/FlowEditor";
 
 const Controls = () => {
+  const {
+    nodeStore,
+    connectionStore,
+    layoutStore,
+    nodeList,
+    connectionList
+  }  = createFlowStores();
+  
+  const [connections , setConnections] = connectionList;
+  
+  setConnections('connections', () => [
+    [['node2','out1'],['node1','in1']],
+    [['node2','out2'],['node1','in2']]
+  ]);
+
   return (
-    <FlowContainer>
-      <FlowNode id="1" inputs={['a','b','c']} output={['out1']}/>
-      <FlowNode id="2" inputs={['inp1']} outputs={['out1' , 'out2']}/>
+    <FlowContainer {...{
+      nodeStore,
+      connectionStore,
+      layoutStore,
+      nodeList,
+      connectionList
+    }}>
+      <FlowNode id="node1" inputs={['in1','in2','in3']} outputs={['out1']} {...{nodeList}}/>
+      <FlowNode id="node2" inputs={['in1']} outputs={['out1' , 'out2']} {...{nodeList}}/>
     </FlowContainer>
   )
 }

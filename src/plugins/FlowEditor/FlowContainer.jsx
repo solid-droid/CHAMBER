@@ -2,18 +2,17 @@ import { createEffect, children, onMount } from "solid-js";
 import Guides from "@scena/guides";
 import "./FlowEditor.css";
 import interact from 'interactjs';
-
-import { nodeStore, connectionStore, layoutStore, nodeList } from "./FlowStore";
-
+import {createArrow} from './FlowScript';
 
 const FlowContainer = (props) => {
     let viewer, horizontalGuides, verticalGuides;
     const child = children(() => props.children);
     
-    const [node, setNode] = nodeStore;
-    const [nodes, setNodes] = nodeList;
-    const [connection, setConnection] = connectionStore;
-    const [layout, setLayout] = layoutStore;
+    const [node, setNode] = props.nodeStore;
+    const [nodes, setNodes] = props.nodeList;
+    const [connection, setConnection] = props.connectionStore;
+    const [connectionList, setConnectionList] = props.connectionList;
+    const [layout, setLayout] = props.layoutStore;
 
     createEffect(()=>{
         if(node.isDragging || connection.isDragging){
@@ -21,6 +20,17 @@ const FlowContainer = (props) => {
         } else {
             viewer?.resume();
         }
+    });
+
+    createEffect(()=>{
+        const view = "#FlowEditor-app .viewport";
+        connectionList.connections?.forEach(async item => {
+            const [[fromNode, fromPort], [toNode, toPort]] = item;
+            const from = `#${fromNode} .${fromPort}`;
+            const to = `#${toNode} .${toPort}`;
+            const arrow = await createArrow(from , to, view);
+            console.log(arrow);
+        });
     });
 
     const createGuides = () => {
