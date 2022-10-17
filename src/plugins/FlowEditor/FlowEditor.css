@@ -5,7 +5,7 @@
   width: 100%;
   height: 100%;
   color: #333;
-  background: #fdfdfd;
+  background: #2d2d2d;
   overscroll-behavior: none;
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
@@ -13,7 +13,7 @@
 
 .FlowEditor-app .reset {
   position: absolute !important;
-  background: #333;
+  background: #2f2f2f;
   width: 30px;
   height: 30px;
   z-index: 1;

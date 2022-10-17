@@ -15,7 +15,7 @@ const createArrow = async ({
         await new Promise(r => setTimeout(r, 100));
     }
     return arrowLine(fromXY, toXY, { 
-        color: 'blue',
+        color: 'rgb(236,9,202)',
         svgParentSelector: view + ' .connectorSVG' ,
         curvature: 0.3,
         thickness: 2,
