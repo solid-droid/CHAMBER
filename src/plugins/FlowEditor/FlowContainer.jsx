@@ -7,34 +7,87 @@ import {createArrow} from './FlowScript';
 const FlowContainer = (props) => {
     let viewer, horizontalGuides, verticalGuides;
     const child = children(() => props.children);
-    
+    const id = 'FlowEditor-app';
     const [node, setNode] = props.nodeStore;
     const [nodes, setNodes] = props.nodeList;
     const [connection, setConnection] = props.connectionStore;
     const [connectionList, setConnectionList] = props.connectionList;
     const [layout, setLayout] = props.layoutStore;
+    const arrowList = {};
+    const offset = {x:30, y:30};
 
-    createEffect(()=>{
-        if(node.isDragging || connection.isDragging){
-            viewer?.pause();
-        } else {
-            viewer?.resume();
-        }
-    });
+    const startEffects = () => {
 
-    createEffect(()=>{
-        const view = "#FlowEditor-app .viewport";
-        connectionList.connections?.forEach(async item => {
-            const [[fromNode, fromPort], [toNode, toPort]] = item;
-            const from = `#${fromNode} .${fromPort}`;
-            const to = `#${toNode} .${toPort}`;
-            const arrow = await createArrow(from , to, view);
-            console.log(arrow);
+        createEffect(()=>{
+            layout.x;
+            layout.y;
+            layout.z;
+
+            $(`#${id} .connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
+            $(`#${id} .connectorSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
+            Object.entries(arrowList).forEach(([key, arrow]) => {
+                const [fromNode, fromPort, toNode, toPort] = key.split('#');
+                const fromWidth = parseFloat($(`#${fromNode}`).css('width').split('px')[0]);
+                const fromHeight = 20*fromPort+10;
+                const fromXY = {
+                    x: parseFloat(nodes[fromNode].x)+ layout.x/layout.z+ offset.x + fromWidth +4,
+                    y: parseFloat(nodes[fromNode].y)+ layout.y/layout.z+ offset.y + fromHeight
+                }
+
+                const toHeight = 20*toPort+10;
+                const toXY = {
+                    x: parseFloat(nodes[toNode].x)+ layout.x/layout.z+ offset.x+4,
+                    y: parseFloat(nodes[toNode].y)+ layout.y/layout.z+ offset.y + toHeight
+                }
+                arrow.update({source:fromXY , destination: toXY});
+            });
+
         });
-    });
+        createEffect(()=>{
+            if(node.isDragging || connection.isDragging){
+                viewer?.pause();
+            } else {
+                viewer?.resume();
+            }
+        });
+    
+        createEffect(()=>{
+            const view = '#'+id;
+            connectionList.connections?.forEach(async item => {
+                const [[fromNode, fromPort], [toNode, toPort]] = item;
+                const key = `${fromNode}#${fromPort}#${toNode}#${toPort}`;
+                const fromWidth = parseFloat($(`#${fromNode}`).css('width').split('px')[0]);
+                const fromHeight = 20*fromPort+15;
+                const fromXY = {
+                    x: parseFloat(nodes[fromNode].x)+ layout.x/layout.z+ offset.x + fromWidth +4 ,
+                    y: parseFloat(nodes[fromNode].y)+ layout.y/layout.z+ offset.y + fromHeight
+                }
+
+                const toHeight = 20*toPort+15;
+                const toXY = {
+                    x: parseFloat(nodes[toNode].x)+ layout.x/layout.z+ offset.x+4,
+                    y: parseFloat(nodes[toNode].y)+ layout.y/layout.z+ offset.y + toHeight
+                }
+                if(!arrowList[key]){
+                    arrowList[key] = await createArrow({
+                        fromNode:'#'+fromNode,
+                        toNode: '#'+toNode,
+                        fromPort,
+                        toPort,
+                        fromXY,
+                        toXY,
+                        view
+                    });
+                } else {
+                    arrowList[key].update({source:fromXY , destination: toXY});
+                }
+            });
+        });
+    
+    };
 
     const createGuides = () => {
-        horizontalGuides = new Guides(document.querySelector("#FlowEditor-app .guides.horizontal"), {
+        horizontalGuides = new Guides(document.querySelector(`#${id} .guides.horizontal`), {
             snapThreshold: 5,
             snaps: [0, 300, 600],
             displayDragPos: true,
@@ -42,7 +95,7 @@ const FlowContainer = (props) => {
         }).on("changeGuides", ({ guides }) => {
             moveable.horizontalGuidelines = guides;
         });
-        verticalGuides = new Guides(document.querySelector("#FlowEditor-app .guides.vertical"), {
+        verticalGuides = new Guides(document.querySelector(`#${id} .guides.vertical`), {
             type: "vertical",
             snapThreshold: 5,
             snaps: [0, 200, 400],
@@ -54,7 +107,7 @@ const FlowContainer = (props) => {
     }
 
     const createPanZoomLayout = () => {
-        viewer =  panzoom(document.querySelector('#FlowEditor-app .viewport'));
+        viewer =  panzoom(document.querySelector(`#${id} .viewport`));
         viewer.on("pan", e => {
             const transform = e.getTransform();
             setLayout({
@@ -78,7 +131,7 @@ const FlowContainer = (props) => {
         new ResizeObserver(() => {
             horizontalGuides.resize();
             verticalGuides.resize();
-            }).observe(document.getElementById('FlowEditor-app'))
+            }).observe(document.getElementById(id))
     }
 
     const createDraggableNodes = () => {
@@ -91,9 +144,10 @@ const FlowContainer = (props) => {
                 const node = nodes[event.target.id];
                 setNodes(event.target.id , item => ({
                     ...item,
-                    x: item.x + event.dx/layout.z,
-                    y: item.y + event.dy/layout.z
+                    x: parseFloat(item.x) + event.dx/layout.z,
+                    y: parseFloat(item.y) + event.dy/layout.z
                 }))
+                
                 event.target.style.transform =`translate(${node.x}px, ${node.y}px)`
               },
               end(event){
@@ -110,16 +164,18 @@ const FlowContainer = (props) => {
         createPanZoomLayout();
         resizeObs();
         createDraggableNodes();
+        startEffects();
     });
 
 return (
-  <div id="FlowEditor-app" class="FlowEditor-app" style="width: 100%;height: 100%;">
+  <div id={id} class="FlowEditor-app" style="width: 100%;height: 100%;">
       <div class="reset" onClick={()=>viewer.scrollCenter()}></div>
       <div class="guides horizontal"></div>
       <div class="guides vertical"></div>
       <div class="scroll horizontal"></div>
       <div class="viewport">
             {child()}
+            <svg class="connectorSVG"></svg>
       </div>
   </div>
 

@@ -5,14 +5,17 @@ const FlowNode = (props) => {
   onMount(async ()=>{
     setNodes({
       [props.id]:{
-        x:0,
-        y:0
+        x:props.x || 0,
+        y:props.y || 0
       }
     });
   });
 
   return (
-    <div id={props.id} class="FlowNode">
+    <div id={props.id} 
+    class="FlowNode" 
+    style={`transform:translate(${props.x || 0}px, ${props.y || 0}px)`}
+    >
       <div class="FN_head">
           testBox
       </div>

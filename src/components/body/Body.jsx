@@ -1,18 +1,19 @@
 import {  onMount, createEffect } from "solid-js";
 import { render } from "solid-js/web";
-import "./Body.css"
+import _ from 'underscore';
+import "./Body.css";
+
 import {openMenu} from '../../scripts/store';
 import Workspace from '../../screens/workspace/Workspace'
 import Connections from '../../screens/connections/Connections'
 import NodeEditor from '../../screens/nodeEditor/NodeEditor'
 import Simulation from '../../screens/simulation/Simulation'
-
 import Controls from '../../screens/controls/Controls'
 import Debug from '../../screens/debug/Debug'
-// screens
+
 export const Body = () => {
   const [menu, setMenu] = openMenu;
-  let layout;
+  let layout, registerRenderer = {};
   ///////////////////////
   function beginLayout(){
     const config = {
@@ -28,13 +29,13 @@ export const Body = () => {
     });
 
 
-    registerWindow('Workspace' , 'workspace',  <Workspace/>);
-    registerWindow('Connections' , 'connections',  <Connections/>);
-    registerWindow('Node Editor' , 'nodeEditor',  <NodeEditor/>);
-    registerWindow('Simulator' , 'simulator',  <Simulation/>);
+    registerRenderer['Workspace'] = _.once(() =>registerWindow('Workspace' , 'workspace',  <Workspace/>));
+    registerRenderer['Connections'] = _.once(() =>registerWindow('Connections' , 'connections',  <Connections/>));
+    registerRenderer['Node Editor'] = _.once(() =>registerWindow('Node Editor' , 'nodeEditor',  <NodeEditor/>));
+    registerRenderer['Simulator'] = _.once(() =>registerWindow('Simulator' , 'simulator',  <Simulation/>));
  
-    registerWindow('Controls' , 'controls',  <Controls/>);
-    registerWindow('Debugger' , 'debugger',  <Debug/>);
+    registerRenderer['Controls'] = _.once(() =>registerWindow('Controls' , 'controls',  <Controls/>));
+    registerRenderer['Debugger'] = _.once(() =>registerWindow('Debugger' , 'debugger',  <Debug/>));
 
     
     layout.init();
@@ -82,6 +83,7 @@ export const Body = () => {
     'Debugger'].forEach((name,i) =>
       createEffect(()=>{
       if(menu[menuItems[i]]){
+        registerRenderer[name]();
         addWindow(name);
       } else {
         closeWindow(name);

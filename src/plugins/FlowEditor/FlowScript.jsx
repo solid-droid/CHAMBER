@@ -1,26 +1,28 @@
-import arrowCreate, { DIRECTION } from 'arrows-svg';
+import * as arrowLine from 'arrow-line';
 
-const createArrow = async (from, to, view) => {
+const createArrow = async ({
+    fromNode,
+    fromPort,
+    toNode,
+    toPort,
+    fromXY,
+    toXY,
+    view
+}) => {
     while(
-        !document.querySelector(from) || 
-        !document.querySelector(to)){
+        !$(fromNode).length || 
+        !$(toNode).length){
         await new Promise(r => setTimeout(r, 100));
     }
-    const _from = document.querySelector(from);
-    const _to =  document.querySelector(to);
-    const _view = document.querySelector(view);
-    const arrow = arrowCreate({
-        from: {
-         node: _from,
-        //  direction: DIRECTION.RIGHT
-        },
-        to: {
-         node: _to,
-        //  direction: DIRECTION.LEFT
+    return arrowLine(fromXY, toXY, { 
+        color: 'blue',
+        svgParentSelector: view + ' .connectorSVG' ,
+        curvature: 0.3,
+        thickness: 2,
+        endpoint:{
+            type : 'none'
         }
-      });
-    _view.appendChild(arrow.node);
-    return arrow;
+    });
 }
 
 
