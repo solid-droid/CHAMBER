@@ -19,31 +19,6 @@ const FlowContainer = (props) => {
     const startEffects = () => {
 
         createEffect(()=>{
-            layout.x;
-            layout.y;
-            layout.z;
-
-            $(`#${id} .connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
-            $(`#${id} .connectorSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
-            Object.entries(arrowList).forEach(([key, arrow]) => {
-                const [fromNode, fromPort, toNode, toPort] = key.split('#');
-                const fromWidth = parseFloat($(`#${fromNode}`).css('width').split('px')[0]);
-                const fromHeight = 20*fromPort+10;
-                const fromXY = {
-                    x: parseFloat(nodes[fromNode].x)+ layout.x/layout.z+ offset.x + fromWidth +4,
-                    y: parseFloat(nodes[fromNode].y)+ layout.y/layout.z+ offset.y + fromHeight
-                }
-
-                const toHeight = 20*toPort+10;
-                const toXY = {
-                    x: parseFloat(nodes[toNode].x)+ layout.x/layout.z+ offset.x+4,
-                    y: parseFloat(nodes[toNode].y)+ layout.y/layout.z+ offset.y + toHeight
-                }
-                arrow.update({source:fromXY , destination: toXY});
-            });
-
-        });
-        createEffect(()=>{
             if(node.isDragging || connection.isDragging){
                 viewer?.pause();
             } else {
@@ -53,6 +28,8 @@ const FlowContainer = (props) => {
     
         createEffect(()=>{
             const view = '#'+id;
+            $(`#${id} .connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
+            $(`#${id} .connectorSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
             connectionList.connections?.forEach(async item => {
                 const [[fromNode, fromPort], [toNode, toPort]] = item;
                 const key = `${fromNode}#${fromPort}#${toNode}#${toPort}`;
@@ -114,11 +91,11 @@ const FlowContainer = (props) => {
                     x:transform.x,
                     y:transform.y,
             });
-            horizontalGuides.scroll(transform.x, transform.scale);
-            horizontalGuides.scrollGuides(transform.y, transform.scale);
+            horizontalGuides.scroll(-transform.x/transform.scale, transform.scale);
+            horizontalGuides.scrollGuides(-transform.x/transform.scale, transform.scale);
     
-            verticalGuides.scroll(transform.y, transform.scale);
-            verticalGuides.scrollGuides(transform.x, transform.scale);
+            verticalGuides.scroll(-transform.y/transform.scale, transform.scale);
+            verticalGuides.scrollGuides(-transform.y/transform.scale, transform.scale);
         }).on("zoom", e => {
             const transform = e.getTransform();
             setLayout({ z:transform.scale });
