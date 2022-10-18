@@ -65,8 +65,8 @@ const FlowContainer = (props) => {
 
     const createGuides = () => {
         horizontalGuides = new Guides(document.querySelector(`#${id} .guides.horizontal`), {
-            snapThreshold: 5,
-            snaps: [0, 300, 600],
+            // snapThreshold: 5,
+            // snaps: [0, 300, 600],
             displayDragPos: true,
             dragPosFormat: v => `${v}px`,
         }).on("changeGuides", ({ guides }) => {
@@ -74,8 +74,8 @@ const FlowContainer = (props) => {
         });
         verticalGuides = new Guides(document.querySelector(`#${id} .guides.vertical`), {
             type: "vertical",
-            snapThreshold: 5,
-            snaps: [0, 200, 400],
+            // snapThreshold: 5,
+            // snaps: [0, 200, 400],
             displayDragPos: true,
             dragPosFormat: v => `${v}px`,
         }).on("changeGuides", ({ guides }) => {
@@ -91,11 +91,10 @@ const FlowContainer = (props) => {
                     x:transform.x,
                     y:transform.y,
             });
-            horizontalGuides.scroll(-transform.x/transform.scale, transform.scale);
-            horizontalGuides.scrollGuides(-transform.x/transform.scale, transform.scale);
-    
-            verticalGuides.scroll(-transform.y/transform.scale, transform.scale);
-            verticalGuides.scrollGuides(-transform.y/transform.scale, transform.scale);
+
+            horizontalGuides.scroll(-transform.x/transform.scale);    
+            verticalGuides.scroll(-transform.y/transform.scale);
+
         }).on("zoom", e => {
             const transform = e.getTransform();
             setLayout({ z:transform.scale });
@@ -121,8 +120,8 @@ const FlowContainer = (props) => {
                 const node = nodes[event.target.id];
                 setNodes(event.target.id , item => ({
                     ...item,
-                    x: parseFloat(item.x) + event.dx/layout.z,
-                    y: parseFloat(item.y) + event.dy/layout.z
+                    x: parseInt(item.x) + event.dx/layout.z,
+                    y: parseInt(item.y) + event.dy/layout.z
                 }))
                 
                 event.target.style.transform =`translate(${node.x}px, ${node.y}px)`
