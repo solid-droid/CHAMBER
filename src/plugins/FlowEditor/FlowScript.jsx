@@ -1,4 +1,4 @@
-import * as arrowLine_ from 'arrow-line';
+import arrowLine from 'arrow-line';
 
 const createArrow = async ({
     fromNode,
@@ -14,7 +14,7 @@ const createArrow = async ({
         !$(toNode).length){
         await new Promise(r => setTimeout(r, 100));
     }
-    return arrowLine_(fromXY, toXY, { 
+    return arrowLine(fromXY, toXY, { 
         color: 'rgb(236,9,202)',
         svgParentSelector: view + ' .connectorSVG' ,
         curvature: 0.3,
