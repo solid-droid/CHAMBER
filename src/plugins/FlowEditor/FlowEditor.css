@@ -43,7 +43,9 @@
   border: solid;
   z-index: 2;
   border-radius: 5px;
-  border-color: white;
+  border-color: #454545;
+  -webkit-box-shadow: 2px 2px 6px 2px #000000c4;
+          box-shadow: 2px 2px 6px 2px #000000c4;
   overflow: hidden;
 }
 
