@@ -53,6 +53,8 @@
             align-items: center;
             padding-bottom: 2px;
             justify-content: center;
+            background-color: #373737;
+            border-bottom: #202020 solid 3px;
             background: linear-gradient(0deg, #295c5c 0%, #4aa89e 100%);
         }
 
@@ -63,6 +65,7 @@
             background-color: #2c2c2cbf;
             display: grid;
             grid-template-columns: auto 1fr auto;
+            background-color: rgb(59 58 58 / 75%);
 
             .FN_inputs,.FN_content,.FN_output{
                 // border: solid 1px;
@@ -71,23 +74,37 @@
                 font-size: 13px;
                 display: grid;
                 align-items: start;
-                div{
-                    // border:solid 1px;
-                    height: 20px;
-                    min-width: 30px;
-                    display: flex;
+                width: max-content;
+                .FN_inputItem{
+                    display: grid;
+                    grid-template-columns: 10px auto;
                     align-items: center;
+                    grid-gap: 5px;
+                    .FN_draggable{
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background-color: red;
+                    }
+                    .FN_title{
+                        height: 20px;
+                        min-width: 30px;
+                        display: flex;
+                        align-items: center;
+                    }
                 }
             }
 
             .FN_content{
                 min-width: 50px;
+                width: max-content;
             }
 
             .FN_outputs{
                 font-size: 13px;
                 display: grid;
                 align-items: start;
+                width: max-content;
                 div{
                     // border:solid 1px;
                     height: 20px;

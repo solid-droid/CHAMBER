@@ -65,7 +65,12 @@ const FlowNode = (props) => {
       <div class="FN_body">
           <div class="FN_inputs">
           <For each={props.inputs}>
-              {(item) => <div class={item}>{item}</div>}
+              {(item) => 
+              <div class="FN_inputItem">
+                <div class="FN_draggable"></div>
+                <div class={`${item} FN_title`}>{item}</div>
+              </div>
+              }
           </For>
           </div>
           <div class="FN_content">
@@ -73,7 +78,12 @@ const FlowNode = (props) => {
           </div>
           <div class="FN_outputs">
           <For each={props.outputs}>
-              {(item) => <div class={item}>{item}</div>}
+              {(item) => 
+                <div class="FN_outputItem">
+                    <div class="FN_draggable"></div>
+                    <div class={`${item} FN_title`}>{item}</div>
+                </div>
+              }
           </For>
           </div>
       </div>
