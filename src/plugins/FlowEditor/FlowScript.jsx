@@ -25,14 +25,14 @@ const createArrow = async ({
 
 const getFromXY = (fromNode,fromWidth,fromHeight,layout)=>{
     return {
-        x: parseFloat(fromNode.x)+ layout.x/layout.z+ fromWidth +4 ,
+        x: parseFloat(fromNode.x)+ layout.x/layout.z+ fromWidth +5 ,
         y: parseFloat(fromNode.y)+ layout.y/layout.z+ fromHeight
     }
 }
 
 const getToXY = (toNode,toHeight,layout) => {
     return {
-        x: parseFloat(toNode.x)+ layout.x/layout.z+ 4,
+        x: parseFloat(toNode.x)+ layout.x/layout.z - 1,
         y: parseFloat(toNode.y)+ layout.y/layout.z+ toHeight
     }
 }

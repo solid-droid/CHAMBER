@@ -4,43 +4,13 @@
     padding: 0;
     width: 100%;
     height: 100%;
-    color: #333;
     background: #2d2d2d;
+    color:white;
     overscroll-behavior: none;
     transform-style: preserve-3d;
-    
-    .reset {
-        position: absolute !important;
-        background: rgb(47, 47, 47);
-        width: 30px;
-        height: 30px;
-        z-index: 1;
-        border-right: 1px solid #444;
-        border-bottom: 1px solid #444;
-        box-sizing: border-box;
-        cursor: pointer;
+    .moveable-line{
+        background-color: unset !important;
     }
-    
-    .guides {
-        position: absolute !important;
-        top: 0;
-        left: 0;
-        transform: translateZ(1px);
-    }
-    
-    .guides.horizontal {
-        left: 30px;
-        width: calc(100% - 30px);
-        height: 30px !important;
-    }
-    
-    .guides.vertical {
-        top: 30px;
-        height: calc(100% - 30px);
-        width: 30px !important;
-    }
-    
-    
     .viewer {
         position: absolute !important;
         left: 30px;
@@ -70,22 +40,26 @@
         position: absolute;
         height: auto;
         border: solid;
-        background: #ffffffeb;
         z-index: 2;
+        border-radius: 5px;
+        border-color: white;
+        overflow: hidden;
 
         .FN_head{
-            font-size: 15px;
+            font-size: 13px;
             height: 20px;
             display: flex;
-            align-items: end;
+            align-items: center;
+            padding-bottom: 2px;
             justify-content: center;
+            background: linear-gradient(0deg, #295c5c 0%, #4aa89e 100%);
         }
 
         .FN_body{
             padding-left: 5px;
             padding-right: 5px;
             height: calc(100% - 18px);
-            background-color: #ff000070;
+            background-color: #2c2c2cbf;
             display: grid;
             grid-template-columns: auto 1fr auto;
 
@@ -123,6 +97,7 @@
             }
         }
 }
+
 
 .arrow {
     pointer-events: none;
