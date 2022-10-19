@@ -1,32 +1,38 @@
 import { For, onMount } from "solid-js";
 import Moveable from "moveable";
+import {getPropertiesForArrow} from './FlowScript';
 
 const FlowNode = (props) => {
   const [nodes , setNodes] = props.nodeList;
   const [node, setNode] = props.nodeStore;
-  let widget;
+  const [layout] = props.layoutStore;
+  let widget, activeConnections = [];
   const id = 'FlowEditor-app';
   const createMoveable = () => {
     widget =  new Moveable(document.querySelector(`#${id} .viewport`), {
       target: document.getElementById(props.id),
       origin: false,
-      edge:false,
       draggable: true,
   })
-  .on("dragStart", ({ target, clientX, clientY }) => {
-      setNode({isDragging:true});
+  .on("dragStart", () => {
+      setNode({isDragging:true, selectedNode:props.id});
   })
-  .on("drag", ({
-      target, transform,
-      left, top, right, bottom,
-      beforeDelta, beforeDist, delta, dist,
-      clientX, clientY,
-  }) => {
+  .on("drag", ({target,left, top}) => {
         setNodes(props.id , item => ({
             ...item,
             x: left,
             y: top
         }))
+        $(`#${layout.id} .connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
+        $(`#${layout.id} .connectorSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
+        nodes[props.id].connections.forEach(item => {
+          const {fromXY, toXY} = getPropertiesForArrow({
+            ...item,
+            nodes,
+            layout
+          })
+          item.arrow.update({source:fromXY , destination: toXY});
+        });
       target.style.left = `${left}px`;
       target.style.top = `${top}px`;
   })
@@ -34,6 +40,8 @@ const FlowNode = (props) => {
       setNode({isDragging:false});
   })
   }
+
+
   onMount(async ()=>{
     setNodes({
       [props.id]:{
