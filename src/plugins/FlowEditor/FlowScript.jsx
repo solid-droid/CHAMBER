@@ -15,8 +15,9 @@ const createArrow = async ({
     return arrowLine(fromXY, toXY, { 
         color: '#4f92a7',
         svgParentSelector: view + ' .connectorSVG' ,
-        curvature: 0.3,
+        // curvature: 0.3,
         thickness: 2,
+        pivots:[{x:20, y: 0}, {x:-15, y: 0}],
         endpoint:{
             type : 'none'
         }
