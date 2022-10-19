@@ -8,6 +8,7 @@
     color:white;
     overscroll-behavior: none;
     transform-style: preserve-3d;
+    cursor: default;
     .moveable-line{
         background-color: unset !important;
     }
@@ -44,28 +45,30 @@
         border-radius: 5px;
         border-color: #454545;
         box-shadow: 2px 2px 6px 2px #000000c4;
-        overflow: hidden;
+        // overflow: hidden;
 
         .FN_head{
+            // cursor: move;
             font-size: 13px;
             height: 20px;
             display: flex;
             align-items: center;
             padding-bottom: 2px;
             justify-content: center;
-            background-color: #373737;
-            border-bottom: #202020 solid 3px;
-            background: linear-gradient(0deg, #295c5c 0%, #4aa89e 100%);
+            background-color: #333333;
+            border-bottom: #454545 solid 3px;
+            user-select: none;
+            // background: linear-gradient(0deg, #295c5c 0%, #4aa89e 100%);
         }
 
         .FN_body{
             padding-left: 5px;
             padding-right: 5px;
             height: calc(100% - 18px);
-            background-color: #2c2c2cbf;
+            background-color: #292929bf;
             display: grid;
             grid-template-columns: auto 1fr auto;
-            background-color: rgb(59 58 58 / 75%);
+            background-color: #3b3a3abf;
 
             .FN_inputs,.FN_content,.FN_output{
                 // border: solid 1px;
@@ -73,27 +76,32 @@
             .FN_inputs{
                 font-size: 13px;
                 display: grid;
+                margin-left: 7px;
                 align-items: start;
-                width: max-content;
                 .FN_inputItem{
                     display: grid;
-                    grid-template-columns: 10px auto;
                     align-items: center;
-                    grid-gap: 5px;
+                    // grid-gap: 5px;
                     .FN_draggable{
-                        width: 10px;
-                        height: 10px;
-                        border-radius: 50%;
-                        background-color: red;
+                        position: absolute;
+                        left:0;
+                        width: 0;
+                        height: 0;
+                        border-top: 8px solid transparent;
+                        border-bottom: 7px solid transparent;
+                        border-left: 9px solid #87c8cbb3;
                     }
                     .FN_title{
                         height: 20px;
                         min-width: 30px;
                         display: flex;
                         align-items: center;
+                        width: max-content;
+                        user-select: none;
                     }
                 }
             }
+            
 
             .FN_content{
                 min-width: 50px;
@@ -104,13 +112,26 @@
                 font-size: 13px;
                 display: grid;
                 align-items: start;
-                width: max-content;
-                div{
-                    // border:solid 1px;
-                    height: 20px;
-                    min-width: 30px;
-                    display: flex;
+                .FN_outputItem{
+                    display: grid;
                     align-items: center;
+                    // grid-gap: 5px;
+                    .FN_draggable{
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background-color: #749d9f;
+                        position: absolute;
+                        right: -5px;
+                    }
+                    .FN_title{
+                        height: 20px;
+                        min-width: 30px;
+                        display: flex;
+                        align-items: center;
+                        width: max-content;
+                        user-select: none;
+                    }
                 }
             }
         }

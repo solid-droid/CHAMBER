@@ -13,7 +13,7 @@ const createArrow = async ({
         await new Promise(r => setTimeout(r, 100));
     }
     return arrowLine(fromXY, toXY, { 
-        color: 'rgb(236,9,202)',
+        color: '#4f92a7',
         svgParentSelector: view + ' .connectorSVG' ,
         curvature: 0.3,
         thickness: 2,
@@ -32,7 +32,7 @@ const getFromXY = (fromNode,fromWidth,fromHeight,layout)=>{
 
 const getToXY = (toNode,toHeight,layout) => {
     return {
-        x: parseFloat(toNode.x)+ layout.x/layout.z - 1,
+        x: parseFloat(toNode.x)+ layout.x/layout.z + 1,
         y: parseFloat(toNode.y)+ layout.y/layout.z+ toHeight
     }
 }

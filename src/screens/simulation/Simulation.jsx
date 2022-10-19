@@ -43,7 +43,7 @@ import { Vector3 } from '@babylonjs/core';
              .start();
          
     box2.on('longClick',(e)=> {
-        console.log('hello');
+
     });
     scene.showAxis()
          .render([TWEEN.update]);      

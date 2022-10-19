@@ -29,7 +29,7 @@ const NodeEditor = () => {
       outputs={['out1']}
       x="100"
       y="100"
-      {...{nodeList, nodeStore, layoutStore}}
+      {...{nodeList, nodeStore, layoutStore, connectionStore}}
       />
       <FlowNode 
       id="node2" 
@@ -37,7 +37,7 @@ const NodeEditor = () => {
       outputs={['out1' , 'out2']} 
       x="0"
       y="0" 
-      {...{nodeList, nodeStore, layoutStore}}/>
+      {...{nodeList, nodeStore, layoutStore, connectionStore}}/>
     </FlowContainer>
   )
 }

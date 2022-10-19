@@ -5,17 +5,25 @@ import {getPropertiesForArrow} from './FlowScript';
 const FlowNode = (props) => {
   const [nodes , setNodes] = props.nodeList;
   const [node, setNode] = props.nodeStore;
+  const [connection , setConnection] = props.connectionStore
   const [layout] = props.layoutStore;
   let widget, activeConnections = [];
   const id = 'FlowEditor-app';
   const createMoveable = () => {
     widget =  new Moveable(document.querySelector(`#${id} .viewport`), {
-      target: document.getElementById(props.id),
+      // dragTarget: document.querySelector(`#${props.id} .FN_head`),
+      target :document.querySelector(`#${props.id}`),
       origin: false,
       draggable: true,
   })
-  .on("dragStart", () => {
+  .on("dragStart", (e) => {
+    
+    if($(`#${id}`).find(".FN_draggable:hover").length){
+      setConnection({isDragging:true, selectedNode:props.id});
+      e.stop();
+    } else {
       setNode({isDragging:true, selectedNode:props.id});
+    }
   })
   .on("drag", ({target,left, top}) => {
         setNodes(props.id , item => ({
@@ -38,7 +46,7 @@ const FlowNode = (props) => {
   })
   .on("dragEnd",()=>{
       setNode({isDragging:false});
-  })
+  });
   }
 
 
@@ -49,8 +57,15 @@ const FlowNode = (props) => {
         y:props.y || 0
       }
     });
-    console.log('test');
     createMoveable();
+    $('').on({
+      mouseenter: function () {
+          //stuff to do on mouse enter
+      },
+      mouseleave: function () {
+          //stuff to do on mouse leave
+      }
+  });
   });
 
   return (
@@ -67,8 +82,8 @@ const FlowNode = (props) => {
           <For each={props.inputs}>
               {(item) => 
               <div class="FN_inputItem">
-                <div class="FN_draggable"></div>
-                <div class={`${item} FN_title`}>{item}</div>
+                <div class="FN_draggable" draggable="true"></div>
+                <div class={`${item} FN_title`}  draggable="false">{item}</div>
               </div>
               }
           </For>
@@ -80,8 +95,8 @@ const FlowNode = (props) => {
           <For each={props.outputs}>
               {(item) => 
                 <div class="FN_outputItem">
-                    <div class="FN_draggable"></div>
-                    <div class={`${item} FN_title`}>{item}</div>
+                    <div class={`${item} FN_title`} draggable="false">{item}</div>
+                    <div class="FN_draggable" draggable="true"></div>
                 </div>
               }
           </For>

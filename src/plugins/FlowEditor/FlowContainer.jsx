@@ -58,6 +58,12 @@ const FlowContainer = (props) => {
             nodeList:props.nodeList,
             layout
         });
+
+        $(window).mouseup(()=> {
+            setNode({isDragging:false});
+            setConnection({isDragging:false});
+        })
+        
     });
 
 return (
