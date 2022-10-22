@@ -30,7 +30,25 @@
         padding: 31px;
     }
 
+    .connectionGhost{
+        display: none;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #749d9f;
+        position: absolute;
+    }
+
     .connectorSVG{
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        z-index: 1;
+        top:0;
+        left:0;
+    }
+
+    .ghostSVG{
         width: 100vw;
         height: 100vh;
         position: absolute;

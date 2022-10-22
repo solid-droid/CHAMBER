@@ -1,3 +1,4 @@
+import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
 
 const createFlowStores = () => {
@@ -8,16 +9,15 @@ const createFlowStores = () => {
     
     const connectionStore = createStore({
       selectedConnection: null,
-      isDragging : false
+      isDragging : false,
+      deletedConnecion:null
     });
   
     const nodeList = createStore({ 
       length: 0
     });
 
-    const connectionList = createStore({
-      connections:  []
-    });
+    const connectionList = createSignal([]);
   
     const layoutStore = createStore({
       ready:false,

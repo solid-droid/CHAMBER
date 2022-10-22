@@ -12,9 +12,13 @@ const createArrow = async ({
         !$(toNode).length){
         await new Promise(r => setTimeout(r, 100));
     }
+    return createArrowLine(fromXY,toXY,view);
+}
+
+const createArrowLine = (fromXY, toXY, view , container='.connectorSVG') => {
     return arrowLine(fromXY, toXY, { 
         color: '#4f92a7',
-        svgParentSelector: view + ' .connectorSVG' ,
+        svgParentSelector: view +' '+ container ,
         // curvature: 0.3,
         thickness: 2,
         pivots:[{x:20, y: 0}, {x:-15, y: 0}],
@@ -24,17 +28,20 @@ const createArrow = async ({
     });
 }
 
-const getFromXY = (fromNode,fromWidth,fromHeight,layout)=>{
+const getFromXY = (fromNode,fromPort,layout,nodes)=>{
+    const fromWidth = parseFloat($(`#${fromNode}`).css('width').split('px')[0]);
+    const fromHeight = 20*fromPort+15;
     return {
-        x: parseFloat(fromNode.x)+ layout.x/layout.z+ fromWidth +5 ,
-        y: parseFloat(fromNode.y)+ layout.y/layout.z+ fromHeight
+        x: parseFloat(nodes[fromNode].x)+ layout.x/layout.z+ fromWidth +5 ,
+        y: parseFloat(nodes[fromNode].y)+ layout.y/layout.z+ fromHeight
     }
 }
 
-const getToXY = (toNode,toHeight,layout) => {
+const getToXY = (toNode,toPort,layout,nodes) => {
+    const toHeight = 20*toPort+15;
     return {
-        x: parseFloat(toNode.x)+ layout.x/layout.z + 1,
-        y: parseFloat(toNode.y)+ layout.y/layout.z+ toHeight
+        x: parseFloat(nodes[toNode].x)+ layout.x/layout.z + 1,
+        y: parseFloat(nodes[toNode].y)+ layout.y/layout.z+ toHeight
     }
 }
 
@@ -46,11 +53,8 @@ const getPropertiesForArrow = ({
     layout,
     nodes
 }) => {
-    const fromWidth = parseFloat($(`#${fromNode}`).css('width').split('px')[0]);
-    const fromHeight = 20*fromPort+15;
-    const fromXY = getFromXY(nodes[fromNode],fromWidth,fromHeight,layout);
-    const toHeight = 20*toPort+15;
-    const toXY = getToXY(nodes[toNode],toHeight,layout);
+    const fromXY = getFromXY(fromNode,fromPort,layout,nodes);
+    const toXY = getToXY(toNode,toPort,layout,nodes);
     return{
         fromXY,
         toXY
@@ -67,6 +71,7 @@ const drawConnections = ({
     if(layout){
         const view = '#'+id;
         const [nodes, setNodes] = nodeList;
+        //create new + update existing
         connections?.forEach(async item => {
             const [[fromNode, fromPort], [toNode, toPort]] = item;
             const key = `${fromNode}#${fromPort}#${toNode}#${toPort}`;
@@ -131,5 +136,8 @@ const drawConnections = ({
 export {
     createArrow,
     drawConnections,
-    getPropertiesForArrow
+    getPropertiesForArrow,
+    getFromXY,
+    getToXY,
+    createArrowLine
 }

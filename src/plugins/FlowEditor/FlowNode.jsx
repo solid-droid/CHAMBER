@@ -1,16 +1,17 @@
-import { For, onMount } from "solid-js";
+import { For,  onMount } from "solid-js";
+import {produce} from "solid-js/store"
 import Moveable from "moveable";
-import {getPropertiesForArrow} from './FlowScript';
+import {getPropertiesForArrow, createArrowLine} from './FlowScript';
 
 const FlowNode = (props) => {
   const [nodes , setNodes] = props.nodeList;
   const [node, setNode] = props.nodeStore;
-  const [connection , setConnection] = props.connectionStore
+  const [connection , setConnection] = props.connectionStore;
+  const [connectionList , setConnectionList] = props.connectionList;
   const [layout] = props.layoutStore;
-  let widget, activeConnections = [];
-  const id = 'FlowEditor-app';
+  let widget;
   const createMoveable = () => {
-    widget =  new Moveable(document.querySelector(`#${id} .viewport`), {
+    widget =  new Moveable(document.querySelector(`#${layout.id} .viewport`), {
       // dragTarget: document.querySelector(`#${props.id} .FN_head`),
       target :document.querySelector(`#${props.id}`),
       origin: false,
@@ -18,22 +19,23 @@ const FlowNode = (props) => {
   })
   .on("dragStart", (e) => {
     
-    if($(`#${id}`).find(".FN_draggable:hover").length){
-      setConnection({isDragging:true, selectedNode:props.id});
+    if($(`#${layout.id}`).find(".FN_draggable:hover").length){
+      setConnection({isDragging:true});
       e.stop();
     } else {
       setNode({isDragging:true, selectedNode:props.id});
     }
   })
   .on("drag", ({target,left, top}) => {
+        $(`#${layout.id} .connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
+        $(`#${layout.id} .connectorSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
         setNodes(props.id , item => ({
             ...item,
             x: left,
             y: top
         }))
-        $(`#${layout.id} .connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
-        $(`#${layout.id} .connectorSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
-        nodes[props.id].connections.forEach(item => {
+        
+        nodes[props.id].connections?.forEach(item => {
           const {fromXY, toXY} = getPropertiesForArrow({
             ...item,
             nodes,
@@ -49,6 +51,84 @@ const FlowNode = (props) => {
   });
   }
 
+  const getXY = (e) => ({
+            x:e.clientX / layout.z, 
+            y:(e.clientY - 55) / layout.z
+          });
+  const beginGhostConnection = e =>{
+    $(`#${layout.id} .ghostSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
+    $(`#${layout.id} .ghostSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
+    
+    $(`#${layout.id} .connectionGhost`).show();
+    $(`#${layout.id} .connectionGhost`).css({left:`${screenX}px`});
+    $(`#${layout.id} .connectionGhost`).css({top:`${screenY}px`});
+    
+    const _classes = e.target.className.split(/\s+/);
+    const _port = parseInt(_classes[1].split('FN_port_')[1]);
+    const _node = _classes[2].split('FN_node_')[1];
+    const ghostArrow = {node : _node, port: _port+1};
+    const fromXY = getXY(e);
+    const arrow =  createArrowLine(fromXY,fromXY,`#${layout.id}`, '.ghostSVG');
+    setConnection({selectedNode:ghostArrow , arrow:arrow ,fromXY});
+
+  }
+
+  const drawGhostConnection = e => {
+    $(`#${layout.id} .connectionGhost`).css({left:`${screenX}px`});
+    $(`#${layout.id} .connectionGhost`).css({top:`${screenY}px`});
+    const fromXY = connection.fromXY;
+    const toXY = getXY(e);
+    connection.arrow.update({source:fromXY , destination: toXY})
+  }
+
+  const endGhostConnection = e => {
+    setConnection({selectedNode:null});
+    connection.arrow.remove();
+    $(`#${layout.id} .connectionGhost`).hide();
+  }
+
+  const dropGhostConnection = e => {
+    e.preventDefault();
+    const _classes = e.target.className.split(/\s+/);
+    const toPort = parseInt(_classes[1].split('FN_port_')[1])+1;
+    const toNode = _classes[2].split('FN_node_')[1];
+    const {node:fromNode, port:fromPort} = connection.selectedNode;
+    setConnectionList(_conn => {
+      if(!_conn.find(item =>
+         item[1][0] == toNode &&
+         item[1][1] == toPort
+        )){
+          
+          const _item = [[fromNode,fromPort],[toNode,toPort]];
+          return [_item, ..._conn];
+        } else {
+          console.log('connection already exists');
+        }
+        return _conn;
+    });
+  }
+
+  const ondragoverGhostConnection = e =>{
+    e.preventDefault();
+  }
+
+  const inputContextMenu = e => {
+    e.preventDefault();
+    const _classes = e.target.className.split(/\s+/);
+    const toPort = parseInt(_classes[1].split('FN_port_')[1])+1;
+    const toNode = _classes[2].split('FN_node_')[1];
+    const prevLen = connectionList().length;
+    setConnectionList(_conn => {
+     return _conn.filter(item => !(item[1][0] == toNode && item[1][1] == toPort));
+    });
+    const newLen = connectionList().length;
+
+    if(prevLen !== newLen){
+      //deleted
+      setConnection({deletedConnection : {toNode, toPort}});
+    }
+
+  };
 
   onMount(async ()=>{
     setNodes({
@@ -58,51 +138,49 @@ const FlowNode = (props) => {
       }
     });
     createMoveable();
-    $('').on({
-      mouseenter: function () {
-          //stuff to do on mouse enter
-      },
-      mouseleave: function () {
-          //stuff to do on mouse leave
-      }
-  });
   });
 
   return (
-    <div id={props.id} 
-    class="FlowNode" 
-    // style={`transform:translate(${props.x || 0}px, ${props.y || 0}px)`}
-    style={`left:${props.x || 0}px; top:${props.y || 0}px;`}
-    >
-      <div class="FN_head">
-          testBox
-      </div>
-      <div class="FN_body">
-          <div class="FN_inputs">
-          <For each={props.inputs}>
-              {(item) => 
-              <div class="FN_inputItem">
-                <div class="FN_draggable" draggable="true"></div>
-                <div class={`${item} FN_title`}  draggable="false">{item}</div>
+      <div id={props.id} class="FlowNode" style={`left:${props.x || 0}px; top:${props.y || 0}px;`}>
+          <div class="FN_head">
+              testBox
+          </div>
+          <div class="FN_body">
+              <div class="FN_inputs">
+              <For each={props.inputs}>
+                  {(item,i) => 
+                  <div class="FN_inputItem">
+                    <div class={`FN_draggable FN_port_${i()}  FN_node_${props.id}`} 
+                    draggable="false"
+                    onContextMenu={e => inputContextMenu(e)}
+                    ondrop={e => dropGhostConnection(e)} 
+                    ondragover={e => ondragoverGhostConnection(e)} 
+                    ></div>
+                    <div class={`${item} FN_title`}  draggable="false">{item}</div>
+                  </div>
+                  }
+              </For>
               </div>
-              }
-          </For>
-          </div>
-          <div class="FN_content">
-            {props.children}
-          </div>
-          <div class="FN_outputs">
-          <For each={props.outputs}>
-              {(item) => 
-                <div class="FN_outputItem">
-                    <div class={`${item} FN_title`} draggable="false">{item}</div>
-                    <div class="FN_draggable" draggable="true"></div>
-                </div>
-              }
-          </For>
+              <div class="FN_content">
+                {props.children}
+              </div>
+              <div class="FN_outputs">
+              <For each={props.outputs}>
+                  {(item, i) => 
+                    <div class="FN_outputItem">
+                        <div class={`${item} FN_title`} draggable="false">{item}</div>
+                        <div class={`FN_draggable FN_port_${i()} FN_node_${props.id}`} draggable="true" 
+                              onDragStart={e => beginGhostConnection(e)} 
+                              onDrag={e => drawGhostConnection(e)} 
+                              onDragEnd={e => endGhostConnection(e)}
+                        ></div>
+                    </div>
+                  }
+              </For>
+              </div>
           </div>
       </div>
-    </div>
+
   )
 }
 

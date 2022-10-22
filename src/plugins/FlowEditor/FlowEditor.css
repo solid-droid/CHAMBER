@@ -32,7 +32,25 @@
   padding: 31px;
 }
 
+.FlowEditor-app .connectionGhost {
+  display: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #749d9f;
+  position: absolute;
+}
+
 .FlowEditor-app .connectorSVG {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.FlowEditor-app .ghostSVG {
   width: 100vw;
   height: 100vh;
   position: absolute;
