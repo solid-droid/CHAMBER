@@ -33,7 +33,7 @@ const getFromXY = (fromNode,fromPort,layout,nodes)=>{
     const fromHeight = 20*fromPort+15;
     return {
         x: parseFloat(nodes[fromNode].x)+ layout.x/layout.z+ fromWidth +5 ,
-        y: parseFloat(nodes[fromNode].y)+ layout.y/layout.z+ fromHeight
+        y: parseFloat(nodes[fromNode].y)+ layout.y/layout.z+ fromHeight+2
     }
 }
 
@@ -41,7 +41,7 @@ const getToXY = (toNode,toPort,layout,nodes) => {
     const toHeight = 20*toPort+15;
     return {
         x: parseFloat(nodes[toNode].x)+ layout.x/layout.z + 1,
-        y: parseFloat(nodes[toNode].y)+ layout.y/layout.z+ toHeight
+        y: parseFloat(nodes[toNode].y)+ layout.y/layout.z+ toHeight + 3
     }
 }
 
