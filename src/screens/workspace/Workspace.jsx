@@ -4,7 +4,7 @@ import { clearFlowEditor } from "../../plugins/FlowEditor/FlowScript"
 function Workspace(params) {
   const [flowConnections, setConnectionList]  = windowData[0].flowEditor.connectionList;
   const [flowNodes, setNodeList]  = windowData[0].flowEditor.nodeList;
-  const [nodeObj]  = windowData[0].flowEditor.nodeObj;
+  const [flowNodeStore, setNodeStore] = windowData[0].flowEditor.nodeStore;
   const masterFile = {};
   const fr = new FileReader();
   fr.onload = e => { 
@@ -16,16 +16,18 @@ const clear = () => {
   clearFlowEditor(windowData[0].flowEditor);
 }
 
- const loadFlowEditor = ({nodeList, connectionList}) =>  {
+ const loadFlowEditor = ({nodeList, connectionList,nodeCounter}) =>  {
         clearFlowEditor(windowData[0].flowEditor);
         setNodeList(nodeList);
         setConnectionList(connectionList);
+        setNodeStore({nodeCounter});
   }
 
   const updateExportFile = () =>{
     masterFile.flowEditor = {
       nodeList:flowNodes(),
-      connectionList:flowConnections()
+      connectionList:flowConnections(),
+      nodeCounter: flowNodeStore.nodeCounter
     };
   }
 
