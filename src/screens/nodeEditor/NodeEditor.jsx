@@ -7,6 +7,8 @@ const NodeEditor = () => {
   const FlowStores  = windowData[0].flowEditor;
   const [context, setContext] = createSignal([]);
 
+  const hideContextMenu = () => $('#FlowContextMenu').hide();
+  
   onMount(()=> {
     $('#FlowEditor-app').contextmenu(e => {
       e.preventDefault();
@@ -23,7 +25,7 @@ const NodeEditor = () => {
 
     $(window).on("mousedown", e => {
       if (e.target.offsetParent != $('#FlowContextMenu')[0]) {
-        $('#FlowContextMenu').hide();
+        hideContextMenu();
       }
     });
   });
@@ -35,12 +37,13 @@ const NodeEditor = () => {
       x:0,
       y:0,
     });
-
+    hideContextMenu();
   }
 
   const deleteNode = (e) => {
     const node = e.find(x => x.includes('FN_node')).split('FN_node_')[1];   
     deleteNodeScript(node,FlowStores);
+    hideContextMenu();
   }
 
   return (
