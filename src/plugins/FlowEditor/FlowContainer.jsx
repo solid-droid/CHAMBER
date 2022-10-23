@@ -1,18 +1,19 @@
-import { createEffect, children, onMount,  on, untrack } from "solid-js";
+import { createEffect, onMount,  on, untrack } from "solid-js";
 import "./FlowEditor.css";
-import {drawConnections, getPropertiesForArrow} from './FlowScript';
+import {drawConnections} from './FlowScript';
+import FlowNode from './FlowNode';
 import _ from "underscore";
 
 const FlowContainer = (props) => {
     let viewer;
-    const child = children(() => props.children);
-    const id = 'FlowEditor-app';
-    const [node, setNode] = props.nodeStore;
-    const [nodes, setNodes] = props.nodeList;
-    const [connection, setConnection] = props.connectionStore;
-    const [connectionList, setConnectionList] = props.connectionList;
-    const [layout, setLayout] = props.layoutStore;
-    let arrowList = {};
+    const id = props.id;
+    const [node, setNode] = props.FlowStores.nodeStore;
+    const [nodeObj, setNodeObj] = props.FlowStores.nodeObj;
+    const [connection, setConnection] = props.FlowStores.connectionStore;
+    const [connectionList] = props.FlowStores.connectionList;
+    const [nodeList] = props.FlowStores.nodeList;
+    const [layout, setLayout] = props.FlowStores.layoutStore;
+    let arrowList = props.FlowStores.arrowList;
 
     const refreshSVG = _.debounce(()=>{
         $(`#${layout.id} .connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
@@ -33,7 +34,7 @@ const FlowContainer = (props) => {
             const dConn = connection.deletedConnection;
             untrack(() => {
                 Object.keys(arrowList).forEach(key => {
-                   const [fromNode, fromPor, toNode, toPort] = key.split('#');
+                   const [fromNode, fromPort, toNode, toPort] = key.split('#');
                    if(dConn.toNode == toNode && dConn.toPort == toPort){
                         arrowList[key].remove();
                         delete arrowList[key];
@@ -42,9 +43,23 @@ const FlowContainer = (props) => {
             });
         })
 
-        createEffect(on(connectionList, () => {
-                createArrows();
-        }));
+        createEffect(() =>{
+            connectionList();
+            untrack(() => createArrows());  
+        });
+
+        createEffect(() => {
+            const _nodes = nodeList();
+            untrack(() => {
+                const keys = Object.keys(nodeObj);
+                //add node to nodeTracker
+                _nodes.forEach(node => {
+                    if(!keys.includes(node.id)){
+                        setNodeObj(node.id,node);
+                    }
+                });
+            });
+        });
     }
     
     const createPanZoomLayout = () => {
@@ -74,7 +89,7 @@ const FlowContainer = (props) => {
             id,
             connections: connectionList(),
             arrowList,
-            nodeList:props.nodeList,
+            nodeObj:props.FlowStores.nodeObj,
             layout
         });
     }
@@ -85,17 +100,30 @@ const FlowContainer = (props) => {
         createPanZoomLayout();
         startEffects();
         setLayout({id :id});
+
         $(window).mouseup(()=> {
             setNode({isDragging:false});
             setConnection({isDragging:false});
-        })
+        });
         
     });
 
 return (
   <div id={id} class="FlowEditor-app" style="width: 100%;height: 100%;">
       <div class="viewport">
-            {child()}
+            <For each={nodeList()}>
+            {item => 
+                <FlowNode 
+                id={item.id} 
+                inputs={item.inputs}
+                outputs={item.outputs} 
+                x={item.x}
+                y={item.y}
+                {...props.FlowStores}>
+                    {item.content}
+                </FlowNode>
+            }
+            </For>
             <svg class="connectorSVG"></svg>
             <div class="connectionGhost"></div>
             <svg class="ghostSVG"></svg>

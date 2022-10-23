@@ -4,7 +4,8 @@ import Moveable from "moveable";
 import {getPropertiesForArrow, createArrowLine} from './FlowScript';
 
 const FlowNode = (props) => {
-  const [nodes , setNodes] = props.nodeList;
+  const [nodeObj , setNodeObj] = props.nodeObj;
+  const [nodeList , setNodeList] = props.nodeList;
   const [node, setNode] = props.nodeStore;
   const [connection , setConnection] = props.connectionStore;
   const [connectionList , setConnectionList] = props.connectionList;
@@ -16,39 +17,47 @@ const FlowNode = (props) => {
       target :document.querySelector(`#${props.id}`),
       origin: false,
       draggable: true,
-  })
-  .on("dragStart", (e) => {
-    
+  }).on("dragStart", (e) => {
     if($(`#${layout.id}`).find(".FN_draggable:hover").length){
       setConnection({isDragging:true});
       e.stop();
     } else {
       setNode({isDragging:true, selectedNode:props.id});
     }
-  })
-  .on("drag", ({target,left, top}) => {
+  }).on("drag", ({target,left, top}) => {
         $(`#${layout.id} .connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
         $(`#${layout.id} .connectorSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
-        setNodes(props.id , item => ({
+        target.style.left = `${left}px`;
+        target.style.top = `${top}px`;
+        setNodeObj(props.id , item => ({
             ...item,
             x: left,
             y: top
-        }))
+        }));
         
-        nodes[props.id].connections?.forEach(item => {
+        nodeObj[props.id].connections?.forEach(item => {
           const {fromXY, toXY} = getPropertiesForArrow({
             ...item,
-            nodes,
+            nodeObj,
             layout
           })
           item.arrow.update({source:fromXY , destination: toXY});
         });
-      target.style.left = `${left}px`;
-      target.style.top = `${top}px`;
-  })
-  .on("dragEnd",()=>{
+  }).on("dragEnd",()=>{
       setNode({isDragging:false});
+      setNodeList(_node => {
+        const k = _node.find(i => i.id == props.id)
+        k.x = nodeObj[props.id].x;
+        k.y = nodeObj[props.id].y;
+        return _node;
+      })
   });
+
+  setNodeObj(props.id , item => ({
+    ...item,
+    widget
+  }));
+
   }
 
   const getXY = (e) => ({
@@ -131,7 +140,7 @@ const FlowNode = (props) => {
   };
 
   onMount(async ()=>{
-    setNodes({
+    setNodeObj({
       [props.id]:{
         x:props.x || 0,
         y:props.y || 0
@@ -142,33 +151,33 @@ const FlowNode = (props) => {
 
   return (
       <div id={props.id} class="FlowNode" style={`left:${props.x || 0}px; top:${props.y || 0}px;`}>
-          <div class="FN_head">
-              testBox
+          <div class={`FN_head FN_node_${props.id}`}>
+              {props.id}
           </div>
-          <div class="FN_body">
-              <div class="FN_inputs">
+          <div class={`FN_body FN_node_${props.id}`}>
+              <div class={`FN_inputs FN_node_${props.id}`}>
               <For each={props.inputs}>
                   {(item,i) => 
-                  <div class="FN_inputItem">
+                  <div class={`FN_inputItem FN_port_${i()} FN_node_${props.id}`}>
                     <div class={`FN_draggable FN_port_${i()}  FN_node_${props.id}`} 
                     draggable="false"
                     onContextMenu={e => inputContextMenu(e)}
                     ondrop={e => dropGhostConnection(e)} 
                     ondragover={e => ondragoverGhostConnection(e)} 
                     ></div>
-                    <div class={`${item} FN_title`}  draggable="false">{item}</div>
+                    <div class={`FN_title FN_port_${i()} FN_node_${props.id}`}  draggable="false">{item}</div>
                   </div>
                   }
               </For>
               </div>
-              <div class="FN_content">
+              <div class={`FN_content FN_node_${props.id}`}>
                 {props.children}
               </div>
-              <div class="FN_outputs">
+              <div class={`FN_outputs FN_node_${props.id}`}>
               <For each={props.outputs}>
                   {(item, i) => 
-                    <div class="FN_outputItem">
-                        <div class={`${item} FN_title`} draggable="false">{item}</div>
+                    <div class={`FN_outputItem FN_node_${props.id}`}>
+                        <div class={`FN_title FN_port_${i()} FN_node_${props.id}`} draggable="false">{item}</div>
                         <div class={`FN_draggable FN_port_${i()} FN_node_${props.id}`} draggable="true" 
                               onDragStart={e => beginGhostConnection(e)} 
                               onDrag={e => drawGhostConnection(e)} 

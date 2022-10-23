@@ -98,7 +98,8 @@
             }
             .FN_inputs{
                 font-size: 13px;
-                display: grid;
+                display: flex;
+                flex-direction: column;
                 margin-left: 7px;
                 align-items: start;
                 .FN_inputItem{
@@ -133,7 +134,8 @@
 
             .FN_outputs{
                 font-size: 13px;
-                display: grid;
+                display: flex;
+                flex-direction: column;
                 align-items: start;
                 .FN_outputItem{
                     display: grid;

@@ -1,10 +1,11 @@
 import { createSignal } from "solid-js";
-import { createStore } from "solid-js/store";
+import { createStore, createMutable } from "solid-js/store";
 
 const createFlowStores = () => {
     const nodeStore = createStore({
       selectedNode: null,
       isDragging: false,
+      nodeCounter:0
     });
     
     const connectionStore = createStore({
@@ -13,10 +14,8 @@ const createFlowStores = () => {
       deletedConnecion:null
     });
   
-    const nodeList = createStore({ 
-      length: 0
-    });
-
+    const nodeObj = createStore({ });
+    const nodeList = createSignal([]);
     const connectionList = createSignal([]);
   
     const layoutStore = createStore({
@@ -26,12 +25,16 @@ const createFlowStores = () => {
       z:1
     });
 
+    const arrowList = createMutable({});
+
     return {
       nodeStore,
       connectionStore,
       layoutStore,
+      nodeObj,
       nodeList,
-      connectionList
+      connectionList,
+      arrowList
     }
 }
 

@@ -34,7 +34,7 @@ export const Header = () => {
         </div>
       </div>
 
-      <div class="Menu Logo">CHAMBER</div>
+      <div class="Menu Logo" title="v0.01 alpha">CHAMBER</div>
     </div>
   )
 }

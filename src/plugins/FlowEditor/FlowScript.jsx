@@ -1,5 +1,5 @@
 import arrowLine from 'arrow-line';
-
+import { produce } from "solid-js/store";
 const createArrow = async ({
     fromNode,
     toNode,
@@ -51,10 +51,10 @@ const getPropertiesForArrow = ({
     toNode,
     toPort,
     layout,
-    nodes
+    nodeObj
 }) => {
-    const fromXY = getFromXY(fromNode,fromPort,layout,nodes);
-    const toXY = getToXY(toNode,toPort,layout,nodes);
+    const fromXY = getFromXY(fromNode,fromPort,layout,nodeObj);
+    const toXY = getToXY(toNode,toPort,layout,nodeObj);
     return{
         fromXY,
         toXY
@@ -66,72 +66,161 @@ const drawConnections = ({
     layout,
     connections,
     arrowList,
-    nodeList
+    nodeObj
 }) => {
     if(layout){
         const view = '#'+id;
-        const [nodes, setNodes] = nodeList;
+        const [nodes, setNodes] = nodeObj;
         //create new + update existing
-        connections?.forEach(async item => {
-            const [[fromNode, fromPort], [toNode, toPort]] = item;
-            const key = `${fromNode}#${fromPort}#${toNode}#${toPort}`;
-            const {fromXY,toXY} = getPropertiesForArrow({
-                fromNode,
-                fromPort,
-                toNode,
-                toPort,
-                layout,
-                nodes
-            })
-            if(!arrowList[key]){
-                arrowList[key] = await createArrow({
-                    fromNode:'#'+fromNode,
-                    toNode: '#'+toNode,
-                    fromXY,
-                    toXY,
-                    view
-                });
-                setNodes(fromNode , item => {
-                    const connections =item.connections || [];
-                    connections.push({
-                        fromNode,
-                        toNode,
-                        fromPort,
-                        toPort,
-                        key,
-                        arrow:arrowList[key]
+        if(purityCheck(nodes,connections)){
+            connections?.forEach(async item => {
+                const [[fromNode, fromPort], [toNode, toPort]] = item;
+                const key = `${fromNode}#${fromPort}#${toNode}#${toPort}`;
+                const {fromXY,toXY} = getPropertiesForArrow({
+                    fromNode,
+                    fromPort,
+                    toNode,
+                    toPort,
+                    layout,
+                    nodeObj:nodes
+                })
+                if(!arrowList[key]){
+                    arrowList[key] = await createArrow({
+                        fromNode:'#'+fromNode,
+                        toNode: '#'+toNode,
+                        fromXY,
+                        toXY,
+                        view
                     });
-                    
-                    return {
-                        ...item,
-                        connections
-                    }
-                });
-                setNodes(toNode , item => {
-                    const connections =item.connections || [];
-                    connections.push({
-                        fromNode,
-                        toNode,
-                        fromPort,
-                        toPort,
-                        key,
-                        arrow:arrowList[key]
+                    setNodes(fromNode , item => {
+                        const connections =item.connections || [];
+                        connections.push({
+                            fromNode,
+                            toNode,
+                            fromPort,
+                            toPort,
+                            key,
+                            arrow:arrowList[key]
+                        });
+                        
+                        return {
+                            ...item,
+                            connections
+                        }
                     });
-                    
-                    return {
-                        ...item,
-                        connections
-                    }
-                });
-            } else {
-                arrowList[key].update({source:fromXY , destination: toXY});
-            } 
-        });
+                    setNodes(toNode , item => {
+                        const connections =item.connections || [];
+                        connections.push({
+                            fromNode,
+                            toNode,
+                            fromPort,
+                            toPort,
+                            key,
+                            arrow:arrowList[key]
+                        });
+                        
+                        return {
+                            ...item,
+                            connections
+                        }
+                    });
+                } else {
+                    arrowList[key].update({source:fromXY , destination: toXY});
+                } 
+            });
+        }
+
     }
 
     return arrowList;
 }
 
+
+const purityCheck = (nodeObj, connectionList) => {
+    let _connNodes = new Set();
+    let allow = true;
+    connectionList.forEach(item => {
+        item.forEach(nodes => {
+            _connNodes.add(nodes[0])
+        })
+    })
+    _connNodes = [..._connNodes];
+    _connNodes.forEach(item => {
+        if(allow && !nodeObj[item]){
+            allow = false;
+        }
+    });
+    return allow;
+}
+
+const deleteNodeScript = (node, FlowStores) => {
+    const [nodeList , setNodeList] = FlowStores.nodeList;
+    const [nodeObj , setNodeObj] = FlowStores.nodeObj;
+    const [connectionList , setConnectionList] = FlowStores.connectionList;
+    setConnectionList(_conn => {
+        _conn = _conn.filter(con => !(con[0][0]==node || con[1][0] ==node) );
+        return _conn;
+      })
+  
+      setNodeObj(produce(_nodes => {
+        _nodes[node].connections?.forEach(con => {
+          con.arrow.remove();
+          const from = con.fromNode == node ? true : false;
+          const _connList = _nodes[from ? con.toNode : con.fromNode].connections.filter(c => {
+                  if(from && c.fromNode == node){
+                    delete FlowStores.arrowList[con.key];
+                    return false
+                  } else if(c.toNode == node){
+                    delete FlowStores.arrowList[con.key];
+                    return false
+                  }
+                  return true
+                });
+          _nodes[from ? con.toNode : con.fromNode].connections = _connList;
+        //   setNodeObj(from ? con.toNode : con.fromNode, _node => ({..._node,connections:_connList }));
+        });
+        _nodes[node].widget.destroy();
+        delete _nodes[node];
+      }));
+
+      setNodeList(_nodes => {
+        return _nodes.filter(_node => _node.id !== node);
+      });
+}
+
+const addNodeScript = (FlowStores, nodeConfig) => {
+    const [nodeList , setNodeList] = FlowStores.nodeList;
+    const [nodeStore, setNodeStore] = FlowStores.nodeStore;
+    setNodeList(_nodes => [{
+        id:`node${nodeStore.nodeCounter}`,
+        inputs:['a','b','c'],
+        outputs:['out1','out2'],
+        x:0,
+        y:0,
+      },..._nodes]);
+    
+    setNodeStore({nodeCounter: nodeStore.nodeCounter+1});
+}
+
+const clearFlowEditor = FlowStores => {
+    const [nodeList , setNodeList] = FlowStores.nodeList;
+    const [connectionList, setConnectionList] = FlowStores.connectionList;
+    const [nodeStore , setNodeStore] = FlowStores.nodeStore;
+    const [nodeObj , setNodeObj] = FlowStores.nodeObj;
+    Object.keys(FlowStores.arrowList).forEach(key => {
+        FlowStores.arrowList[key].remove();
+        delete FlowStores.arrowList[key];
+    });
+    setNodeObj(produce(nodes => {
+        Object.entries(nodes).forEach(([nodeID,node]) =>{
+            node.widget.destroy();
+        });
+        nodes = {};
+    }));
+    setNodeList([]);
+    setConnectionList([]);
+    setNodeStore({nodeCounter:0});
+};
 
 export {
     createArrow,
@@ -139,5 +228,9 @@ export {
     getPropertiesForArrow,
     getFromXY,
     getToXY,
-    createArrowLine
+    createArrowLine,
+    purityCheck,
+    deleteNodeScript,
+    addNodeScript,
+    clearFlowEditor
 }

@@ -1,43 +1,62 @@
-import {FlowContainer, FlowNode, createFlowStores} from "../../plugins/FlowEditor/FlowEditor";
+import { createSignal, onMount } from "solid-js";
+import {FlowContainer} from "../../plugins/FlowEditor/FlowEditor";
+import {deleteNodeScript , addNodeScript} from '../../plugins/FlowEditor/FlowScript';
+import { windowData } from "../../scripts/store";
+import ContextMenu from "./ContextMenu";
 const NodeEditor = () => {
-  const FlowStores  = createFlowStores();
-  
-  const [connectionList , setConnectionList] = FlowStores.connectionList;
-  
-  setConnectionList(_conn => 
-    [
-      [['node2',1],['node1',1]],
-      [['node2',2],['node1',2]],
-      [['node1',1],['node3',1]],
-      ..._conn
-  ]);
+  const FlowStores  = windowData[0].flowEditor;
+  const [context, setContext] = createSignal([]);
+
+  onMount(()=> {
+    $('#FlowEditor-app').contextmenu(e => {
+      e.preventDefault();
+      const classes = typeof e.target.className === 'string' ?  e.target.className.split(/\s+/) : [];
+      if(classes[0] !== 'FN_draggable'){
+        setContext(classes);
+        $('#FlowContextMenu').css({
+          top:e.clientY-50+'px',
+          left: e.clientX+'px'
+        });
+        $('#FlowContextMenu').show();
+      }
+    });
+
+    $(window).on("mousedown", e => {
+      if (e.target.offsetParent != $('#FlowContextMenu')[0]) {
+        $('#FlowContextMenu').hide();
+      }
+    });
+  });
+
+  const createNewNode = () => {
+    addNodeScript(FlowStores,{
+      inputs:['a','b','c'],
+      outputs:['out1','out2'],
+      x:0,
+      y:0,
+    });
+
+  }
+
+  const deleteNode = (e) => {
+    const node = e.find(x => x.includes('FN_node')).split('FN_node_')[1];   
+    deleteNodeScript(node,FlowStores);
+  }
 
   return (
-    <FlowContainer {...FlowStores}>
-      <FlowNode 
-      id="node1" 
-      inputs={['in1','in2','input number 3']} 
-      outputs={['out1']}
-      x="100"
-      y="100"
-      {...FlowStores}
-      />
-      <FlowNode 
-      id="node2" 
-      inputs={['in1']} 
-      outputs={['out1' , 'out2']} 
-      x="0"
-      y="0" 
-      {...FlowStores}/>
+    <>
+      <FlowContainer 
+      id="FlowEditor-app" 
+      FlowStores={FlowStores}>
+      </FlowContainer>
+      <ContextMenu 
+      id="FlowContextMenu" 
+      context={context()}
+      newNode={createNewNode}
+      deleteNode={deleteNode}
+      ></ContextMenu>
+    </>
 
-      <FlowNode 
-      id="node3" 
-      inputs={['in1']} 
-      outputs={['out1' , 'out2']} 
-      x="300"
-      y="400" 
-      {...FlowStores}/>
-    </FlowContainer>
   )
 }
 
