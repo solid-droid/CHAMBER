@@ -214,8 +214,8 @@ const clearFlowEditor = FlowStores => {
     setNodeObj(produce(nodes => {
         Object.entries(nodes).forEach(([nodeID,node]) =>{
             node.widget.destroy();
+            delete nodes[nodeID];
         });
-        nodes = {};
     }));
     setNodeList([]);
     setConnectionList([]);
