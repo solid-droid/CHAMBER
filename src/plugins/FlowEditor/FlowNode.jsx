@@ -1,5 +1,4 @@
 import { For,  onMount } from "solid-js";
-import {produce} from "solid-js/store"
 import Moveable from "moveable";
 import {getPropertiesForArrow, createArrowLine} from './FlowScript';
 
@@ -10,9 +9,8 @@ const FlowNode = (props) => {
   const [connection , setConnection] = props.connectionStore;
   const [connectionList , setConnectionList] = props.connectionList;
   const [layout] = props.layoutStore;
-  let widget;
   const createMoveable = () => {
-    widget =  new Moveable(document.querySelector(`#${layout.id} .viewport`), {
+   const widget =  new Moveable(document.querySelector(`#${layout.id} .viewport`), {
       // dragTarget: document.querySelector(`#${props.id} .FN_head`),
       target :document.querySelector(`#${props.id}`),
       origin: false,
@@ -77,9 +75,8 @@ const FlowNode = (props) => {
     const _node = _classes[2].split('FN_node_')[1];
     const ghostArrow = {node : _node, port: _port+1};
     const fromXY = getXY(e);
-    const arrow =  createArrowLine(fromXY,fromXY,`#${layout.id}`, '.ghostSVG');
+    const arrow =  createArrowLine(fromXY,fromXY,`#${layout.id}`, 'ghostSVG');
     setConnection({selectedNode:ghostArrow , arrow:arrow ,fromXY});
-
   }
 
   const drawGhostConnection = e => {
@@ -91,8 +88,8 @@ const FlowNode = (props) => {
   }
 
   const endGhostConnection = e => {
-    setConnection({selectedNode:null});
     connection.arrow.remove();
+    setConnection({selectedNode:null, arrow:null, fromXY:null});
     $(`#${layout.id} .connectionGhost`).hide();
   }
 

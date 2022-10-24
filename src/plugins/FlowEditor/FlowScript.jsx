@@ -15,10 +15,10 @@ const createArrow = async ({
     return createArrowLine(fromXY,toXY,view);
 }
 
-const createArrowLine = (fromXY, toXY, view , container='.connectorSVG') => {
+const createArrowLine = (fromXY, toXY, view , container='connectorSVG') => {
     return arrowLine(fromXY, toXY, { 
         color: '#4f92a7',
-        svgParentSelector: view +' '+ container ,
+        svgParentSelector: view +'_'+ container ,
         // curvature: 0.3,
         thickness: 2,
         pivots:[{x:20, y: 0}, {x:-15, y: 0}],
@@ -202,11 +202,13 @@ const addNodeScript = (FlowStores, nodeConfig) => {
     setNodeStore({nodeCounter: nodeStore.nodeCounter+1});
 }
 
-const clearFlowEditor = FlowStores => {
+const clearFlowEditor = (FlowStores, disposeLayout = false, disposeMethod=null) => {
     const [nodeList , setNodeList] = FlowStores.nodeList;
     const [connectionList, setConnectionList] = FlowStores.connectionList;
     const [nodeStore , setNodeStore] = FlowStores.nodeStore;
     const [nodeObj , setNodeObj] = FlowStores.nodeObj;
+    const [connectionStore, setConnectionStore] = FlowStores.connectionStore;
+    const [layout, setLayout] = FlowStores.layoutStore;
     Object.keys(FlowStores.arrowList).forEach(key => {
         FlowStores.arrowList[key].remove();
         delete FlowStores.arrowList[key];
@@ -219,8 +221,33 @@ const clearFlowEditor = FlowStores => {
     }));
     setNodeList([]);
     setConnectionList([]);
-    setNodeStore({nodeCounter:0});
+    setNodeStore({
+        selectedNode: null,
+        isDragging: false,
+        nodeCounter:0
+    });
+
+    setConnectionStore({
+        selectedConnection: null,
+        isDragging : false,
+        deletedConnecion:null,
+        arrow:null,
+        fromXY:null
+    });
+    if(disposeLayout){
+        layout?.viewer?.dispose();
+    }
+
+    setLayout({
+        ready:false,
+        x:0,
+        y:0,
+        z:1
+    });
+
+    disposeMethod?.();
 };
+
 
 export {
     createArrow,

@@ -1,45 +1,9 @@
-import { windowData } from "../../scripts/store";
-import { clearFlowEditor } from "../../plugins/FlowEditor/FlowScript"
+import { exportFile, importJSON, clear } from "../../scripts/scripts";
 
 function Workspace(params) {
-  const [flowConnections, setConnectionList]  = windowData[0].flowEditor.connectionList;
-  const [flowNodes, setNodeList]  = windowData[0].flowEditor.nodeList;
-  const [flowNodeStore, setNodeStore] = windowData[0].flowEditor.nodeStore;
-  const masterFile = {};
   const fr = new FileReader();
   fr.onload = e => { 
-    const result = JSON.parse(e.target.result);
-    loadFlowEditor(result.flowEditor);
-  }
-
-const clear = () => {
-  clearFlowEditor(windowData[0].flowEditor);
-}
-
- const loadFlowEditor = ({nodeList, connectionList,nodeCounter}) =>  {
-        clearFlowEditor(windowData[0].flowEditor);
-        setNodeList(nodeList);
-        setConnectionList(connectionList);
-        setNodeStore({nodeCounter});
-  }
-
-  const updateExportFile = () =>{
-    masterFile.flowEditor = {
-      nodeList:flowNodes(),
-      connectionList:flowConnections(),
-      nodeCounter: flowNodeStore.nodeCounter
-    };
-  }
-
-  const exportFile = (exportName = 'project') => {
-    updateExportFile();
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(masterFile));
-    const downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href",     dataStr);
-    downloadAnchorNode.setAttribute("download", exportName + ".json");
-    document.body.appendChild(downloadAnchorNode); // required for firefox
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
+    importJSON(JSON.parse(e.target.result))
   }
 
   const importProject = () => {

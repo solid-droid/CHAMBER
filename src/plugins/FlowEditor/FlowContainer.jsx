@@ -1,11 +1,10 @@
-import { createEffect, onMount,  on, untrack } from "solid-js";
+import { createEffect, onMount,  onCleanup, untrack } from "solid-js";
 import "./FlowEditor.css";
 import {drawConnections} from './FlowScript';
 import FlowNode from './FlowNode';
 import _ from "underscore";
 
 const FlowContainer = (props) => {
-    let viewer;
     const id = props.id;
     const [node, setNode] = props.FlowStores.nodeStore;
     const [nodeObj, setNodeObj] = props.FlowStores.nodeObj;
@@ -14,33 +13,60 @@ const FlowContainer = (props) => {
     const [nodeList] = props.FlowStores.nodeList;
     const [layout, setLayout] = props.FlowStores.layoutStore;
     let arrowList = props.FlowStores.arrowList;
+    let viewport;
+    onCleanup(() =>{
+        $(window).off('mouseup.FlowContainerEvent');
+        removeSVGcontainers();
+    });
 
     const refreshSVG = _.debounce(()=>{
-        $(`#${layout.id} .connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
-        $(`#${layout.id} .connectorSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
+        $(`#${id}_connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
+        $(`#${id}_connectorSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
         createArrows();
     }, 200)
+
+    const addSVGcontainers = () => {
+        if($(`#${id}_connectorSVG`).length){
+            $(`#${id}_connectorSVG`).detach().appendTo($(`#${id} .viewport`));
+            $(`#${id}_ghostSVG`).detach().appendTo($(`#${id} .viewport`));
+            $(`#${id}_connectorSVG`).show();
+            $(`#${id}_ghostSVG`).show();
+        } else {
+            $(`#${id} .viewport`).append(`
+            <svg id="${id}_connectorSVG" class="connectorSVG"></svg>
+            <svg id="${id}_ghostSVG" class="ghostSVG"></svg>`); 
+        }
+    };
+
+    const removeSVGcontainers = () => {
+        $(`#${id}_connectorSVG`).detach().appendTo($('body'));
+        $(`#${id}_ghostSVG`).detach().appendTo($('body'));
+        $(`#${id}_connectorSVG`).hide();
+        $(`#${id}_ghostSVG`).hide();
+    }
     const startEffects = () => {
 
         createEffect(()=>{
             if(node.isDragging || connection.isDragging){
-                viewer?.pause();
+                layout?.viewer?.pause();
             } else {
-                viewer?.resume();
+                layout?.viewer?.resume();
             }
         });   
 
         createEffect(()=>{
             const dConn = connection.deletedConnection;
-            untrack(() => {
-                Object.keys(arrowList).forEach(key => {
-                   const [fromNode, fromPort, toNode, toPort] = key.split('#');
-                   if(dConn.toNode == toNode && dConn.toPort == toPort){
-                        arrowList[key].remove();
-                        delete arrowList[key];
-                   }
+            if(dConn){
+                untrack(() => {
+                    Object.keys(arrowList).forEach(key => {
+                       const [fromNode, fromPort, toNode, toPort] = key.split('#');
+                       if(dConn.toNode == toNode && dConn.toPort == toPort){
+                            arrowList[key].remove();
+                            delete arrowList[key];
+                       }
+                    });
                 });
-            });
+            }
         })
 
         createEffect(() =>{
@@ -63,8 +89,9 @@ const FlowContainer = (props) => {
     }
     
     const createPanZoomLayout = () => {
-        viewer =  panzoom(document.querySelector(`#${id} .viewport`));
-        viewer.on("pan", e => {
+        const viewer =  panzoom(document.querySelector(`#${id} .viewport`));
+        setLayout({viewer});
+        layout.viewer.on("pan", e => {
             const transform = e.getTransform();
             setLayout({
                     x:transform.x,
@@ -94,14 +121,15 @@ const FlowContainer = (props) => {
         });
     }
 
+    startEffects();
+
     onMount(async ()=>{
-    
         await new Promise(r => setTimeout(r, 50));
+        addSVGcontainers();
         createPanZoomLayout();
-        startEffects();
         setLayout({id :id});
 
-        $(window).mouseup(()=> {
+        $(window).on('mouseup.FlowContainerEvent', ()=> {
             setNode({isDragging:false});
             setConnection({isDragging:false});
         });
@@ -109,7 +137,7 @@ const FlowContainer = (props) => {
     });
 
 return (
-  <div id={id} class="FlowEditor-app" style="width: 100%;height: 100%;">
+  <div id={id} ref={viewport} class="FlowEditor-app" style="width: 100%;height: 100%;">
       <div class="viewport">
             <For each={nodeList()}>
             {item => 
@@ -124,9 +152,7 @@ return (
                 </FlowNode>
             }
             </For>
-            <svg class="connectorSVG"></svg>
             <div class="connectionGhost"></div>
-            <svg class="ghostSVG"></svg>
       </div>
 
   </div>

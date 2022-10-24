@@ -11,7 +11,9 @@ const createFlowStores = () => {
     const connectionStore = createStore({
       selectedConnection: null,
       isDragging : false,
-      deletedConnecion:null
+      deletedConnecion:null,
+      arrow:null,
+      fromXY:null
     });
   
     const nodeObj = createStore({ });

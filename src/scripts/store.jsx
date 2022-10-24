@@ -12,9 +12,22 @@ const openMenu = createStore({
 
 const windowData = createStore({
   flowEditor:createFlowStores()
+});
+
+const windowDispose = createStore({
+  'Workspace':null,
+  'Connections':null,
+  'Node Editor':null,
+  'Simulator':null,
+  'Controls':null,
+  'Debugger':null
 })
+
+const masterFile = {};
 
 export {
     openMenu,
-    windowData
+    windowData,
+    masterFile,
+    windowDispose
 }
