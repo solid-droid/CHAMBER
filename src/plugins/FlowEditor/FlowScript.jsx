@@ -202,7 +202,7 @@ const addNodeScript = (FlowStores, nodeConfig) => {
     setNodeStore({nodeCounter: nodeStore.nodeCounter+1});
 }
 
-const clearFlowEditor = (FlowStores, disposeLayout = false, disposeMethod=null) => {
+const clearFlowEditor = (FlowStores) => {
     const [nodeList , setNodeList] = FlowStores.nodeList;
     const [connectionList, setConnectionList] = FlowStores.connectionList;
     const [nodeStore , setNodeStore] = FlowStores.nodeStore;
@@ -236,18 +236,12 @@ const clearFlowEditor = (FlowStores, disposeLayout = false, disposeMethod=null) 
         arrow:null,
         fromXY:null
     });
-    if(disposeLayout){
-        layout?.viewer?.dispose();
-    }
-
     setLayout({
         ready:false,
         x:0,
         y:0,
         z:1
     });
-
-    disposeMethod?.();
 };
 
 

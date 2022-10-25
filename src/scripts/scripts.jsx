@@ -31,7 +31,7 @@ const importJSON = (JSON=masterFile) => {
 }
 
 const loadFlowEditor = ({nodeList, connectionList,nodeCounter}) =>  {
-    clearFlowEditor(windowData[0].flowEditor, true);
+    clearFlowEditor(windowData[0].flowEditor);
     setNodeList(nodeList);
     setConnectionList(connectionList);
     setNodeStore({nodeCounter});

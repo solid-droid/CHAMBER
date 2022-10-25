@@ -33,46 +33,42 @@ export const Body = () => {
 
     registerRenderer['Workspace'] = _.once(() =>
     {
-      registerWindow('Workspace' , 'workspace',  <Workspace/>);
+      registerWindow('Workspace' , 'workspace');
     });
     registerRenderer['Connections'] = _.once(() =>{
-      registerWindow('Connections' , 'connections',  <Connections/>)
+      registerWindow('Connections' , 'connections')
     });
-    registerRenderer['Node Editor'] = _.once(() =>{
-      registerWindow('Node Editor' , 'nodeEditor',  lazy(() => import('../../screens/nodeEditor/NodeEditor')))
+    registerRenderer['Blueprint'] = _.once(() =>{
+      registerWindow('Blueprint' , 'nodeEditor')
     });
     registerRenderer['Simulator'] = _.once(() =>{
-      registerWindow('Simulator' , 'simulator',  <Simulation/>)
+      registerWindow('Simulator' , 'simulator')
     });
     registerRenderer['Controls'] = _.once(() =>{
-      registerWindow('Controls' , 'controls',  <Controls/>)
+      registerWindow('Controls' , 'controls')
     });
     registerRenderer['Debugger'] = _.once(() =>{
-      registerWindow('Debugger' , 'debugger',  <Debug/>)
+      registerWindow('Debugger' , 'debugger')
     });
 
     layout.on( 'stackCreated', function( stack ){
       stack
         .header
         .controlsContainer
-        .find( '.lm_close' ) //get the close icon
-        .off( 'click' ) //unbind the current click handler
+        .find( '.lm_close' )
+        .off( 'click' ) 
         .click(e => {
-          //add your own
           Array.from(e.target.parentElement.previousSibling.children).forEach(child=>{
-            dispose[child.innerText]();
+            $(`#screen_${child.innerText}`).detach().appendTo($('body'));
           });
             stack.remove();
         });
     });
     
-    layout.on( 'tabCreated', function( tab ){
-      tab
-        .closeElement
-        .off( 'click' ) //unbind the current click handler
+    layout.on( 'tabCreated',  tab => {
+      tab.closeElement.off( 'click' ) 
         .click(e => {
-          //add your own
-          dispose[e.target.previousElementSibling.innerText]();
+          $(`#screen_${e.target.previousElementSibling.innerText}`).detach().appendTo($('body'));
           tab.contentItem.remove();
         });
     });
@@ -82,8 +78,7 @@ export const Body = () => {
 
   const registerWindow = (name, menuName , element) => {
     layout.registerComponent( name , function( container, state ){
-      const _dispose = render(() => element, container.getElement()[0]);
-      setDispose({[name]:_dispose})
+      $(`#screen_${name}`).detach().appendTo(container.getElement()[0]);     
       container.on('destroy', async () => {
         await new Promise(r => setTimeout(r, 50));
         setMenu({[menuName]:false});
@@ -101,7 +96,7 @@ export const Body = () => {
   }
 
   const closeWindow = name => {
-    dispose[name]?.();
+    $(`#screen_${name}`).detach().appendTo($('body'));
     layout?._getAllContentItems().find(x => x.componentName === name)?.close();
   }
 
@@ -113,23 +108,39 @@ export const Body = () => {
     'controls',
     'debugger'
   ];
+
+  const components = [
+    <Workspace/>,
+    <Connections/>,
+    <NodeEditor/>,
+    <Simulation/>,
+    <Controls/>,
+    <Debug/>
+  ];
+
+  const TabName =     
+  ['Workspace',
+  'Connections',
+  'Blueprint',
+  'Simulator',
+  'Controls',
+  'Debugger'];
     
   onMount(() =>{
+
     beginLayout();
-    ['Workspace',
-    'Connections',
-    'Node Editor',
-    'Simulator',
-    'Controls',
-    'Debugger'].forEach((name,i) =>
+    TabName.forEach((name,i) =>{
+      render(() => components[i], document.getElementById(`screen_${name}`));
       createEffect(()=>{
-      if(menu[menuItems[i]]){
-        registerRenderer[name]();
-        addWindow(name);
-      } else {
-        closeWindow(name);
-      }
-    }))
+        if(menu[menuItems[i]]){
+          registerRenderer[name]();
+          addWindow(name);
+        } else {
+          closeWindow(name);
+        }
+      });
+
+  });
 
   });
 

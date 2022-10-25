@@ -1,4 +1,4 @@
-import { createEffect, onMount,  onCleanup, untrack } from "solid-js";
+import { createEffect, onMount, untrack } from "solid-js";
 import "./FlowEditor.css";
 import {drawConnections} from './FlowScript';
 import FlowNode from './FlowNode';
@@ -14,10 +14,6 @@ const FlowContainer = (props) => {
     const [layout, setLayout] = props.FlowStores.layoutStore;
     let arrowList = props.FlowStores.arrowList;
     let viewport;
-    onCleanup(() =>{
-        $(window).off('mouseup.FlowContainerEvent');
-        removeSVGcontainers();
-    });
 
     const refreshSVG = _.debounce(()=>{
         $(`#${id}_connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
@@ -25,25 +21,6 @@ const FlowContainer = (props) => {
         createArrows();
     }, 200)
 
-    const addSVGcontainers = () => {
-        if($(`#${id}_connectorSVG`).length){
-            $(`#${id}_connectorSVG`).detach().appendTo($(`#${id} .viewport`));
-            $(`#${id}_ghostSVG`).detach().appendTo($(`#${id} .viewport`));
-            $(`#${id}_connectorSVG`).show();
-            $(`#${id}_ghostSVG`).show();
-        } else {
-            $(`#${id} .viewport`).append(`
-            <svg id="${id}_connectorSVG" class="connectorSVG"></svg>
-            <svg id="${id}_ghostSVG" class="ghostSVG"></svg>`); 
-        }
-    };
-
-    const removeSVGcontainers = () => {
-        $(`#${id}_connectorSVG`).detach().appendTo($('body'));
-        $(`#${id}_ghostSVG`).detach().appendTo($('body'));
-        $(`#${id}_connectorSVG`).hide();
-        $(`#${id}_ghostSVG`).hide();
-    }
     const startEffects = () => {
 
         createEffect(()=>{
@@ -125,7 +102,6 @@ const FlowContainer = (props) => {
 
     onMount(async ()=>{
         await new Promise(r => setTimeout(r, 50));
-        addSVGcontainers();
         createPanZoomLayout();
         setLayout({id :id});
 
@@ -153,6 +129,8 @@ return (
             }
             </For>
             <div class="connectionGhost"></div>
+            <svg id={`${id}_connectorSVG`} class="connectorSVG"></svg>
+            <svg id={`${id}_ghostSVG`} class="ghostSVG"></svg>
       </div>
 
   </div>

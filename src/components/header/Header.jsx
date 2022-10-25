@@ -14,7 +14,7 @@ export const Header = () => {
         <div class={menu.connections ? 'MenuItem active' : 'MenuItem'} title='Connections' onClick={() => setMenuState('connections')}>
           <i class="fa-solid fa-tower-broadcast"></i>
         </div>
-        <div class={menu.nodeEditor ? 'MenuItem active' : 'MenuItem'} title='Node Editor' onClick={() => setMenuState('nodeEditor')}>
+        <div class={menu.nodeEditor ? 'MenuItem active' : 'MenuItem'} title='Blueprint' onClick={() => setMenuState('nodeEditor')}>
           <i class="fa-solid fa-diagram-project"></i>
         </div>
         <div class={menu.simulator ? 'MenuItem active' : 'MenuItem'} title='Simulator' onClick={() => setMenuState('simulator')}>
