@@ -49,15 +49,11 @@ import { Vector3 } from '@babylonjs/core';
          .render([TWEEN.update]);      
   }
 
-  createEffect(async ()=>{
+  createEffect(()=>{
     if(menu.simulator){
-      await new Promise(r => setTimeout(r, 50));
-      if(scene){
-        scene.dispose();
-      }
       init();
     } else {
-
+      scene?.dispose();
     }
   })
 
