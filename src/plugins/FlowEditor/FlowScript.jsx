@@ -215,7 +215,9 @@ const clearFlowEditor = (FlowStores, disposeLayout = false, disposeMethod=null) 
     });
     setNodeObj(produce(nodes => {
         Object.entries(nodes).forEach(([nodeID,node]) =>{
-            node.widget.destroy();
+            try{
+                node.widget.destroy();
+            } catch(e){}
             delete nodes[nodeID];
         });
     }));
