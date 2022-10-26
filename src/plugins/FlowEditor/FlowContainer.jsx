@@ -120,7 +120,8 @@ return (
                 <FlowNode 
                 id={item.id} 
                 inputs={item.inputs}
-                outputs={item.outputs} 
+                outputs={item.outputs}
+                title={item.title}
                 x={item.x}
                 y={item.y}
                 {...props.FlowStores}>
@@ -128,11 +129,9 @@ return (
                 </FlowNode>
             }
             </For>
-            <div class="connectionGhost"></div>
             <svg id={`${id}_connectorSVG`} class="connectorSVG"></svg>
             <svg id={`${id}_ghostSVG`} class="ghostSVG"></svg>
       </div>
-
   </div>
 
   )

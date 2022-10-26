@@ -12,9 +12,20 @@
     padding-bottom: 20px;
     font-size: 15px;
     overflow: hidden;
-    div{
+    .section{
+        font-size: 15px;
         border-bottom: solid 1px #ffffff46;
+        margin-top: 10px;
+    }
+
+    .firstSection{
+        margin-top: 0;
+    }
+    .item{
+        font-size: 12px;
         padding: 5px;
+        padding-bottom: 2px;
+        padding-top: 2px;
         transition: 0.3s;
         cursor: pointer;
         &:hover{

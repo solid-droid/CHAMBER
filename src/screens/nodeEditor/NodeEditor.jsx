@@ -5,6 +5,7 @@ import { windowData } from "../../scripts/store";
 import ContextMenu from "./ContextMenu";
 const NodeEditor = () => {
   const FlowStores  = windowData[0].flowEditor;
+  const [layout] = FlowStores.layoutStore;
   const [context, setContext] = createSignal([]);
   const hideContextMenu = () => $('#FlowContextMenu').hide();
   const id = 'FlowEditor-app';
@@ -14,26 +15,100 @@ const NodeEditor = () => {
       hideContextMenu();
     }
   });
-  
+
   const contextMenu = e => {
     e.preventDefault();
     const classes = typeof e.target.className === 'string' ?  e.target.className.split(/\s+/) : [];
     if(classes[0] !== 'FN_draggable'){
       setContext(classes);
+      let left = e.clientX , top = e.clientY-50;
+
+      if(window.innerWidth - left < 200){
+        left-=140;
+      }
+
+     const boxH = parseInt($('#FlowContextMenu').css('height').split('px')[0]);
+
+     if(window.innerHeight - top < boxH + 50){
+      top-=boxH+10
+     }
+
       $('#FlowContextMenu').css({
-        top:e.clientY-50+'px',
-        left: e.clientX+'px'
+        top: top+'px',
+        left: left+'px'
       });
       $('#FlowContextMenu').show();
     }
   }
 
-  const createNewNode = () => {
+  const config = {
+    'Input Signal':{
+      inputs:[],
+      outputs:['output'],
+    },
+    'Output Signal':{
+      inputs:['input'],
+      outputs:[],
+    },
+    'Log Signal':{
+      inputs:['input'],
+      outputs:[],
+    },
+    '3D Box':{
+      inputs:['position','scale'],
+      outputs:[],
+    },
+    'Input':{
+      inputs:[],
+      outputs:['value'],
+    },
+    'Slider':{
+      inputs:[],
+      outputs:['value'],
+    },
+    'Toggle' : {
+      inputs:[],
+      outputs:['value'],
+    },
+    'Button' : {
+      inputs:[],
+      outputs:['click'],
+    },
+    'Knob' : {
+      inputs:[],
+      outputs:['value'],
+    },
+    'Chart' : {
+      inputs:['value'],
+      outputs:[],
+    },
+    'Javascript' : {
+      inputs:['input'],
+      outputs:['output'],
+    },
+    'Python' : {
+      inputs:['input'],
+      outputs:['output'],
+    },
+    'Join' : {
+      inputs:['a','b','c','d'],
+      outputs:['value'],
+    },
+    'Split' : {
+      inputs:['value'],
+      outputs:['a','b','c','d'],
+    },
+    'HTML Widget' : {
+      inputs:['input'],
+      outputs:['output'],
+    }
+  }
+  const createNewNode = (e,type) => {
     addNodeScript(FlowStores,{
-      inputs:['a','b','c'],
-      outputs:['out1','out2'],
-      x:0,
-      y:0,
+      title:type,
+      ...config[type],
+      x:(e.clientX-layout.x)/layout.z,
+      y:(e.clientY-60-layout.y)/layout.z,
     });
     hideContextMenu();
   }

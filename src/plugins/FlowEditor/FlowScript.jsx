@@ -164,7 +164,9 @@ const deleteNodeScript = (node, FlowStores) => {
   
       setNodeObj(produce(_nodes => {
         _nodes[node].connections?.forEach(con => {
-          con.arrow.remove();
+          try{
+            con.arrow.remove();
+          } catch(e){}
           const from = con.fromNode == node ? true : false;
           const _connList = _nodes[from ? con.toNode : con.fromNode].connections.filter(c => {
                   if(from && c.fromNode == node){
@@ -193,10 +195,7 @@ const addNodeScript = (FlowStores, nodeConfig) => {
     const [nodeStore, setNodeStore] = FlowStores.nodeStore;
     setNodeList(_nodes => [{
         id:`node${nodeStore.nodeCounter}`,
-        inputs:['a','b','c'],
-        outputs:['out1','out2'],
-        x:0,
-        y:0,
+        ...nodeConfig
       },..._nodes]);
     
     setNodeStore({nodeCounter: nodeStore.nodeCounter+1});

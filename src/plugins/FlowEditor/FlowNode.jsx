@@ -65,11 +65,7 @@ const FlowNode = (props) => {
   const beginGhostConnection = e =>{
     $(`#${layout.id} .ghostSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
     $(`#${layout.id} .ghostSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
-    
-    $(`#${layout.id} .connectionGhost`).show();
-    $(`#${layout.id} .connectionGhost`).css({left:`${screenX}px`});
-    $(`#${layout.id} .connectionGhost`).css({top:`${screenY}px`});
-    
+        
     const _classes = e.target.className.split(/\s+/);
     const _port = parseInt(_classes[1].split('FN_port_')[1]);
     const _node = _classes[2].split('FN_node_')[1];
@@ -80,8 +76,6 @@ const FlowNode = (props) => {
   }
 
   const drawGhostConnection = e => {
-    $(`#${layout.id} .connectionGhost`).css({left:`${screenX}px`});
-    $(`#${layout.id} .connectionGhost`).css({top:`${screenY}px`});
     const fromXY = connection.fromXY;
     const toXY = getXY(e);
     connection.arrow.update({source:fromXY , destination: toXY})
@@ -90,7 +84,6 @@ const FlowNode = (props) => {
   const endGhostConnection = e => {
     connection.arrow.remove();
     setConnection({selectedNode:null, arrow:null, fromXY:null});
-    $(`#${layout.id} .connectionGhost`).hide();
   }
 
   const dropGhostConnection = e => {
@@ -149,7 +142,7 @@ const FlowNode = (props) => {
   return (
       <div id={props.id} class="FlowNode" style={`left:${props.x || 0}px; top:${props.y || 0}px;`}>
           <div class={`FN_head FN_node_${props.id}`}>
-              {props.id}
+              {props.title}
           </div>
           <div class={`FN_body FN_node_${props.id}`}>
               <div class={`FN_inputs FN_node_${props.id}`}>

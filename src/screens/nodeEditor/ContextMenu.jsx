@@ -21,9 +21,28 @@ const ContextMenu = (props) => {
 
 
   return (
-    <div id={props.id}>
+    <div id={props.id} class="NodeEditor_contextMenu">
         <Show when={type() == 0}>
-            <div onClick={() => props.newNode()}>New</div>
+            <div class="section firstSection">Connections</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Input Signal')}>Input Signal</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Output Signal')}>Output Signal</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Log Signal')}>Log Signal</div>
+            <div class="section">Simulator</div>
+              <div class="item" onClick={(e) => props.newNode(e , '3D Box')}>3D Box</div>
+            <div class="section">Widgets</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Input')}>Input</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Slider')}>Slider</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Toggle')}>Toggle</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Button')}>Button</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Knob')}>Knob</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Chart')}>Chart</div>
+            <div class="section">Scripts</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Javascript')}>Javascript</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Python')}>Python</div>
+            <div class="section">Helper</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Join')}>Join</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Split')}>Split</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'HTML Widget')}>HTML Widget</div>
         </Show>
         <Show when={[1,2,3,4].includes(type())}>
             <div onClick={() => props.deleteNode(props.context)}>Delete</div>

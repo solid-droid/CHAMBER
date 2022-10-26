@@ -175,6 +175,7 @@
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: start;
+  margin-right: 7px;
 }
 
 .FlowEditor-app .FlowNode .FN_body .FN_outputs .FN_outputItem {
