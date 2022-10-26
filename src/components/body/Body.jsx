@@ -6,7 +6,7 @@ import "./Body.css";
 
 import {openMenu} from '../../scripts/store';
 import Workspace from '../../screens/workspace/Workspace'
-import NodeEditor from '../../screens/NodeEditor/NodeEditor'
+import NodeEditor from '../../screens/nodeEditor/NodeEditor'
 import Connections from '../../screens/connections/Connections'
 import Simulation from '../../screens/simulation/Simulation'
 import Controls from '../../screens/controls/Controls'
