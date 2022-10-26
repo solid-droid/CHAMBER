@@ -140,7 +140,6 @@
 
 .FlowEditor-app .FlowNode .FN_body .FN_inputs .FN_inputItem .FN_title {
   height: 20px;
-  min-width: 30px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -197,7 +196,6 @@
 
 .FlowEditor-app .FlowNode .FN_body .FN_outputs .FN_outputItem .FN_title {
   height: 20px;
-  min-width: 30px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

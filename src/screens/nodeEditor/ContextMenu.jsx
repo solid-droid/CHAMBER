@@ -33,19 +33,22 @@ const ContextMenu = (props) => {
               <div class="item" onClick={(e) => props.newNode(e , 'Input')}>Input</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Slider')}>Slider</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Toggle')}>Toggle</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Button')}>JoyStick</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Button')}>Button</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Knob')}>Knob</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Chart')}>Chart</div>
-            <div class="section">Scripts</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Javascript')}>Javascript</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Python')}>Python</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Chart')}>Table</div>
             <div class="section">Helper</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Join')}>Join</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Split')}>Split</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Split')}>Condition</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Split')}>Loop</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Split')}>Arithmetic</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Javascript')}>Javascript</div>
               <div class="item" onClick={(e) => props.newNode(e , 'HTML Widget')}>HTML Widget</div>
         </Show>
         <Show when={[1,2,3,4].includes(type())}>
-            <div class="item" onClick={() => props.deleteNode(props.context)}>Edit</div>
+            <div class="item" onClick={() => {}}>Edit</div>
             <div class="item" onClick={() => props.deleteNode(props.context)}>Delete</div>
         </Show>
     </div>
