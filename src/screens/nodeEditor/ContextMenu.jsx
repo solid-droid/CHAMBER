@@ -45,7 +45,8 @@ const ContextMenu = (props) => {
               <div class="item" onClick={(e) => props.newNode(e , 'HTML Widget')}>HTML Widget</div>
         </Show>
         <Show when={[1,2,3,4].includes(type())}>
-            <div onClick={() => props.deleteNode(props.context)}>Delete</div>
+            <div class="item" onClick={() => props.deleteNode(props.context)}>Edit</div>
+            <div class="item" onClick={() => props.deleteNode(props.context)}>Delete</div>
         </Show>
     </div>
   )
