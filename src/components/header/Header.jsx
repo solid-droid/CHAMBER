@@ -9,9 +9,9 @@ export const Header = () => {
     <div class="header" >
       <div class="Menu screens">
         <div class={menu.workspace ? 'MenuItem active' : 'MenuItem'} title='Workspace'onClick={() => setMenuState('workspace')}>
-          <i class="fa-solid fa-layer-group"></i>
+          <i class="fa-solid fa-folder"></i>
         </div>
-        <div class={menu.connections ? 'MenuItem active' : 'MenuItem'} title='Connections' onClick={() => setMenuState('connections')}>
+        <div class={menu.connections ? 'MenuItem active' : 'MenuItem'} title='Signals' onClick={() => setMenuState('connections')}>
           <i class="fa-solid fa-tower-broadcast"></i>
         </div>
         <div class={menu.nodeEditor ? 'MenuItem active' : 'MenuItem'} title='Blueprint' onClick={() => setMenuState('nodeEditor')}>
@@ -21,7 +21,10 @@ export const Header = () => {
           <i class="fa-solid fa-cubes"></i>
         </div>
         <div class={menu.analytics ? 'MenuItem active' : 'MenuItem'} title='Analytics' onClick={() => setMenuState('analytics')}>
-        <i class="fa-solid fa-chart-pie"></i>
+          <i class="fa-solid fa-chart-pie"></i>
+        </div>
+        <div class={menu.market ? 'MenuItem active' : 'MenuItem'} title='Collection' onClick={() => setMenuState('market')}>
+          <i class="fa-solid fa-layer-group"></i>
         </div>
       </div>  
 

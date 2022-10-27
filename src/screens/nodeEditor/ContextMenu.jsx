@@ -24,13 +24,13 @@ const ContextMenu = (props) => {
     <div id={props.id} class="NodeEditor_contextMenu">
         <Show when={type() == 0}>
             <div class="section firstSection">Connections</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Input Signal')}>Input Signal</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Output Signal')}>Output Signal</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Log Signal')}>Log Signal</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Input')}>Input</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Output')}>Output</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Log')}>Log</div>
             <div class="section">Simulator</div>
               <div class="item" onClick={(e) => props.newNode(e , '3D Box')}>3D Box</div>
             <div class="section">Widgets</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Input')}>Input</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'InputBox')}>InputBox</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Slider')}>Slider</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Toggle')}>Toggle</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Button')}>JoyStick</div>

@@ -33,8 +33,8 @@ export const Body = () => {
     {
       registerWindow('Workspace' , 'workspace');
     });
-    registerRenderer['Connections'] = _.once(() =>{
-      registerWindow('Connections' , 'connections')
+    registerRenderer['Signals'] = _.once(() =>{
+      registerWindow('Signals' , 'connections')
     });
     registerRenderer['Blueprint'] = _.once(() =>{
       registerWindow('Blueprint' , 'nodeEditor')
@@ -118,7 +118,7 @@ export const Body = () => {
 
   const TabName =     
   ['Workspace',
-  'Connections',
+  'Signals',
   'Blueprint',
   'Simulator',
   'Controls',

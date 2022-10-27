@@ -1,6 +1,6 @@
 const Connections = (params) => {
   return (
-    <div class={params.class}>Connections</div>
+    <div class={params.class}>Signals</div>
   )
 }
 

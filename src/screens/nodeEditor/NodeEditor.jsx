@@ -47,15 +47,15 @@ const NodeEditor = () => {
   }
 
   const config = {
-    'Input Signal':{
+    'Input':{
       inputs:[],
       outputs:['output'],
     },
-    'Output Signal':{
+    'Output':{
       inputs:['input'],
       outputs:[],
     },
-    'Log Signal':{
+    'Log':{
       inputs:['input'],
       outputs:[],
     },
@@ -63,7 +63,7 @@ const NodeEditor = () => {
       inputs:['position','scale'],
       outputs:[],
     },
-    'Input':{
+    'InputBox':{
       inputs:[],
       outputs:['value'],
     },
