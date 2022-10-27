@@ -23,10 +23,10 @@ const ContextMenu = (props) => {
   return (
     <div id={props.id} class="NodeEditor_contextMenu">
         <Show when={type() == 0}>
-            <div class="section firstSection">Connections</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Input')}>Input</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Output')}>Output</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Log')}>Log</div>
+            <div class="section firstSection">Signals</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Input Signal')}>Input</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Output Signal')}>Output</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Log Signal')}>Log</div>
             <div class="section">Simulator</div>
               <div class="item" onClick={(e) => props.newNode(e , '3D Box')}>3D Box</div>
             <div class="section">Widgets</div>
