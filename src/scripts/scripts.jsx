@@ -1,4 +1,4 @@
-import { windowData, masterFile, windowDispose } from "./store";
+import { windowData, masterFile } from "./store";
 import { clearFlowEditor } from "../plugins/FlowEditor/FlowScript"
 
 const [flowConnections, setConnectionList]  = windowData[0].flowEditor.connectionList;

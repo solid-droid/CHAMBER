@@ -1,6 +1,5 @@
 import {  onMount, createEffect, lazy } from "solid-js";
 import { render } from "solid-js/web";
-import { windowDispose} from '../../scripts/store';
 import _ from 'underscore';
 import "./Body.css";
 
@@ -14,7 +13,6 @@ import Debug from '../../screens/debug/Debug'
 
 export const Body = () => {
   const [menu, setMenu] = openMenu;
-  const [dispose , setDispose] = windowDispose;
   let layout, registerRenderer = {};
   ///////////////////////
   function beginLayout(){
@@ -146,6 +144,6 @@ export const Body = () => {
 
   return (
   <>
-  <div class="body" id="layoutContainer"></div>
+    <div class="body" id="layoutContainer"></div>
   </>)
 }

@@ -1,11 +1,12 @@
 import { createSignal, onMount } from "solid-js";
 import {FlowContainer} from "../../plugins/FlowEditor/FlowEditor";
 import {deleteNodeScript , addNodeScript} from '../../plugins/FlowEditor/FlowScript';
-import { windowData } from "../../scripts/store";
+import { windowData, popupData } from "../../scripts/store";
 import ContextMenu from "./ContextMenu";
 const NodeEditor = () => {
   const FlowStores  = windowData[0].flowEditor;
   const [layout] = FlowStores.layoutStore;
+  const [popup, setPopup] = popupData;
   const [context, setContext] = createSignal([]);
   const hideContextMenu = () => $('#FlowContextMenu').hide();
   const id = 'FlowEditor-app';
@@ -28,9 +29,13 @@ const NodeEditor = () => {
       }
 
      const boxH = parseInt($('#FlowContextMenu').css('height').split('px')[0]);
-
+     const midMin = window.innerHeight/2 - boxH/2 - boxH/3;
+     const midMax = window.innerHeight/2 + boxH/2 - boxH/3;
      if(window.innerHeight - top < boxH + 50){
-      top-=boxH+10
+      if( midMin <top && midMax>top)
+      top-=boxH/2
+      else
+      top-=boxH + 10
      }
 
       $('#FlowContextMenu').css({
@@ -119,6 +124,11 @@ const NodeEditor = () => {
     hideContextMenu();
   }
 
+  const editNode = (e) => {
+    const node = e.find(x => x.includes('FN_node')).split('FN_node_')[1];   
+    setPopup({open:true});
+  }
+
   return (
     <div onContextMenu={e => contextMenu(e)} style="height: 100%;width: 100%;">
       <FlowContainer 
@@ -130,6 +140,7 @@ const NodeEditor = () => {
       context={context()}
       newNode={createNewNode}
       deleteNode={deleteNode}
+      editNode={editNode}
       ></ContextMenu>
     </div>
 

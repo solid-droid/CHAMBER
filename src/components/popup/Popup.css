@@ -1,0 +1,70 @@
+.Popup_Container {
+  width: 70vw;
+  height: 70vh;
+  background: #303030;
+  border: solid 1px #999999;
+  border-radius: 20px;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 11px 5px #41414185;
+          box-shadow: 0px 0px 11px 5px #41414185;
+  position: relative;
+}
+
+.Popup_Container .popup_close {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  border-top: solid 2px rgba(113, 113, 113, 0.65);
+  border-right: solid 2px rgba(113, 113, 113, 0.65);
+  color: rgba(216, 216, 216, 0.997);
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.Popup_Container .popup_close:hover {
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-box-shadow: 0px 0px 5px 1px #737373;
+          box-shadow: 0px 0px 5px 1px #737373;
+}
+
+.Popup_Container .popup_close .symbol {
+  padding-bottom: 2px;
+}
+
+.popupMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #45454594;
+  -webkit-backdrop-filter: blur(1px);
+          backdrop-filter: blur(1px);
+  z-index: 2;
+}
+/*# sourceMappingURL=Popup.css.map */
