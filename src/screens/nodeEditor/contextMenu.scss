@@ -4,22 +4,27 @@
     top: 20px;
     left: 30px;
     height: auto;
-    width: 130px;
+    min-width: 130px;
     background-color: #3c3c3cf5;
     box-shadow: 1px 1px 6px 2px #0000008f;
     border-radius: 10px;
     padding: 10px;
     font-size: 15px;
     overflow: hidden;
-    .section{
-        font-size: 15px;
-        border-bottom: solid 1px #ffffff46;
-        margin-top: 10px;
+    .defaultContent{
+        display: flex;
+        grid-gap: 20px;
+        .column{
+            display: flex;
+            flex-direction: column;
+        }
     }
 
-    .firstSection{
-        margin-top: 0;
+    .section{
+        font-size: 15px;
+        font-weight: 500;
     }
+
     .item{
         font-size: 12px;
         padding: 5px;

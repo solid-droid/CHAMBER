@@ -50,3 +50,31 @@
     backdrop-filter: blur(1px);
     z-index: 2;
 }
+
+.EditNode_container{
+    height: 100%;
+    .title{
+        margin-top: -5px;
+        margin-bottom: 30px;
+        font-size:20px;
+    }
+    .Node{
+        display: grid;
+        grid-template-columns: 140px  1fr 140px;
+        min-height: calc(100% - 100px);
+        .inputs{
+            padding: 10px;
+        }
+
+        .content{
+            padding: 10px;
+            border-left: solid 1px;
+            border-right: solid 1px;
+            border-color: #4e4e4e;
+        }
+
+        .outputs{
+            padding: 10px;
+        }
+    }
+}

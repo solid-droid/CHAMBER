@@ -153,7 +153,7 @@ const purityCheck = (nodeObj, connectionList) => {
     return allow;
 }
 
-const deleteNodeScript = (node, FlowStores) => {
+const deleteNode = (node, FlowStores) => {
     const [nodeList , setNodeList] = FlowStores.nodeList;
     const [nodeObj , setNodeObj] = FlowStores.nodeObj;
     const [connectionList , setConnectionList] = FlowStores.connectionList;
@@ -162,7 +162,7 @@ const deleteNodeScript = (node, FlowStores) => {
         return _conn;
       })
   
-      setNodeObj(produce(_nodes => {
+    setNodeObj(produce(_nodes => {
         _nodes[node].connections?.forEach(con => {
           try{
             con.arrow.remove();
@@ -183,14 +183,14 @@ const deleteNodeScript = (node, FlowStores) => {
         });
         _nodes[node].widget.destroy();
         delete _nodes[node];
-      }));
+    }));
 
-      setNodeList(_nodes => {
+    setNodeList(_nodes => {
         return _nodes.filter(_node => _node.id !== node);
-      });
+    });
 }
 
-const addNodeScript = (FlowStores, nodeConfig) => {
+const addNode = (FlowStores, nodeConfig) => {
     const [nodeList , setNodeList] = FlowStores.nodeList;
     const [nodeStore, setNodeStore] = FlowStores.nodeStore;
     setNodeList(_nodes => [{
@@ -199,6 +199,16 @@ const addNodeScript = (FlowStores, nodeConfig) => {
       },..._nodes]);
     
     setNodeStore({nodeCounter: nodeStore.nodeCounter+1});
+}
+
+const updateNode = (FlowStores, nodeConfig) => {
+    const [nodeList , setNodeList] = FlowStores.nodeList;
+    const [nodeObj , setNodeObj] = FlowStores.nodeObj;
+}
+
+const getNode = (node, FlowStores) => {
+    const [nodeList , setNodeList] = FlowStores.nodeList;
+    return nodeList().find(x => x.id == node);
 }
 
 const clearFlowEditor = (FlowStores) => {
@@ -252,7 +262,9 @@ export {
     getToXY,
     createArrowLine,
     purityCheck,
-    deleteNodeScript,
-    addNodeScript,
-    clearFlowEditor
+    clearFlowEditor,
+    addNode,
+    deleteNode,
+    updateNode,
+    getNode
 }

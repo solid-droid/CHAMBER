@@ -1,6 +1,6 @@
 import { createSignal, onMount } from "solid-js";
 import {FlowContainer} from "../../plugins/FlowEditor/FlowEditor";
-import {deleteNodeScript , addNodeScript} from '../../plugins/FlowEditor/FlowScript';
+import {deleteNode , addNode} from '../../plugins/FlowEditor/FlowScript';
 import { windowData, popupData } from "../../scripts/store";
 import ContextMenu from "./ContextMenu";
 const NodeEditor = () => {
@@ -109,7 +109,7 @@ const NodeEditor = () => {
     }
   }
   const createNewNode = (e,type) => {
-    addNodeScript(FlowStores,{
+    addNode(FlowStores,{
       title:type,
       ...config[type],
       x:(e.clientX-layout.x)/layout.z,
@@ -118,15 +118,15 @@ const NodeEditor = () => {
     hideContextMenu();
   }
 
-  const deleteNode = (e) => {
+  const deleteExistingNode = (e) => {
     const node = e.find(x => x.includes('FN_node')).split('FN_node_')[1];   
-    deleteNodeScript(node,FlowStores);
+    deleteNode(node,FlowStores);
     hideContextMenu();
   }
 
   const editNode = (e) => {
     const node = e.find(x => x.includes('FN_node')).split('FN_node_')[1];   
-    setPopup({open:true});
+    setPopup({open:true , type:'editNode', node});
   }
 
   return (
@@ -139,7 +139,7 @@ const NodeEditor = () => {
       id="FlowContextMenu" 
       context={context()}
       newNode={createNewNode}
-      deleteNode={deleteNode}
+      deleteNode={deleteExistingNode}
       editNode={editNode}
       ></ContextMenu>
     </div>

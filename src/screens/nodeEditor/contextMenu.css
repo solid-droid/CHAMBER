@@ -4,7 +4,7 @@
   top: 20px;
   left: 30px;
   height: auto;
-  width: 130px;
+  min-width: 130px;
   background-color: #3c3c3cf5;
   -webkit-box-shadow: 1px 1px 6px 2px #0000008f;
           box-shadow: 1px 1px 6px 2px #0000008f;
@@ -14,14 +14,26 @@
   overflow: hidden;
 }
 
-#FlowContextMenu .section {
-  font-size: 15px;
-  border-bottom: solid 1px #ffffff46;
-  margin-top: 10px;
+#FlowContextMenu .defaultContent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  grid-gap: 20px;
 }
 
-#FlowContextMenu .firstSection {
-  margin-top: 0;
+#FlowContextMenu .defaultContent .column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#FlowContextMenu .section {
+  font-size: 15px;
+  font-weight: 500;
 }
 
 #FlowContextMenu .item {

@@ -23,12 +23,8 @@ const ContextMenu = (props) => {
   return (
     <div id={props.id} class="NodeEditor_contextMenu">
         <Show when={type() == 0}>
-            <div class="section firstSection">Signals</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Input Signal')}>Input</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Output Signal')}>Output</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Log Signal')}>Log</div>
-            <div class="section">Simulator</div>
-              <div class="item" onClick={(e) => props.newNode(e , '3D Box')}>3D Box</div>
+          <div class="defaultContent">
+          <div class="column">
             <div class="section">Widgets</div>
               <div class="item" onClick={(e) => props.newNode(e , 'InputBox')}>InputBox</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Slider')}>Slider</div>
@@ -38,6 +34,14 @@ const ContextMenu = (props) => {
               <div class="item" onClick={(e) => props.newNode(e , 'Knob')}>Knob</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Chart')}>Chart</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Chart')}>Table</div>
+            <div class="section">Simulator</div>
+              <div class="item" onClick={(e) => props.newNode(e , '3D Box')}>3D Box</div>
+          </div>
+          <div class="column">
+            <div class="section">Signals</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Input Signal')}>Input</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Output Signal')}>Output</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Log Signal')}>Log</div>
             <div class="section">Helper</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Join')}>Join</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Split')}>Split</div>
@@ -46,6 +50,8 @@ const ContextMenu = (props) => {
               <div class="item" onClick={(e) => props.newNode(e , 'Split')}>Arithmetic</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Javascript')}>Javascript</div>
               <div class="item" onClick={(e) => props.newNode(e , 'HTML Widget')}>HTML Widget</div>
+          </div>
+          </div>
         </Show>
         <Show when={[1,2,3,4].includes(type())}>
             <div class="item" onClick={() => props.editNode(props.context)}>Edit</div>

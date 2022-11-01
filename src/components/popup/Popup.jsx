@@ -1,6 +1,7 @@
 import './Popup.css'
 import {popupData} from '../../scripts/store'
 import { Show } from 'solid-js';
+import EditNode from './EditNode';
 export const Popup = (props) => {
   const [popup, setPopup] = popupData;
   return (
@@ -12,10 +13,10 @@ export const Popup = (props) => {
                 ✖
               </div>
             </div>
-            <div class="popup_header"></div>
-            <div class="popup_content"></div>
-            <div class="popup_footer"></div>
-        </div>
+              <Show when={popup.type=='editNode'}>
+                <EditNode node={popup.node}/>
+              </Show>
+          </div>
       </div>
     </Show>
 
