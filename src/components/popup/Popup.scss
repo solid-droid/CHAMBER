@@ -59,18 +59,27 @@
         font-size:20px;
     }
     .Node{
-        display: grid;
-        grid-template-columns: 140px  1fr 140px;
-        min-height: calc(100% - 100px);
+        height: calc(100% - 100px);
         .inputs{
             padding: 10px;
         }
 
         .content{
+            height: 100%;
             padding: 10px;
             border-left: solid 1px;
             border-right: solid 1px;
             border-color: #4e4e4e;
+            .section{
+                display: grid;
+                grid-template-columns: 70px 1fr;
+                grid-gap:10px;
+                margin-bottom: 10px;
+                select{      
+                    width: 170px;
+                    height: 25px;
+                }
+            }
         }
 
         .outputs{

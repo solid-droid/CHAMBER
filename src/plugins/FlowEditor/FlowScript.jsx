@@ -1,5 +1,6 @@
 import arrowLine from 'arrow-line';
 import { produce } from "solid-js/store";
+
 const createArrow = async ({
     fromNode,
     toNode,
@@ -201,9 +202,16 @@ const addNode = (FlowStores, nodeConfig) => {
     setNodeStore({nodeCounter: nodeStore.nodeCounter+1});
 }
 
-const updateNode = (FlowStores, nodeConfig) => {
+const updateNode = (FlowStores, id, nodeConfig) => {
     const [nodeList , setNodeList] = FlowStores.nodeList;
-    const [nodeObj , setNodeObj] = FlowStores.nodeObj;
+    setNodeList(_node => {
+        const k = _node.find(i => i.id == id)
+        Object.keys(nodeConfig).forEach(x => {
+            k[x] = nodeConfig[x]
+        });
+        return _node;
+      });
+    
 }
 
 const getNode = (node, FlowStores) => {

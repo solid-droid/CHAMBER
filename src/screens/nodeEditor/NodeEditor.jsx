@@ -50,50 +50,47 @@ const NodeEditor = () => {
     'Input Signal':{
       inputs:[],
       outputs:['output'],
+      name:'undefined'
     },
     'Output Signal':{
       inputs:['input'],
       outputs:[],
+      name:'undefined'
     },
     'Log Signal':{
       inputs:['input'],
       outputs:[],
+      name:'undefined'
     },
     '3D Box':{
       inputs:['position','scale'],
       outputs:[],
+      position:[0,0,0],
+      scale:[0,0,0]
     },
     'InputBox':{
       inputs:[],
       outputs:['value'],
+      value:0,
+      type:'number'
     },
     'Slider':{
       inputs:[],
       outputs:['value'],
+      min:0,
+      max:10,
+      value:5,
+      steps:1
     },
     'Toggle' : {
       inputs:[],
       outputs:['value'],
-    },
-    'Button' : {
-      inputs:[],
-      outputs:['click'],
-    },
-    'Knob' : {
-      inputs:[],
-      outputs:['value'],
-    },
-    'Chart' : {
-      inputs:['value'],
-      outputs:[],
+      value:false
     },
     'Javascript' : {
       inputs:['input'],
       outputs:['output'],
-    },
-    'Python' : {
-      inputs:['input'],
-      outputs:['output'],
+      script:''
     },
     'Join' : {
       inputs:['a','b','c','d'],
@@ -106,6 +103,7 @@ const NodeEditor = () => {
     'HTML Widget' : {
       inputs:['input'],
       outputs:['output'],
+      html:''
     }
   }
   const createNewNode = (e,type) => {

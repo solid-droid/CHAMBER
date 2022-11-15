@@ -5,11 +5,9 @@
   border: solid 1px #999999;
   border-radius: 20px;
   padding: 10px;
-  -webkit-box-shadow: 0px 0px 11px 5px #41414185;
-          box-shadow: 0px 0px 11px 5px #41414185;
+  box-shadow: 0px 0px 11px 5px rgba(65, 65, 65, 0.5215686275);
   position: relative;
 }
-
 .Popup_Container .popup_close {
   position: absolute;
   right: 5px;
@@ -22,27 +20,16 @@
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-
 .Popup_Container .popup_close:hover {
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
-  -webkit-box-shadow: 0px 0px 5px 1px #737373;
-          box-shadow: 0px 0px 5px 1px #737373;
+  transform: rotate(-90deg);
+  box-shadow: 0px 0px 5px 1px #737373;
 }
-
 .Popup_Container .popup_close .symbol {
   padding-bottom: 2px;
 }
@@ -53,16 +40,10 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background: #45454594;
+  justify-content: center;
+  align-items: center;
+  background: rgba(69, 69, 69, 0.5803921569);
   -webkit-backdrop-filter: blur(1px);
           backdrop-filter: blur(1px);
   z-index: 2;
@@ -71,33 +52,34 @@
 .EditNode_container {
   height: 100%;
 }
-
 .EditNode_container .title {
   margin-top: -5px;
   margin-bottom: 30px;
   font-size: 20px;
 }
-
 .EditNode_container .Node {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 140px  1fr 140px;
-      grid-template-columns: 140px  1fr 140px;
-  min-height: calc(100% - 100px);
+  height: calc(100% - 100px);
 }
-
 .EditNode_container .Node .inputs {
   padding: 10px;
 }
-
 .EditNode_container .Node .content {
+  height: 100%;
   padding: 10px;
   border-left: solid 1px;
   border-right: solid 1px;
   border-color: #4e4e4e;
 }
-
+.EditNode_container .Node .content .section {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  grid-gap: 10px;
+  margin-bottom: 10px;
+}
+.EditNode_container .Node .content .section select {
+  width: 170px;
+  height: 25px;
+}
 .EditNode_container .Node .outputs {
   padding: 10px;
-}
-/*# sourceMappingURL=Popup.css.map */
+}/*# sourceMappingURL=Popup.css.map */

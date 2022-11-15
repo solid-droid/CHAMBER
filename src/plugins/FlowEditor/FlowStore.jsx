@@ -4,6 +4,7 @@ import { createStore, createMutable } from "solid-js/store";
 const createFlowStores = () => {
     const nodeStore = createStore({
       selectedNode: null,
+      editedNode:null,
       isDragging: false,
       nodeCounter:0
     });

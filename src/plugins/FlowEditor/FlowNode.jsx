@@ -1,6 +1,7 @@
-import { For,  onMount } from "solid-js";
+import { createEffect, createSignal, For,  onMount, Show } from "solid-js";
 import Moveable from "moveable";
-import {getPropertiesForArrow, createArrowLine} from './FlowScript';
+import {getPropertiesForArrow, createArrowLine, updateNode} from './FlowScript';
+import { windowData ,popupData} from "../../scripts/store";
 
 const FlowNode = (props) => {
   const [nodeObj , setNodeObj] = props.nodeObj;
@@ -9,6 +10,8 @@ const FlowNode = (props) => {
   const [connection , setConnection] = props.connectionStore;
   const [connectionList , setConnectionList] = props.connectionList;
   const [layout] = props.layoutStore;
+  const FlowStores  = windowData[0].flowEditor;
+  const [popup, setPopup] = popupData;
   const createMoveable = () => {
    const widget =  new Moveable(document.querySelector(`#${layout.id} .viewport`), {
       // dragTarget: document.querySelector(`#${props.id} .FN_head`),
@@ -16,9 +19,11 @@ const FlowNode = (props) => {
       origin: false,
       draggable: true,
   }).on("dragStart", (e) => {
-    if($(`#${layout.id}`).find(".FN_draggable:hover").length){
-      setConnection({isDragging:true});
-      e.stop();
+    if(
+      $(`#${layout.id}`).find(".FN_draggable:hover").length || 
+      $(`#${layout.id}`).find(".nodeContNoDrag:hover").length){
+        setConnection({isDragging:true});
+        e.stop();
     } else {
       setNode({isDragging:true, selectedNode:props.id});
     }
@@ -138,6 +143,44 @@ const FlowNode = (props) => {
     });
     createMoveable();
   });
+  
+  const widgets = {
+    'InputBox' : () => inputBox(),
+    'Slider': () => alert('slider'),
+    'Toggle' : () => alert('Toggle'),
+    'HTML Widget': () => alert('custom'),
+    
+    'Javascript' : () => alert('script'),
+
+    'Join' : () => alert('join'),
+    'Split' : () => alert('split'),
+
+    'Input Signal': () => alert('IS'),
+    'Output Signal': () => alert('OS'),
+    'Log Signal': () => alert('log')
+}
+
+  const inputBox = () => {
+    const [inpType , setType] = createSignal('number');
+    const [inpVal , setVal] = createSignal(0);
+    createEffect(()=>{
+      if(!popup.open && node.edittedNode === props.id){
+        const dat =nodeList.find(x => x.id == props.id);
+        setVal(dat.value);
+        setType(dat.type);
+      }
+    })
+    const updateValue = e => {
+      layout?.viewer?.pause();
+      updateNode(FlowStores, props.id, {value:e.target.value})
+    }
+    return <div class="nodeContNoDrag" style="margin-right:5px; margin-bottom:5px;">
+              <input type={inpType()} value={inpVal()} 
+                     onChange={e => updateValue(e)}
+                     onBlur={() => layout?.viewer?.resume()}
+              />
+          </div>
+  }
 
   return (
       <div id={props.id} class="FlowNode" style={`left:${props.x || 0}px; top:${props.y || 0}px;`}>
@@ -161,7 +204,9 @@ const FlowNode = (props) => {
               </For>
               </div>
               <div class={`FN_content FN_node_${props.id}`}>
-                {props.children}
+              <Show when={props.title !== 'HTML Widget'} fallback={props.children}>
+                {widgets[props.title]()}
+              </Show>
               </div>
               <div class={`FN_outputs FN_node_${props.id}`}>
               <For each={props.outputs}>

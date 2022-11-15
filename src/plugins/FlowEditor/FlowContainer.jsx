@@ -53,6 +53,7 @@ const FlowContainer = (props) => {
 
         createEffect(() => {
             const _nodes = nodeList();
+            
             untrack(() => {
                 const keys = Object.keys(nodeObj);
                 //add node to nodeTracker
