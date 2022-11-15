@@ -1,6 +1,6 @@
 import { windowData } from "../../scripts/store";
 import {getNode, updateNode} from '../../plugins/FlowEditor/FlowScript';
-import { createSignal } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 
 const EditNode = (props) => {
   const FlowStores  = windowData[0].flowEditor;
@@ -23,7 +23,8 @@ const widgets = {
     'Log Signal': () => alert('log')
 }
 const inputBox = () => {
-    let [type, setType] = createSignal('number');
+    let selectRef;
+    let [type, setType] = createSignal(node.type);
     const typeChange = e => {
         setType(e.target.value);
         updateNode(FlowStores,node.id, {type:type()});
@@ -33,11 +34,14 @@ const inputBox = () => {
         updateNode(FlowStores,node.id, {value:e.target.value});
         setNodeStore({editedNode: node.id});
     }
+    onMount(()=>{
+        selectRef.value = node.type;
+    });
     return <>
         <div class="section">
             <div class="key">Type</div>
             <div class="value">
-                <select name="inputType" onChange={typeChange}>
+                <select ref={selectRef} name="inputType" onChange={typeChange}>
                     <option value="number">Number</option>
                     <option value="text">Text</option>
                     <option value="time">Time</option>

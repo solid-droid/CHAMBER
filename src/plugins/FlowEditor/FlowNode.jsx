@@ -164,10 +164,10 @@ const FlowNode = (props) => {
     const [inpType , setType] = createSignal('number');
     const [inpVal , setVal] = createSignal(0);
     createEffect(()=>{
-      if(!popup.open && node.edittedNode === props.id){
-        const dat =nodeList.find(x => x.id == props.id);
-        setVal(dat.value);
+      if(!popup.open && node.editedNode === props.id){
+        const dat = nodeList().find(x => x.id == props.id);
         setType(dat.type);
+        setVal(dat.value);
       }
     })
     const updateValue = e => {
