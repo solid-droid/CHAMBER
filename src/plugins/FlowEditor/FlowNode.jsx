@@ -155,7 +155,7 @@ const FlowNode = (props) => {
     'Join' : () => alert('join'),
     'Split' : () => alert('split'),
 
-    'Input Signal': () => alert('IS'),
+    'Input Signal': () => inputSignal(),
     'Output Signal': () => alert('OS'),
     'Log Signal': () => alert('log')
 }
@@ -180,6 +180,19 @@ const FlowNode = (props) => {
                      onBlur={() => layout?.viewer?.resume()}
               />
           </div>
+  }
+
+  const inputSignal = () => {
+    const [inpVal , setVal] = createSignal(undefined);
+    createEffect(()=>{
+      if(!popup.open && node.editedNode === props.id){
+        const dat = nodeList().find(x => x.id == props.id);
+        setVal(dat.name);
+      }
+    })
+    return <div style="margin-right:5px; margin-bottom:5px;">
+      <input type='text' value={inpVal()} disabled/>
+    </div>
   }
 
   return (

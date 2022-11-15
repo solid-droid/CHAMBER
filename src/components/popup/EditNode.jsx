@@ -18,7 +18,7 @@ const widgets = {
     'Join' : () => alert('join'),
     'Split' : () => alert('split'),
 
-    'Input Signal': () => alert('IS'),
+    'Input Signal': () => inputSignal(),
     'Output Signal': () => alert('OS'),
     'Log Signal': () => alert('log')
 }
@@ -57,6 +57,16 @@ const inputBox = () => {
     </> 
 }
 
+const inputSignal = () => {
+    const updateValue = e => {
+        updateNode(FlowStores,node.id, {name:e.target.value});
+        setNodeStore({editedNode: node.id});
+    }    
+    return <div class="section">
+        <div class="key">Value</div>
+        <div class="value"><input type="text" value={node.name} onChange={updateValue}/></div>
+    </div>
+}
 return (
     <div class="EditNode_container">
         <div class="title">Configure Node</div>
