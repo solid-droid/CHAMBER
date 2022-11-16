@@ -1,8 +1,8 @@
-import { createEffect, createSignal, For,  onMount, Show } from "solid-js";
+import { For,  onMount, Show } from "solid-js";
 import Moveable from "moveable";
 import {getPropertiesForArrow, createArrowLine, updateNode} from './FlowScript';
 import { windowData ,popupData} from "../../scripts/store";
-import { inputBox, inputSignal } from "./NodeTemplate";
+import { inputBox, signal } from "./NodeTemplate";
 
 const FlowNode = (props) => {
   const [nodeObj , setNodeObj] = props.nodeObj;
@@ -153,12 +153,12 @@ const FlowNode = (props) => {
     
     'Javascript' : () => alert('script'),
 
-    'Join' : () => alert('join'),
-    'Split' : () => alert('split'),
+    'Join' : () => {},
+    'Split' : () => {},
 
-    'Input Signal': () => inputSignal(nodeList,node,popup,props.id),
-    'Output Signal': () => alert('OS'),
-    'Log Signal': () => alert('log')
+    'Input Signal': () => signal(nodeList,node,popup,props.id),
+    'Output Signal': () => signal(nodeList,node,popup,props.id),
+    'Log Signal': () => signal(nodeList,node,popup,props.id)
 }
 
   return (

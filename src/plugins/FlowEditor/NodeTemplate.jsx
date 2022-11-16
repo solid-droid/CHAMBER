@@ -27,7 +27,7 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
           </div>
   }
 
-  const inputSignal = (nodeList,node,popup,id) => {
+  const signal = (nodeList,node,popup,id) => {
     const [inpVal , setVal] = createSignal(undefined);
     createEffect(()=>{
       if(!popup.open && node.editedNode === id){
@@ -41,12 +41,12 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
         setVal(dat.name);
     });
 
-    return <div class="NodeContent" style="margin-right:5px; margin-bottom:5px;">
+    return <div class="NodeContent" style="margin:5px; margin-top:0;">
       <input type='text' value={inpVal()} disabled/>
     </div>
   }
 
   export {
     inputBox,
-    inputSignal
+    signal
   }
