@@ -36,7 +36,7 @@ const inputBox = (node,FlowStores,setNodeStore) => {
     </> 
 }
 
-const inputSignal = (node,FlowStores,setNodeStore) => {
+const signal = (node,FlowStores,setNodeStore) => {
     const updateValue = e => {
         updateNode(FlowStores,node.id, {name:e.target.value});
         setNodeStore({editedNode: node.id});
@@ -49,5 +49,5 @@ const inputSignal = (node,FlowStores,setNodeStore) => {
 
 export {
     inputBox,
-    inputSignal
+    signal
 }
