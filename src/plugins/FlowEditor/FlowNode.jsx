@@ -2,6 +2,7 @@ import { createEffect, createSignal, For,  onMount, Show } from "solid-js";
 import Moveable from "moveable";
 import {getPropertiesForArrow, createArrowLine, updateNode} from './FlowScript';
 import { windowData ,popupData} from "../../scripts/store";
+import { inputBox, inputSignal } from "./NodeTemplate";
 
 const FlowNode = (props) => {
   const [nodeObj , setNodeObj] = props.nodeObj;
@@ -145,7 +146,7 @@ const FlowNode = (props) => {
   });
   
   const widgets = {
-    'InputBox' : () => inputBox(),
+    'InputBox' : () => inputBox(nodeList,node,popup,updateNode,props.id,FlowStores,layout),
     'Slider': () => alert('slider'),
     'Toggle' : () => alert('Toggle'),
     'HTML Widget': () => alert('custom'),
@@ -155,45 +156,10 @@ const FlowNode = (props) => {
     'Join' : () => alert('join'),
     'Split' : () => alert('split'),
 
-    'Input Signal': () => inputSignal(),
+    'Input Signal': () => inputSignal(nodeList,node,popup,props.id),
     'Output Signal': () => alert('OS'),
     'Log Signal': () => alert('log')
 }
-
-  const inputBox = () => {
-    const [inpType , setType] = createSignal('number');
-    const [inpVal , setVal] = createSignal(0);
-    createEffect(()=>{
-      if(!popup.open && node.editedNode === props.id){
-        const dat = nodeList().find(x => x.id == props.id);
-        setType(dat.type);
-        setVal(dat.value);
-      }
-    })
-    const updateValue = e => {
-      layout?.viewer?.pause();
-      updateNode(FlowStores, props.id, {value:e.target.value})
-    }
-    return <div class="nodeContNoDrag" style="margin-right:5px; margin-bottom:5px;">
-              <input type={inpType()} value={inpVal()} 
-                     onChange={e => updateValue(e)}
-                     onBlur={() => layout?.viewer?.resume()}
-              />
-          </div>
-  }
-
-  const inputSignal = () => {
-    const [inpVal , setVal] = createSignal(undefined);
-    createEffect(()=>{
-      if(!popup.open && node.editedNode === props.id){
-        const dat = nodeList().find(x => x.id == props.id);
-        setVal(dat.name);
-      }
-    })
-    return <div style="margin-right:5px; margin-bottom:5px;">
-      <input type='text' value={inpVal()} disabled/>
-    </div>
-  }
 
   return (
       <div id={props.id} class="FlowNode" style={`left:${props.x || 0}px; top:${props.y || 0}px;`}>
