@@ -6,14 +6,8 @@ const ContextMenu = (props) => {
 
     createEffect(()=>{
        switch(props.context[0]){
-        case 'FN_head' : setType(1);break;
-        case 'FN_title': setType(2);break;
-        case 'FN_content': setType(3);break;
-        case 'FN_inputItem':
-        case 'FN_inputs':
-        case 'FN_outputs':
-        case 'FN_outputItem':setType(4);break;
-        default: setType(0);break;
+        case 'FlowEditor-app' : setType(0);break;
+        default: setType(1);break;
        }
     });
 
@@ -45,7 +39,7 @@ const ContextMenu = (props) => {
           </div>
           </div>
         </Show>
-        <Show when={[1,2,3,4].includes(type())}>
+        <Show when={type() == 1}>
             <div class="item" onClick={() => props.editNode(props.context)}>Edit</div>
             <div class="item" onClick={() => props.deleteNode(props.context)}>Delete</div>
         </Show>

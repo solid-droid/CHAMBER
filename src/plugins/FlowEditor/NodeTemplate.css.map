@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,YADQ,CACR,KAAK,CAAA;EACD,KAAK,EAAE,KAAK;CACf",
+    "sources": [
+        "NodeTemplate.scss"
+    ],
+    "names": [],
+    "file": "NodeTemplate.css"
+}

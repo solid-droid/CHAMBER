@@ -20,7 +20,7 @@ const NodeEditor = () => {
   const contextMenu = e => {
     e.preventDefault();
     const classes = typeof e.target.className === 'string' ?  e.target.className.split(/\s+/) : [];
-    if(classes[0] !== 'FN_draggable'){
+    if(!['','FN_draggable'].includes(classes[0])){
       setContext(classes);
       let left = e.clientX , top = e.clientY-50;
 

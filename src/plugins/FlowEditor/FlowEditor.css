@@ -6,17 +6,19 @@
   height: 100%;
   background: #2d2d2d;
   color: white;
-  -ms-scroll-chaining: none;
-      overscroll-behavior: none;
-  transform-style: preserve-3d;
+  overscroll-behavior: none;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
   --s: 70px;
   --_g: #0000 90deg,#2b2b2b 0;
-  background: conic-gradient(from 90deg at 2px 2px, var(--_g)) 0 0/var(--s) var(--s), conic-gradient(from 90deg at 1px 1px, var(--_g)) 0 0/calc(var(--s) / 5) calc(var(--s) / 5);
+  background: conic-gradient(from 90deg at 2px 2px, var(--_g)) 0 0/var(--s) var(--s), conic-gradient(from 90deg at 1px 1px, var(--_g)) 0 0/calc(var(--s)/5) calc(var(--s)/5);
   cursor: default;
 }
+
 .FlowEditor-app .moveable-line {
   background-color: unset !important;
 }
+
 .FlowEditor-app .viewer {
   position: absolute !important;
   left: 30px;
@@ -24,10 +26,12 @@
   width: calc(100% - 30px);
   height: calc(100% - 30px);
 }
+
 .FlowEditor-app .viewport {
   border: none;
   padding: 31px;
 }
+
 .FlowEditor-app .connectionGhost {
   display: none;
   width: 10px;
@@ -36,6 +40,7 @@
   background-color: #749d9f;
   position: absolute;
 }
+
 .FlowEditor-app .connectorSVG {
   width: 100vw;
   height: 100vh;
@@ -45,6 +50,7 @@
   left: 0;
   pointer-events: none;
 }
+
 .FlowEditor-app .ghostSVG {
   width: 100vw;
   height: 100vh;
@@ -62,15 +68,23 @@
   z-index: 2;
   border-radius: 5px;
   border-color: #454545;
-  box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.768627451);
+  -webkit-box-shadow: 2px 2px 6px 2px #000000c4;
+          box-shadow: 2px 2px 6px 2px #000000c4;
 }
+
 .FlowEditor-app .FlowNode .FN_head {
   font-size: 13px;
   height: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding-bottom: 2px;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   background-color: #333333;
   border-bottom: #454545 solid 3px;
   -webkit-user-select: none;
@@ -78,26 +92,42 @@
       -ms-user-select: none;
           user-select: none;
 }
+
 .FlowEditor-app .FlowNode .FN_body {
   padding-left: 5px;
   padding-right: 5px;
   height: calc(100% - 18px);
-  background-color: rgba(41, 41, 41, 0.7490196078);
+  background-color: #292929bf;
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  background-color: rgba(59, 58, 58, 0.7490196078);
+  -ms-grid-columns: auto 1fr auto;
+      grid-template-columns: auto 1fr auto;
+  background-color: #3b3a3abf;
 }
+
 .FlowEditor-app .FlowNode .FN_body .FN_inputs {
   font-size: 13px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   margin-left: 7px;
-  align-items: start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
 }
+
 .FlowEditor-app .FlowNode .FN_body .FN_inputs .FN_inputItem {
+  display: -ms-grid;
   display: grid;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 .FlowEditor-app .FlowNode .FN_body .FN_inputs .FN_inputItem .FN_draggable {
   position: absolute;
   left: 0;
@@ -105,12 +135,17 @@
   height: 0;
   border-top: 8px solid transparent;
   border-bottom: 7px solid transparent;
-  border-left: 9px solid rgba(135, 200, 203, 0.7019607843);
+  border-left: 9px solid #87c8cbb3;
 }
+
 .FlowEditor-app .FlowNode .FN_body .FN_inputs .FN_inputItem .FN_title {
   height: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
@@ -119,23 +154,37 @@
       -ms-user-select: none;
           user-select: none;
 }
+
 .FlowEditor-app .FlowNode .FN_body .FN_content {
   min-width: 50px;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
+
 .FlowEditor-app .FlowNode .FN_body .FN_outputs {
   font-size: 13px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
   margin-right: 7px;
 }
+
 .FlowEditor-app .FlowNode .FN_body .FN_outputs .FN_outputItem {
+  display: -ms-grid;
   display: grid;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 .FlowEditor-app .FlowNode .FN_body .FN_outputs .FN_outputItem .FN_draggable {
   width: 10px;
   height: 10px;
@@ -144,10 +193,15 @@
   position: absolute;
   right: -5px;
 }
+
 .FlowEditor-app .FlowNode .FN_body .FN_outputs .FN_outputItem .FN_title {
   height: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
@@ -170,4 +224,5 @@
 .arrow__head line {
   stroke: #000;
   stroke-width: 1px;
-}/*# sourceMappingURL=FlowEditor.css.map */
+}
+/*# sourceMappingURL=FlowEditor.css.map */

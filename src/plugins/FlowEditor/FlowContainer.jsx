@@ -1,5 +1,6 @@
 import { createEffect, onMount, untrack } from "solid-js";
 import "./FlowEditor.css";
+import "./NodeTemplate.css";
 import {drawConnections} from './FlowScript';
 import FlowNode from './FlowNode';
 import _ from "underscore";

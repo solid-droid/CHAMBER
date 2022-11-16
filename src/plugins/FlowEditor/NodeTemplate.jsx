@@ -19,7 +19,7 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
       layout?.viewer?.pause()
       updateNode(FlowStores, id, {value:e.target.value})
     }
-    return <div class="nodeContNoDrag" style="margin-right:5px; margin-bottom:5px;">
+    return <div class="nodeContNoDrag NodeContent" style="margin-right:5px; margin-bottom:5px;">
               <input type={inpType()} value={inpVal()} 
                      onChange={e => updateValue(e)}
                      onBlur={() => layout?.viewer?.resume()}
@@ -41,7 +41,7 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
         setVal(dat.name);
     });
 
-    return <div style="margin-right:5px; margin-bottom:5px;">
+    return <div class="NodeContent" style="margin-right:5px; margin-bottom:5px;">
       <input type='text' value={inpVal()} disabled/>
     </div>
   }
