@@ -66,7 +66,8 @@ const NodeEditor = () => {
       inputs:['position','scale'],
       outputs:[],
       position:[0,0,0],
-      scale:[0,0,0]
+      scale:[0,0,0],
+      name:'undefined'
     },
     'InputBox':{
       inputs:[],

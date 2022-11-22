@@ -6,7 +6,7 @@ const ContextMenu = (props) => {
 
     createEffect(()=>{
        switch(props.context[0]){
-        case 'FlowEditor-app' : setType(0);break;
+        case 'FlowEditor-app': case 'viewport' : setType(0);break;
         default: setType(1);break;
        }
     });
