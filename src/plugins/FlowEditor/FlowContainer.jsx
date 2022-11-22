@@ -121,8 +121,6 @@ return (
             {item => 
                 <FlowNode 
                 id={item.id} 
-                inputs={item.inputs}
-                outputs={item.outputs}
                 title={item.title}
                 x={item.x}
                 y={item.y}

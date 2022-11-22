@@ -1,4 +1,5 @@
 import { createSignal, onMount } from "solid-js";
+import { createStore } from "solid-js/store";
 import {updateNode} from '../../plugins/FlowEditor/FlowScript';
 
 const inputBox = (node,FlowStores,setNodeStore) => {
@@ -48,25 +49,37 @@ const signal = (node,FlowStores,setNodeStore) => {
 }
 
 const join = (node,FlowStores,setNodeStore) => {
-    let [inputs, setInputs] = createSignal(node.inputs);
+    let [inputs, setInputs] = createStore({nodeList:node.inputs});
     const updatePort = (i,e) => {
-        console.log(i,e.target.value);
-        // updateNode(FlowStores,node.id, {name:e.target.value});
-        // setNodeStore({editedNode: node.id});
+        let ports = [...inputs.nodeList];
+        ports[i] = e.target.value;
+        updateData(ports);
     }    
 
-    const addPort = () => {
-        const list = inputs();
-        list.push(null)
-        setInputs(list)
+    const updateData = ports => {
+        ports = ports.filter(x => x);
+        updateNode(FlowStores,node.id, {inputs:ports});
+        setNodeStore({editedNode: node.id});
     }
+
+    const addPort = () => {
+        setInputs({nodeList:[...inputs.nodeList,null]})
+    }
+
+    const deletePort = (i) => {
+        let ports = [...inputs.nodeList];
+        ports.splice(i, 1);
+        setInputs({nodeList:ports});
+        updateData(ports);
+    }
+
     return<>
     <div class="listBox">
-    <For each={inputs()}>{(port, i) =>
+    <For each={inputs.nodeList}>{(port, i) =>
         <div class="section3">
             <div class="key">Port Name</div>
             <div class="value"><input type="text" value={port} onChange={e => updatePort(i(),e)}/></div>
-            <div class="delete"><i class="fa-solid fa-trash"></i></div>
+            <div class="delete" onClick={()=>deletePort(i())}><i class="fa-solid fa-trash"></i></div>
         </div>
     }</For>
     </div>

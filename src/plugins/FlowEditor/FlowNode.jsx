@@ -1,8 +1,9 @@
-import { For,  onMount, Show } from "solid-js";
+import { createEffect, For,  onMount, Show } from "solid-js";
 import Moveable from "moveable";
 import {getPropertiesForArrow, createArrowLine, updateNode} from './FlowScript';
 import { windowData ,popupData} from "../../scripts/store";
 import { inputBox, signal } from "./NodeTemplate";
+import { createStore } from "solid-js/store";
 
 const FlowNode = (props) => {
   const [nodeObj , setNodeObj] = props.nodeObj;
@@ -13,6 +14,28 @@ const FlowNode = (props) => {
   const [layout] = props.layoutStore;
   const FlowStores  = windowData[0].flowEditor;
   const [popup, setPopup] = popupData;
+  const [nodeConfigs , setNodeConfigs] = createStore({
+    inputs: [],
+    outputs:[]
+  });
+
+  const updateNodeInputsAndOutputs = () => {
+    const nodeConfig = nodeList().find(x => x.id == props.id);
+    setNodeConfigs({
+      inputs:nodeConfig.inputs,
+      outputs:nodeConfig.outputs
+    })
+  };
+
+  updateNodeInputsAndOutputs();
+
+  createEffect(()=>{
+    if(!popup.open && node.editedNode === props.id){
+      updateNodeInputsAndOutputs();
+    }
+
+  });
+
   const createMoveable = () => {
    const widget =  new Moveable(document.querySelector(`#${layout.id} .viewport`), {
       // dragTarget: document.querySelector(`#${props.id} .FN_head`),
@@ -168,7 +191,7 @@ const FlowNode = (props) => {
           </div>
           <div class={`FN_body FN_node_${props.id}`}>
               <div class={`FN_inputs FN_node_${props.id}`}>
-              <For each={props.inputs}>
+              <For each={nodeConfigs.inputs}>
                   {(item,i) => 
                   <div class={`FN_inputItem FN_port_${i()} FN_node_${props.id}`}>
                     <div class={`FN_draggable FN_port_${i()}  FN_node_${props.id}`} 
@@ -188,7 +211,7 @@ const FlowNode = (props) => {
               </Show>
               </div>
               <div class={`FN_outputs FN_node_${props.id}`}>
-              <For each={props.outputs}>
+              <For each={nodeConfigs.outputs}>
                   {(item, i) => 
                     <div class={`FN_outputItem FN_node_${props.id}`}>
                         <div class={`FN_title FN_port_${i()} FN_node_${props.id}`} draggable="false">{item}</div>
