@@ -123,8 +123,13 @@ const NodeEditor = () => {
   }
 
   const editNode = (e) => {
-    const node = e.find(x => x.includes('FN_node')).split('FN_node_')[1];   
-    setPopup({open:true , type:'editNode', node});
+    try{
+      const node = e.find(x => x.includes('FN_node')).split('FN_node_')[1];   
+      setPopup({open:true , type:'editNode', node});
+    } catch(e){
+      alert('Something went wrong, pleae try again !');
+    }
+
   }
 
   return (
