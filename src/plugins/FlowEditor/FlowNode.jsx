@@ -175,6 +175,7 @@ const FlowNode = (props) => {
     'HTML Widget': () => alert('custom'),
     
     'Javascript' : () => alert('script'),
+    'Box3D': () => {},
 
     'Join' : () => {},
     'Split' : () => {},

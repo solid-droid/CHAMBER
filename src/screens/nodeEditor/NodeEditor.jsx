@@ -62,7 +62,7 @@ const NodeEditor = () => {
       outputs:[],
       name:'undefined'
     },
-    '3D Box':{
+    'Box3D':{
       inputs:['position','scale'],
       outputs:[],
       position:[0,0,0],

@@ -25,9 +25,9 @@ const ContextMenu = (props) => {
               <div class="item" onClick={(e) => props.newNode(e , 'Toggle')}>Toggle</div>
               <div class="item" onClick={(e) => props.newNode(e , 'HTML Widget')}>Custom</div>
             <div class="section" style="margin-top:10px;">Simulator</div>
-              <div class="item" onClick={(e) => props.newNode(e , '3D Box')}>Box</div>
-              <div class="item" onClick={(e) => props.newNode(e , '3D Box')}>Sphere</div>
-              <div class="item" onClick={(e) => props.newNode(e , '3D Box')}>Custom</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Box3D')}>Box</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Box3D')}>Sphere</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Box3D')}>Custom</div>
           </div>
           <div class="column">
             <div class="section">Signals</div>
