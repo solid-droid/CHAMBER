@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AACI,YADQ,CACR,KAAK,CAAA;EACD,KAAK,EAAE,KAAK;CACf",
-    "sources": [
-        "NodeTemplate.scss"
-    ],
-    "names": [],
-    "file": "NodeTemplate.css"
-}
+{"version":3,"sources":["NodeTemplate.scss","NodeTemplate.css"],"names":[],"mappings":"AACI;EACI,YAAA;ACAR","file":"NodeTemplate.css"}

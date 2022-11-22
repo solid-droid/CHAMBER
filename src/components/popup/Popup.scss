@@ -80,6 +80,38 @@
                     height: 25px;
                 }
             }
+
+            .listBox{
+                height: calc(100% - 40px);
+                overflow-y: auto;
+            }
+            .section3{
+                display: flex;
+                grid-gap:15px;  
+            }
+
+            .delete{
+                transition: 0.3s;
+                &:hover{
+                    cursor: pointer;
+                    color: orange;
+                }
+            }
+            .AddPort{
+                border-radius: 10px;
+                border: solid 1px rgb(201, 201, 201);
+                width: 150px;
+                height: 35px;
+                margin-top:10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: 0.3s;
+                &:hover{
+                    cursor: pointer;
+                    border-color: orange;
+                }
+            }
         }
 
         .outputs{

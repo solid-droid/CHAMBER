@@ -47,7 +47,37 @@ const signal = (node,FlowStores,setNodeStore) => {
     </div>
 }
 
+const join = (node,FlowStores,setNodeStore) => {
+    let [inputs, setInputs] = createSignal(node.inputs);
+    const updatePort = (i,e) => {
+        console.log(i,e.target.value);
+        // updateNode(FlowStores,node.id, {name:e.target.value});
+        // setNodeStore({editedNode: node.id});
+    }    
+
+    const addPort = () => {
+        const list = inputs();
+        list.push(null)
+        setInputs(list)
+    }
+    return<>
+    <div class="listBox">
+    <For each={inputs()}>{(port, i) =>
+        <div class="section3">
+            <div class="key">Port Name</div>
+            <div class="value"><input type="text" value={port} onChange={e => updatePort(i(),e)}/></div>
+            <div class="delete"><i class="fa-solid fa-trash"></i></div>
+        </div>
+    }</For>
+    </div>
+    <div class="AddPort" onClick={addPort}>
+        Add Port
+    </div>
+    </>
+}
+
 export {
     inputBox,
-    signal
+    signal,
+    join
 }
