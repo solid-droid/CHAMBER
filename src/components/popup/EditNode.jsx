@@ -1,6 +1,6 @@
 import { windowData } from "../../scripts/store";
 import {getNode} from '../../plugins/FlowEditor/FlowScript';
-import { inputBox, signal, join } from "./ConfigTemplate";
+import { inputBox, signal, join, split } from "./ConfigTemplate";
 
 const EditNode = (props) => {
   const FlowStores  = windowData[0].flowEditor;
@@ -16,7 +16,7 @@ const widgets = {
     'Javascript' : () => alert('script'),
 
     'Join' : () => join(node,FlowStores,setNodeStore),
-    'Split' : () => alert('split'),
+    'Split' : () => split(node,FlowStores,setNodeStore),
 
     'Input Signal': () => signal(node,FlowStores,setNodeStore),
     'Output Signal': () => signal(node,FlowStores,setNodeStore),
