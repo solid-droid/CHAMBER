@@ -129,6 +129,7 @@ const NodeEditor = () => {
       setPopup({open:true , type:'editNode', node});
     } catch(e){
       alert('Something went wrong, pleae try again !');
+      console.log(e);
     }
 
   }

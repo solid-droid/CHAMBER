@@ -16,14 +16,20 @@ const FlowNode = (props) => {
   const [popup, setPopup] = popupData;
   const [nodeConfigs , setNodeConfigs] = createStore({
     inputs: [],
-    outputs:[]
+    outputs:[],
+    title:''
   });
 
   const updateNodeInputsAndOutputs = () => {
     const nodeConfig = nodeList().find(x => x.id == props.id);
+    let title = props?.title;
+    if(['Box3D'].includes(props.title)){
+        title = `${props.title} - ${nodeConfig.name}`
+    }
     setNodeConfigs({
       inputs:nodeConfig.inputs,
-      outputs:nodeConfig.outputs
+      outputs:nodeConfig.outputs,
+      title
     })
   };
 
@@ -167,7 +173,6 @@ const FlowNode = (props) => {
     });
     createMoveable();
   });
-  
   const widgets = {
     'InputBox' : () => inputBox(nodeList,node,popup,updateNode,props.id,FlowStores,layout),
     'Slider': () => alert('slider'),
@@ -188,7 +193,7 @@ const FlowNode = (props) => {
   return (
       <div id={props.id} class="FlowNode" style={`left:${props.x || 0}px; top:${props.y || 0}px;`}>
           <div class={`FN_head FN_node_${props.id}`}>
-              {props.title}
+              {nodeConfigs.title}
           </div>
           <div class={`FN_body FN_node_${props.id}`}>
               <div class={`FN_inputs FN_node_${props.id}`}>
