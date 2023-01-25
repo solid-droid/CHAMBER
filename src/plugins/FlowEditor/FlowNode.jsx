@@ -2,7 +2,7 @@ import { createEffect, For,  onMount, Show } from "solid-js";
 import Moveable from "moveable";
 import {getPropertiesForArrow, createArrowLine, updateNode} from './FlowScript';
 import { windowData ,popupData} from "../../scripts/store";
-import { inputBox, signal } from "./NodeTemplate";
+import { inputBox, signal, slider, toggle, javascript } from "./NodeTemplate";
 import { createStore } from "solid-js/store";
 
 const FlowNode = (props) => {
@@ -175,11 +175,11 @@ const FlowNode = (props) => {
   });
   const widgets = {
     'InputBox' : () => inputBox(nodeList,node,popup,updateNode,props.id,FlowStores,layout),
-    'Slider': () => alert('slider'),
-    'Toggle' : () => alert('Toggle'),
+    'Slider': () => slider(nodeList,node,popup,updateNode,props.id,FlowStores,layout),
+    'Toggle' : () => toggle(nodeList,node,popup,updateNode,props.id,FlowStores,layout),
     'HTML Widget': () => alert('custom'),
     
-    'Javascript' : () => alert('script'),
+    'Javascript' : () => javascript(nodeList,node,popup,updateNode,props.id,FlowStores,layout),
     'Box3D': () => {},
 
     'Join' : () => {},

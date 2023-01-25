@@ -81,12 +81,12 @@ const NodeEditor = () => {
       min:0,
       max:10,
       value:5,
-      steps:1
+      step:1
     },
     'Toggle' : {
       inputs:[],
       outputs:['value'],
-      value:false
+      value:true
     },
     'Javascript' : {
       inputs:['input'],

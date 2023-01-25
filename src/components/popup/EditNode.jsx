@@ -1,6 +1,6 @@
 import { windowData } from "../../scripts/store";
 import {getNode} from '../../plugins/FlowEditor/FlowScript';
-import { inputBox, signal, join, split,box3D } from "./ConfigTemplate";
+import * as template from "./ConfigTemplate";
 
 const EditNode = (props) => {
   const FlowStores  = windowData[0].flowEditor;
@@ -8,20 +8,20 @@ const EditNode = (props) => {
   let node = {}
   node = getNode(props.node , FlowStores);
 const widgets = {
-    'InputBox' : () => inputBox(node,FlowStores,setNodeStore),
-    'Slider': () => alert('slider'),
-    'Toggle' : () => alert('Toggle'),
+    'InputBox' : () => template.inputBox(node,FlowStores,setNodeStore),
+    'Slider': () =>  template.slider(node,FlowStores,setNodeStore),
+    'Toggle' : () =>  template.toggle(node,FlowStores,setNodeStore),
     'HTML Widget': () => alert('custom'),
     
-    'Javascript' : () => alert('script'),
+    'Javascript' : () =>  template.javascript(node,FlowStores,setNodeStore),
 
-    'Join' : () => join(node,FlowStores,setNodeStore),
-    'Split' : () => split(node,FlowStores,setNodeStore),
-    'Box3D': () => box3D(node,FlowStores,setNodeStore),
+    'Join' : () =>  template.join(node,FlowStores,setNodeStore),
+    'Split' : () =>  template.split(node,FlowStores,setNodeStore),
+    'Box3D': () =>  template.box3D(node,FlowStores,setNodeStore),
 
-    'Input Signal': () => signal(node,FlowStores,setNodeStore),
-    'Output Signal': () => signal(node,FlowStores,setNodeStore),
-    'Log Signal': () => signal(node,FlowStores,setNodeStore)
+    'Input Signal': () =>  template.signal(node,FlowStores,setNodeStore),
+    'Output Signal': () =>  template.signal(node,FlowStores,setNodeStore),
+    'Log Signal': () =>  template.signal(node,FlowStores,setNodeStore)
 }
 
 return (
