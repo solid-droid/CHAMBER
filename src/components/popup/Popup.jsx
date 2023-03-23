@@ -8,8 +8,13 @@ export const Popup = (props) => {
     <Show when={popup.open}>
       <div class="popupMask">
         <div class="Popup_Container">
+            <div class="popup_close" onClick={() => setPopup({open:false})}>
+              <div class="symbol">
+                ✖
+              </div>
+            </div>
               <Show when={popup.type=='editNode'}>
-                <EditNode node={popup.node} />
+                <EditNode node={popup.node}/>
               </Show>
           </div>
       </div>

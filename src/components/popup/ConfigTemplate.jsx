@@ -168,7 +168,7 @@ const signal = (node,FlowStores,setNodeStore) => {
 
 const join = (node,FlowStores,setNodeStore) => {
     let [inputs, setInputs] = createStore({nodeList:node.inputs});
-    const deb_update = debounce((ports)=>updateData(ports))
+    const deb_update = debounce((ports)=>updateData(ports),10)
 
     const isValid = (list, value) => list.find(x => x == value) ? false :  true;
     
@@ -234,7 +234,7 @@ const join = (node,FlowStores,setNodeStore) => {
 
 const split = (node,FlowStores,setNodeStore) => {
     let [outputs, setOutputs] = createStore({nodeList:node.outputs});
-    const deb_update = debounce((ports)=>updateData(ports))
+    const deb_update = debounce((ports)=>updateData(ports),10)
     const isValid = (list, value) => list.find(x => x == value) ? false :  true;
 
     const updatePort = (i,e) => {
