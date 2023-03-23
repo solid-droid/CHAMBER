@@ -1,6 +1,8 @@
 import { createSignal, onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 import {updateNode} from '../../plugins/FlowEditor/FlowScript';
+import {popupData} from '../../scripts/store'
+const [popup, setPopup] = popupData;
 
 function debounce(cb, delay = 1000) {
     let timeout
@@ -167,14 +169,26 @@ const signal = (node,FlowStores,setNodeStore) => {
 const join = (node,FlowStores,setNodeStore) => {
     let [inputs, setInputs] = createStore({nodeList:node.inputs});
     const deb_update = debounce((ports)=>updateData(ports))
+
+    const isValid = (list, value) => list.find(x => x == value) ? false :  true;
+    
     const updatePort = (i,e) => {
         let ports = [...inputs.nodeList];
-        ports[i] = e.target.value;
-        setInputs({nodeList:ports});
-        deb_update(ports);
+        if(! e.target.value){
+            alert('empty name');
+            return;
+        }
+        if(isValid(ports, e.target.value)){
+            ports[i] = e.target.value;
+            setInputs({nodeList:ports});
+            deb_update(ports);
+        } else {
+            alert('duplicate');
+        }
+
     }    
 
-    const updateData = ports => {
+    const updateData = (ports) => {
         ports = ports.filter(x => x);
         updateNode(FlowStores,node.id, {inputs:ports});
         setNodeStore({editedNode: node.id});
@@ -184,18 +198,29 @@ const join = (node,FlowStores,setNodeStore) => {
         setInputs({nodeList:[...inputs.nodeList,null]})
     }
 
+    const findConnections = (nodeID = node.id) =>  
+                        (FlowStores.connectionList[0]() || [])
+                        .filter(([from,to]) => to[0] == nodeID )
+                        .map(([from, to])=> to[1]);
+                        
     const deletePort = (i) => {
-        let ports = [...inputs.nodeList];
-        ports.splice(i, 1);
-        setInputs({nodeList:ports});
-        deb_update(ports);
+        const ports = [...inputs.nodeList];
+        const maxIndex = Math.max(...findConnections());
+        if(maxIndex < i+1){
+            ports.splice(i, 1);
+            setInputs({nodeList:ports});
+            deb_update(ports);
+        } else {
+            alert('connection exists')
+        }
+
     }
 
     return<>
     <div class="listBox">
     <For each={inputs.nodeList}>{(port, i) =>
         <div class="section3">
-            <div class="key">Port Name</div>
+            <div class="key">Port {i}: </div>
             <div class="value"><input type="text" value={port} onChange={e => updatePort(i(),e)}/></div>
             <div class="delete" onClick={()=>deletePort(i())}><i class="fa-solid fa-trash"></i></div>
         </div>
@@ -209,10 +234,21 @@ const join = (node,FlowStores,setNodeStore) => {
 
 const split = (node,FlowStores,setNodeStore) => {
     let [outputs, setOutputs] = createStore({nodeList:node.outputs});
+    const deb_update = debounce((ports)=>updateData(ports))
+    const isValid = (list, value) => list.find(x => x == value) ? false :  true;
+
     const updatePort = (i,e) => {
         let ports = [...outputs.nodeList];
-        ports[i] = e.target.value;
-        updateData(ports);
+        if(! e.target.value){
+            alert('empty name');
+            return;
+        }
+        if(isValid(ports, e.target.value)){
+            ports[i] = e.target.value;
+            deb_update(ports);
+        } else {
+            alert('duplicate');
+        }
     }    
 
     const updateData = ports => {
@@ -225,11 +261,23 @@ const split = (node,FlowStores,setNodeStore) => {
         setOutputs({nodeList:[...outputs.nodeList,null]})
     }
 
+    const findConnections = (nodeID = node.id) =>  
+    (FlowStores.connectionList[0]() || [])
+    .filter(([from,to]) => from[0] == nodeID )
+    .map(([from, to])=> from[1]);
+
+
     const deletePort = (i) => {
-        let ports = [...outputs.nodeList];
-        ports.splice(i, 1);
-        setOutputs({nodeList:ports});
-        updateData(ports);
+        const ports = [...outputs.nodeList];
+        const maxIndex = Math.max(...findConnections());
+        if(maxIndex < i+1){
+            ports.splice(i, 1);
+            setOutputs({nodeList:ports});
+            deb_update(ports);
+        } else {
+            alert('connection exists')
+        }
+
     }
 
     return<>

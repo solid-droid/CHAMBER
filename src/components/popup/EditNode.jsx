@@ -1,6 +1,9 @@
 import { windowData } from "../../scripts/store";
 import {getNode} from '../../plugins/FlowEditor/FlowScript';
 import * as template from "./ConfigTemplate";
+import {popupData} from '../../scripts/store'
+
+const [popup, setPopup] = popupData;
 
 const EditNode = (props) => {
   const FlowStores  = windowData[0].flowEditor;
@@ -27,7 +30,12 @@ const widgets = {
 return (
     <div class="EditNode_container">
         <div class="title">Configure Node</div>
-        <div class="Node">
+        <div class="popup_close" onClick={() => setPopup({open:false})}>
+              <div class="symbol">
+                ✖
+              </div>
+        </div>
+        <div class="Node EditNode_content">
             <div class="content">
                 {widgets[node.title]()}
             </div>

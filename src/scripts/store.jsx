@@ -18,8 +18,7 @@ const windowData = createStore({
 const popupData = createStore({
   open:false,
   type:null,
-  conent:null,
-  status:null
+  node:null,
 })
 
 const masterFile = {};
