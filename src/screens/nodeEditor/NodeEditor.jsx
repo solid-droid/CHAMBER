@@ -122,8 +122,13 @@ const NodeEditor = () => {
   }
 
   const deleteExistingNode = (e) => {
-    const node = e.find(x => x.includes('FN_node')).split('FN_node_')[1];   
-    deleteNode(node,FlowStores);
+    try{
+      const node = e.find(x => x.includes('FN_node')).split('FN_node_')[1];   
+      deleteNode(node,FlowStores);
+    } catch(e){
+      alert('Something went wrong.please try again.')
+    }
+
     hideContextMenu();
   }
 

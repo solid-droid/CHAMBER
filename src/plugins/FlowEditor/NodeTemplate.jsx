@@ -97,7 +97,7 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
       layout?.viewer?.pause()
       updateNode(FlowStores, id, {value:e.target.checked})
     }
-    return <div class="nodeContNoDrag NodeContent" style="margin-right:5px; margin-bottom:5px;">
+    return <div class="nodeContNoDrag NodeContent checkboxNode">
               <input type="checkbox" ref={inputBox}
                      onChange={e => updateValue(e)}
                      onBlur={() => layout?.viewer?.resume()}

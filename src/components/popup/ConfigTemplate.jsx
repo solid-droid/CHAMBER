@@ -51,13 +51,6 @@ const inputBox = (node,FlowStores,setNodeStore) => {
 }
 
 const slider = (node,FlowStores,setNodeStore) => {
-    let selectRef;
-    let [type, setType] = createSignal(node.type);
-    const typeChange = e => {
-        setType(e.target.value);
-        updateNode(FlowStores,node.id, {type:type()});
-        setNodeStore({editedNode: node.id});
-    }
     const updateValue = (e,key) => {
         updateNode(FlowStores,node.id, {[key]:e.target.value});
         setNodeStore({editedNode: node.id});
@@ -65,55 +58,33 @@ const slider = (node,FlowStores,setNodeStore) => {
     return <>
         <div class="section">
             <div class="key">Min</div>
-            <div class="value"><input type={type()} value={node.min} onChange={e => updateValue(e, 'min')}/></div>
+            <div class="value"><input value={node.min} onChange={e => updateValue(e, 'min')}/></div>
         </div>
         <div class="section">
             <div class="key">Value</div>
-            <div class="value"><input type={type()} value={node.value} onChange={e => updateValue(e, 'value')}/></div>
+            <div class="value"><input value={node.value} onChange={e => updateValue(e, 'value')}/></div>
         </div>
         <div class="section">
             <div class="key">Max</div>
-            <div class="value"><input type={type()} value={node.max} onChange={e => updateValue(e, 'max')}/></div>
+            <div class="value"><input value={node.max} onChange={e => updateValue(e, 'max')}/></div>
         </div>
         <div class="section">
             <div class="key">Step</div>
-            <div class="value"><input type={type()} value={node.step} onChange={e => updateValue(e, 'step')}/></div>
+            <div class="value"><input value={node.step} onChange={e => updateValue(e, 'step')}/></div>
         </div>
     </> 
 }
 
 const toggle = (node,FlowStores,setNodeStore) => {
-    let selectRef;
-    let [type, setType] = createSignal(node.type);
-    const typeChange = e => {
-        setType(e.target.value);
-        updateNode(FlowStores,node.id, {type:type()});
-        setNodeStore({editedNode: node.id});
-    }
     const updateValue = e => {
-        updateNode(FlowStores,node.id, {value:e.target.value});
+        updateNode(FlowStores,node.id, {value:e.target.checked});
         setNodeStore({editedNode: node.id});
     }
-    onMount(()=>{
-        selectRef.value = node.type;
-    });
     return <>
         <div class="section">
-            <div class="key">Type</div>
-            <div class="value">
-                <select ref={selectRef} name="inputType" onChange={typeChange}>
-                    <option value="number">Number</option>
-                    <option value="text">Text</option>
-                    <option value="time">Time</option>
-                    <option value="date">Date</option>
-                </select>
-            </div>
-        </div>
-        <div class="section">
             <div class="key">Value</div>
-            <div class="value"><input type={type()} value={node.value} onChange={updateValue}/></div>
+            <div class="value"><input type="checkbox" checked={node.value} onChange={updateValue}/></div>
         </div>
-
     </> 
 }
 

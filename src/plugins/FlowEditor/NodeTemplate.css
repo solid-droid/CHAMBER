@@ -13,4 +13,15 @@
   min-width: 30px;
   text-align: center;
 }
+
+.checkboxNode {
+  margin: 5px;
+  width: 50px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
 /*# sourceMappingURL=NodeTemplate.css.map */
