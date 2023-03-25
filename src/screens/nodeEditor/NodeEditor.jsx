@@ -1,8 +1,12 @@
 import { createSignal, onMount } from "solid-js";
 import {FlowContainer} from "../../plugins/FlowEditor/FlowEditor";
+
 import {deleteNode , addNode} from '../../plugins/FlowEditor/FlowScript';
 import { windowData, popupData } from "../../scripts/store";
+
 import ContextMenu from "./ContextMenu";
+import NodeEditorToolbar from "./NodeEditorToolbar";
+
 const NodeEditor = () => {
   const FlowStores  = windowData[0].flowEditor;
   const [layout] = FlowStores.layoutStore;
@@ -135,6 +139,8 @@ const NodeEditor = () => {
   }
 
   return (
+    <>
+    <NodeEditorToolbar></NodeEditorToolbar>
     <div onContextMenu={e => contextMenu(e)} style="height: 100%;width: 100%;">
       <FlowContainer 
       id={id} 
@@ -148,7 +154,7 @@ const NodeEditor = () => {
       editNode={editNode}
       ></ContextMenu>
     </div>
-
+    </>
   )
 }
 

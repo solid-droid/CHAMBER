@@ -27,13 +27,40 @@
 
     .item{
         font-size: 12px;
-        padding: 5px;
+        padding:W 5px;
         padding-bottom: 2px;
         padding-top: 2px;
         transition: 0.3s;
         cursor: pointer;
         &:hover{
             color: orange;
+        }
+    }
+}
+
+.NodeEditorToolbar{
+    z-index: 2;
+    position: absolute;
+    width: 100%;
+    background: #333333;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    .toolBarButton{
+        margin-left: 2px;
+        padding-right: 5px;
+        padding-left: 5px;
+        background-color: rgb(63, 63, 63);
+        color: rgb(177, 177, 177);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover{
+            background-color: rgb(79, 79, 79);
+            color: rgb(185, 185, 185);
         }
     }
 }

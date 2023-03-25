@@ -1,5 +1,6 @@
 import arrowLine from 'arrow-line';
 import { produce } from "solid-js/store";
+import {windowData} from "../../scripts/store";
 
 const createArrow = async ({
     fromNode,
@@ -219,7 +220,7 @@ const getNode = (node, FlowStores) => {
     return nodeList().find(x => x.id == node);
 }
 
-const clearFlowEditor = (FlowStores) => {
+const clearFlowEditor = (FlowStores = windowData[0].flowEditor) => {
     const [nodeList , setNodeList] = FlowStores.nodeList;
     const [connectionList, setConnectionList] = FlowStores.connectionList;
     const [nodeStore , setNodeStore] = FlowStores.nodeStore;
