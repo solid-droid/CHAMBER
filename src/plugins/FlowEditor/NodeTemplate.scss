@@ -3,3 +3,12 @@
         width: 120px;
     }
 }
+
+.sliderNode{
+    display: flex;
+    grid-gap:5px;
+    .sliderDisplayValue{
+        min-width:30px;
+        text-align: center;
+    }
+}

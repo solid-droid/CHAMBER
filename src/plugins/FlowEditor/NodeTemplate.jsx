@@ -71,9 +71,11 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
       layout?.viewer?.pause()
       updateNode(FlowStores, id, {value:e.target.value})
     }
-    return <div class="nodeContNoDrag NodeContent" style="margin-right:5px; margin-bottom:5px;">
+    return <div class="nodeContNoDrag NodeContent sliderNode" style="margin-right:5px; margin-bottom:5px;">
+              <div class="sliderDisplayValue">{inpVal()}</div>
               <input type='range' min={inpMin()} max={inpMax()} value={inpVal()} step={inpStep()}
                      onChange={e => updateValue(e)}
+                     oninput = {e => setVal(e.target.value)}
                      onBlur={() => layout?.viewer?.resume()}
               />
           </div>
