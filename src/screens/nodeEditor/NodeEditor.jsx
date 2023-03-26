@@ -26,16 +26,20 @@ const NodeEditor = () => {
     const classes = typeof e.target.className === 'string' ?  e.target.className.split(/\s+/) : [];
     if(!['','FN_draggable'].includes(classes[0])){
       setContext(classes);
-      let left = e.clientX , top = e.clientY-50;
+      const _width = $('#FlowEditor-app').width();
+      const _height = $('#FlowEditor-app').height();
+      const _top = $('#FlowEditor-app')[0].getBoundingClientRect().top;
+      const _left = $('#FlowEditor-app')[0].getBoundingClientRect().left;
+      let left = e.clientX-_left , top = e.clientY-_top;
 
-      if(window.innerWidth - left < 200){
+      if(_width- left < 200){
         left-=140;
       }
 
      const boxH = parseInt($('#FlowContextMenu').css('height').split('px')[0]);
-     const midMin = window.innerHeight/2 - boxH/2 - boxH/3;
-     const midMax = window.innerHeight/2 + boxH/2 - boxH/3;
-     if(window.innerHeight - top < boxH + 50){
+     const midMin = _height/2 - boxH/2 - boxH/3;
+     const midMax = _height/2 + boxH/2 - boxH/3;
+     if(_height - top < boxH + 50){
       if( midMin <top && midMax>top)
       top-=boxH/2
       else
@@ -131,11 +135,13 @@ const NodeEditor = () => {
     }
   }
   const createNewNode = (e,type) => {
+    const _top = $('#FlowEditor-app')[0].getBoundingClientRect().top;
+    const _left = $('#FlowEditor-app')[0].getBoundingClientRect().left;
     addNode(FlowStores,{
       title:type,
       ...config[type],
-      x:(e.clientX-layout.x)/layout.z,
-      y:(e.clientY-60-layout.y)/layout.z,
+      x:(e.clientX-layout.x-_left)/layout.z,
+      y:(e.clientY-layout.y-_top)/layout.z,
     });
     hideContextMenu();
   }
