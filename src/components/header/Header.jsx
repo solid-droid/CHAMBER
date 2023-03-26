@@ -30,9 +30,6 @@ export const Header = () => {
 
       <div class="Menu MenuList">
         <div class={menu.controls ? 'MenuItem last active' : 'last MenuItem'} title='Controls' onClick={() => setMenuState('controls')}>
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-        </div>
-        <div class={menu.debugger ? 'MenuItem active' : 'MenuItem'} title='Debug' onClick={() => setMenuState('debugger')}>
           <i class="fa-solid fa-terminal"></i>
         </div>
       </div>

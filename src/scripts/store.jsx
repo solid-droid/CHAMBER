@@ -8,7 +8,6 @@ const openMenu = createStore({
     analytics:false,
     market:false,
     controls: false,
-    debugger : false
   });
 
 const windowData = createStore({

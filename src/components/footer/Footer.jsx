@@ -2,6 +2,6 @@
 import './Footer.css';
 export const Footer = () => {
   return (
-    <div class="footer">Ready //</div>
+    <div class="footer"></div>
   )
 }

@@ -9,7 +9,6 @@ import NodeEditor from '../../screens/nodeEditor/NodeEditor'
 import Connections from '../../screens/connections/Connections'
 import Simulation from '../../screens/simulation/Simulation'
 import Controls from '../../screens/controls/Controls'
-import Debug from '../../screens/debug/Debug'
 
 export const Body = () => {
   const [menu, setMenu] = openMenu;
@@ -44,9 +43,6 @@ export const Body = () => {
     });
     registerRenderer['Controls'] = _.once(() =>{
       registerWindow('Controls' , 'controls')
-    });
-    registerRenderer['Debugger'] = _.once(() =>{
-      registerWindow('Debugger' , 'debugger')
     });
 
     layout.on( 'stackCreated', function( stack ){
@@ -104,7 +100,6 @@ export const Body = () => {
     'nodeEditor',
     'simulator',
     'controls',
-    'debugger'
   ];
 
   const components = [
@@ -113,7 +108,6 @@ export const Body = () => {
     <NodeEditor/>,
     <Simulation/>,
     <Controls/>,
-    <Debug/>
   ];
 
   const TabName =     
@@ -121,8 +115,7 @@ export const Body = () => {
   'Signals',
   'Blueprint',
   'Simulator',
-  'Controls',
-  'Debugger'];
+  'Controls'];
     
   onMount(() =>{
 
