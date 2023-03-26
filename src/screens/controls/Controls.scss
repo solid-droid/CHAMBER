@@ -7,29 +7,8 @@
     box-shadow: 0px 0px 2px 2px #818181;
     border-radius: 5px;
     overflow: hidden;
-    padding: 2px;;
-    .terminal-output>:first-child{
-        display: none;
-    }
-    ::-webkit-scrollbar {
-        width: 5px;
-        border-radius: 5px;
-      }
-      
-      /* Track */
-      ::-webkit-scrollbar-track {
-        background: #3c3c3c; 
-        border-radius: 5px;
-      }
-       
-      /* Handle */
-      ::-webkit-scrollbar-thumb {
-        background: #959595; 
-        border-radius: 5px;
-      }
-      
-      /* Handle on hover */
-      ::-webkit-scrollbar-thumb:hover {
-        background: #c1c1c1; 
-      }
+    padding: 2px;
+    // .terminal-output>:first-child{
+    //     display: none;
+    // }
 }

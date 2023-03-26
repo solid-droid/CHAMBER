@@ -20,11 +20,20 @@ const popupData = createStore({
   node:null,
 })
 
+const terminalSignal = createStore({
+  clear : false,
+  echo : null,
+  progressBar: false,
+  progressPercent: 0,
+  progressWidth: 50
+})
+
 const masterFile = {};
 
 export {
     openMenu,
     windowData,
     masterFile,
-    popupData
+    popupData,
+    terminalSignal
 }

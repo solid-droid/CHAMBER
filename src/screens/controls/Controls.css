@@ -9,31 +9,5 @@
   border-radius: 5px;
   overflow: hidden;
   padding: 2px;
-  /* Track */
-  /* Handle */
-  /* Handle on hover */
-}
-
-#debugger .terminal-output > :first-child {
-  display: none;
-}
-
-#debugger ::-webkit-scrollbar {
-  width: 5px;
-  border-radius: 5px;
-}
-
-#debugger ::-webkit-scrollbar-track {
-  background: #3c3c3c;
-  border-radius: 5px;
-}
-
-#debugger ::-webkit-scrollbar-thumb {
-  background: #959595;
-  border-radius: 5px;
-}
-
-#debugger ::-webkit-scrollbar-thumb:hover {
-  background: #c1c1c1;
 }
 /*# sourceMappingURL=Controls.css.map */
