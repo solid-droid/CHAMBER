@@ -18,6 +18,7 @@ const widgets = {
     'Join' : () =>  template.join(node,FlowStores,setNodeStore),
     'Split' : () =>  template.split(node,FlowStores,setNodeStore),
     'Box3D': () =>  template.box3D(node,FlowStores,setNodeStore),
+    'Sphere3D': () =>  template.sphere3D(node,FlowStores,setNodeStore),
 
     'Input Signal': () =>  template.signal(node,FlowStores,setNodeStore),
     'Output Signal': () =>  template.signal(node,FlowStores,setNodeStore),

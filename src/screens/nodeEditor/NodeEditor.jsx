@@ -73,6 +73,13 @@ const NodeEditor = () => {
       scale:[0,0,0],
       name:'undefined'
     },
+    'Sphere3D':{
+      inputs:['position','scale'],
+      outputs:[],
+      position:[0,0,0],
+      scale:[0,0,0],
+      name:'undefined'
+    },
     'InputBox':{
       inputs:[],
       outputs:['value'],

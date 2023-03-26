@@ -23,11 +23,11 @@ const ContextMenu = (props) => {
               <div class="item" onClick={(e) => props.newNode(e , 'InputBox')}>InputBox</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Slider')}>Slider</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Toggle')}>Toggle</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'HTML Widget')}>Custom</div>
+              {/* <div class="item" onClick={(e) => props.newNode(e , 'HTML Widget')}>Custom</div> */}
             <div class="section" style="margin-top:10px;">Simulator</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Box3D')}>Box</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Box3D')}>Sphere</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Box3D')}>Custom</div>
+              <div class="item" onClick={(e) => props.newNode(e , 'Sphere3D')}>Sphere</div>
+              {/* <div class="item" onClick={(e) => props.newNode(e , 'Box3D')}>Custom</div> */}
           </div>
           <div class="column">
             <div class="section">Signals</div>
@@ -37,7 +37,7 @@ const ContextMenu = (props) => {
             <div class="section" style="margin-top:10px;">Logic</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Join')}>Join</div>
               <div class="item" onClick={(e) => props.newNode(e , 'Split')}>Split</div>
-              <div class="item" onClick={(e) => props.newNode(e , 'Javascript')}>Javascript</div>
+              {/* <div class="item" onClick={(e) => props.newNode(e , 'Javascript')}>Javascript</div> */}
           </div>
           </div>
         </Show>

@@ -275,12 +275,24 @@ const box3D = (node,FlowStores,setNodeStore) => {
     </div>
 }
 
+const sphere3D = (node,FlowStores,setNodeStore) => {
+    const updateValue = e => {
+        updateNode(FlowStores,node.id, {name:e.target.value});
+        setNodeStore({editedNode: node.id});
+    }    
+    return <div class="section">
+        <div class="key">Name</div>
+        <div class="value"><input type="text" value={node.name} onChange={updateValue}/></div>
+    </div>
+}
+
 export {
     inputBox,
     signal,
     join,
     split,
     box3D,
+    sphere3D,
     slider,
     toggle,
     javascript

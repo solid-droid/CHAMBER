@@ -23,7 +23,7 @@ const FlowNode = (props) => {
   const updateNodeInputsAndOutputs = () => {
     const nodeConfig = nodeList().find(x => x.id == props.id);
     let title = props?.title;
-    if(['Box3D'].includes(props.title)){
+    if(['Box3D', 'Sphere3D'].includes(props.title)){
         title = `${props.title} - ${nodeConfig.name}`
     }
     setNodeConfigs({
@@ -181,6 +181,7 @@ const FlowNode = (props) => {
     
     'Javascript' : () => javascript(nodeList,node,popup,updateNode,props.id,FlowStores,layout),
     'Box3D': () => {},
+    'Sphere3D': () => {},
 
     'Join' : () => {},
     'Split' : () => {},
