@@ -263,6 +263,15 @@ const clearFlowEditor = (FlowStores = windowData[0].flowEditor) => {
 };
 
 
+const rescaleSVG = () => {
+    const id = 'FlowEditor-app';
+    const FlowStores = windowData[0].flowEditor
+    const [layout, setLayout] = FlowStores.layoutStore;
+    $(`#${id}_connectorSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
+    $(`#${id}_connectorSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
+}
+
+
 export {
     createArrow,
     drawConnections,
@@ -275,5 +284,6 @@ export {
     addNode,
     deleteNode,
     updateNode,
-    getNode
+    getNode,
+    rescaleSVG
 }

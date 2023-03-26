@@ -54,37 +54,43 @@ const NodeEditor = () => {
     'Input Signal':{
       inputs:[],
       outputs:['output'],
-      name:'undefined'
+      name:'undefined',
+      dataflow: 'input'
     },
     'Output Signal':{
       inputs:['input'],
       outputs:[],
-      name:'undefined'
+      name:'undefined',
+      dataflow: 'output'
     },
     'Log Signal':{
       inputs:['input'],
       outputs:[],
-      name:'undefined'
+      name:'undefined',
+      dataflow: 'output'
     },
     'Box3D':{
       inputs:['position','scale'],
       outputs:[],
       position:[0,0,0],
       scale:[0,0,0],
-      name:'undefined'
+      name:'undefined',
+      dataflow: 'output'
     },
     'Sphere3D':{
       inputs:['position','scale'],
       outputs:[],
       position:[0,0,0],
       scale:[0,0,0],
-      name:'undefined'
+      name:'undefined',
+      dataflow: 'output'
     },
     'InputBox':{
       inputs:[],
       outputs:['value'],
       value:0,
-      type:'number'
+      type:'number',
+      dataflow: 'input'
     },
     'Slider':{
       inputs:[],
@@ -92,30 +98,36 @@ const NodeEditor = () => {
       min:0,
       max:10,
       value:5,
-      step:1
+      step:1,
+      dataflow: 'input'
     },
     'Toggle' : {
       inputs:[],
       outputs:['value'],
-      value:true
+      value:true,
+      dataflow: 'input'
     },
     'Javascript' : {
       inputs:['input'],
       outputs:['output'],
-      script:''
+      script:'',
+      dataflow: 'control'
     },
     'Join' : {
       inputs:['a','b','c','d'],
       outputs:['value'],
+      dataflow: 'control'
     },
     'Split' : {
       inputs:['value'],
       outputs:['a','b','c','d'],
+      dataflow: 'control'
     },
     'HTML Widget' : {
       inputs:['input'],
       outputs:['output'],
-      html:''
+      html:'',
+      dataflow: 'control'
     }
   }
   const createNewNode = (e,type) => {

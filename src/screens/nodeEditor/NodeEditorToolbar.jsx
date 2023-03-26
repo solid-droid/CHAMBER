@@ -1,4 +1,4 @@
-import {clearFlowEditor} from '../../plugins/FlowEditor/FlowScript'
+import {clearFlowEditor, rescaleSVG} from '../../plugins/FlowEditor/FlowScript'
 import { importJSON, updateMasterFile, clear } from '../../scripts/scripts'
 import { masterFile } from "../../scripts/store";
 
@@ -13,6 +13,7 @@ const NodeEditorToolbar = () => {
           const _masterFile = JSON.parse(JSON.stringify(masterFile));
           clear();
           importJSON(_masterFile);
+          rescaleSVG();
         }}>
             Refresh
         </div>

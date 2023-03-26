@@ -1,4 +1,5 @@
 import { terminalSignal } from "../../scripts/store"
+import { run, pause } from "../../scripts/executer";
 const ControlsToolbar = () => {
   const [terminal , setTerminal] = terminalSignal;
   const fr = new FileReader();
@@ -6,20 +7,21 @@ const ControlsToolbar = () => {
   fr.onload = e => { 
     const json = JSON.parse(e.target.result);
     setTerminal({import:true, logConfig:json})
+    $('#selectedLog')[0].value = '';
   }
 
   const importProject = () => {
-    const files = document.getElementById('selectFiles').files;
+    const files = document.getElementById('selectedLog').files;
     if (files.length > 0) {
       fr.readAsText(files.item(0));
     }
   }
   return (
     <div class="NodeEditorToolbar">
-        <div class="toolBarButton" onClick={() => setTerminal({progressBar : true, progressPercent: terminal.progressPercent + 10})}>
+        <div class="toolBarButton" onClick={() => run()}>
             Play
         </div>
-        <div class="toolBarButton" onClick={() => setTerminal({echo : 'done'})}>
+        <div class="toolBarButton" onClick={() => pause()}>
             Pause
         </div>
         <div class="toolBarButton" onClick={() => setTerminal({export:true})}>
@@ -34,7 +36,7 @@ const ControlsToolbar = () => {
         <div class="toolBarButton" onClick={() => alert('Not ready')}>
             Help
         </div>
-        <input ref={ref.file} type="file" id="selectFiles" value="Import" onInput={importProject} hidden/>
+        <input ref={ref.file} type="file" id="selectedLog" value="Import" onInput={importProject} hidden/>
     </div>
   )
 }

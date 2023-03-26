@@ -1,3 +1,4 @@
+import { rescaleSVG } from "../../plugins/FlowEditor/FlowScript";
 import { exportFile, importJSON, clear } from "../../scripts/scripts";
 import { masterFile } from "../../scripts/store";
 import './Workspace.css';
@@ -9,7 +10,9 @@ function Workspace(params) {
     ref.projectName.value = json.info.project;
     ref.authorName.value = json.info.author;
     ref.description.value = json.info.description;
-    importJSON(json)
+    importJSON(json);
+    $('#selectFiles')[0].value = '';
+    rescaleSVG();
   }
 
   const importProject = () => {
