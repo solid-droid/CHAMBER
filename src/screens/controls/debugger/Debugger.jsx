@@ -1,6 +1,7 @@
 import { createEffect } from "solid-js";
 import { openMenu } from "../../../scripts/store";
 import { terminalSignal } from "../../../scripts/store";
+import { createFile } from "../../../scripts/scripts";
 const Debugger = () => {
     let term;
     let progress;
@@ -13,6 +14,20 @@ const Debugger = () => {
             term?.echo('> '+_terminal.echo)
         }
         setTerminal({echo:null});
+    });
+
+    createEffect(()=>{
+        if(_terminal.import){
+            term.import_view(_terminal.logConfig);
+            setTerminal({import:false, logConfig:null});
+        }
+    });
+
+    createEffect(()=>{
+        if(_terminal.export){
+            createFile('logConfig',term.export_view());
+            setTerminal({export:false});
+        }
     });
 
     createEffect(()=>{

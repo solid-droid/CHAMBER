@@ -13,16 +13,22 @@ const updateMasterFile = () =>{
     };
 }
 
-const exportFile =  (exportName = 'project') => {
-    updateMasterFile();
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(masterFile));
+const createFile = (fileName, fileObj) => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fileObj));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href",     dataStr);
-    downloadAnchorNode.setAttribute("download", exportName + ".json");
+    downloadAnchorNode.setAttribute("download", fileName + ".json");
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
 }
+
+const exportFile =  (exportName = 'project') => {
+    updateMasterFile();
+    createFile(exportName,masterFile);
+}
+
+
 
 const importJSON = (JSON=masterFile) => {
     if(JSON.flowEditor){
@@ -46,5 +52,6 @@ export {
     updateMasterFile,
     exportFile,
     importJSON,
-    clear
+    clear,
+    createFile
 }

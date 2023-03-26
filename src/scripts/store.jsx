@@ -25,7 +25,10 @@ const terminalSignal = createStore({
   echo : null,
   progressBar: false,
   progressPercent: 0,
-  progressWidth: 50
+  progressWidth: 50,
+  export:false,
+  import:false, 
+  logConfig:null
 })
 
 const masterFile = {};
