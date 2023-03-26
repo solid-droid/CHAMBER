@@ -205,13 +205,16 @@ const addNode = (FlowStores, nodeConfig) => {
 
 const updateNode = (FlowStores, id, nodeConfig) => {
     const [nodeList , setNodeList] = FlowStores.nodeList;
+    const [nodeStore, setNodeStore] = FlowStores.nodeStore;
+   
     setNodeList(_node => {
         const k = _node.find(i => i.id == id)
         Object.keys(nodeConfig).forEach(x => {
             k[x] = nodeConfig[x]
         });
         return _node;
-      });
+    });
+    setNodeStore({editedNode:id})
     
 }
 
