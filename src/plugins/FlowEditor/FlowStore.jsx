@@ -5,6 +5,7 @@ const createFlowStores = () => {
     const nodeStore = createStore({
       selectedNode: null,
       editedNode:null,
+      executeNode:null,
       isDragging: false,
       nodeCounter:0
     });

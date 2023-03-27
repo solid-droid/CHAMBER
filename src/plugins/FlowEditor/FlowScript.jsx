@@ -214,7 +214,7 @@ const updateNode = (FlowStores, id, nodeConfig) => {
         });
         return _node;
     });
-    setNodeStore({editedNode:id})
+    setNodeStore({editedNode:id, executeNode:id})
     
 }
 

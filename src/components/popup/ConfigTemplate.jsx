@@ -21,11 +21,11 @@ const inputBox = (node,FlowStores,setNodeStore) => {
     const typeChange = e => {
         setType(e.target.value);
         updateNode(FlowStores,node.id, {type:type()});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }
     const updateValue = e => {
         updateNode(FlowStores,node.id, {value:e.target.value});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }
     onMount(()=>{
         selectRef.value = node.type;
@@ -53,7 +53,7 @@ const inputBox = (node,FlowStores,setNodeStore) => {
 const slider = (node,FlowStores,setNodeStore) => {
     const updateValue = (e,key) => {
         updateNode(FlowStores,node.id, {[key]:e.target.value});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }
     return <>
         <div class="section">
@@ -78,7 +78,7 @@ const slider = (node,FlowStores,setNodeStore) => {
 const toggle = (node,FlowStores,setNodeStore) => {
     const updateValue = e => {
         updateNode(FlowStores,node.id, {value:e.target.checked});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }
     return <>
         <div class="section">
@@ -94,11 +94,11 @@ const javascript = (node,FlowStores,setNodeStore) => {
     const typeChange = e => {
         setType(e.target.value);
         updateNode(FlowStores,node.id, {type:type()});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }
     const updateValue = e => {
         updateNode(FlowStores,node.id, {value:e.target.value});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }
     onMount(()=>{
         selectRef.value = node.type;
@@ -126,7 +126,7 @@ const javascript = (node,FlowStores,setNodeStore) => {
 const signal = (node,FlowStores,setNodeStore) => {
     const updateValue = e => {
         updateNode(FlowStores,node.id, {name:e.target.value});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }    
     return <div class="section">
         <div class="key">Name</div>
@@ -159,7 +159,7 @@ const join = (node,FlowStores,setNodeStore) => {
     const updateData = (ports) => {
         ports = ports.filter(x => x);
         updateNode(FlowStores,node.id, {inputs:ports});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }
 
     const addPort = () => {
@@ -222,7 +222,7 @@ const split = (node,FlowStores,setNodeStore) => {
     const updateData = ports => {
         ports = ports.filter(x => x);
         updateNode(FlowStores,node.id, {outputs:ports});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }
 
     const addPort = () => {
@@ -267,7 +267,7 @@ const split = (node,FlowStores,setNodeStore) => {
 const box3D = (node,FlowStores,setNodeStore) => {
     const updateValue = e => {
         updateNode(FlowStores,node.id, {name:e.target.value});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }    
     return <div class="section">
         <div class="key">Name</div>
@@ -278,7 +278,7 @@ const box3D = (node,FlowStores,setNodeStore) => {
 const sphere3D = (node,FlowStores,setNodeStore) => {
     const updateValue = e => {
         updateNode(FlowStores,node.id, {name:e.target.value});
-        setNodeStore({editedNode: node.id});
+        setNodeStore({editedNode: node.id, executeNode:node.id});
     }    
     return <div class="section">
         <div class="key">Name</div>

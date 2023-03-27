@@ -61,7 +61,7 @@ const execute = () => {
     const getPortList = (id, _from=false) => connections.filter(([from,to])=> _from ? from[0] == id : to[0]== id)
     const findOutput = (arr, prevNode) => {
         let value = [];
-        arr.forEach(x => {
+        arr?.forEach(x => {
             if(x.dataflow === 'output'){
                 x.nodeValue = findOutput(x.parents, x);
             } else {
@@ -116,13 +116,19 @@ const getString = val => {
 }
 
 const broadcastOutput = outputs => {
+    let dat = '', showCurser = false;
     outputs.forEach(item => {
         if(item.title=='Log Signal'){
-            setTerminal({
-                echo: `${item.name}: ${JSON.stringify(item.nodeValue)}`
-            })
+            if(showCurser)
+            dat+='> '
+            else 
+            showCurser = true;
+
+            dat+=`${item.name}: ${JSON.stringify(item.nodeValue)} \n`
         }
-    })
+    });
+    dat = dat.trim();
+    (dat !== '' && setTerminal({echo: dat}));
 }
 
 const run = () => {     
@@ -145,8 +151,8 @@ const pause = () => {
 }
 
 createEffect(()=>{
-    if(nodeStore.editedNode){
-        setNodeStore({editedNode:null})
+    if(nodeStore.executeNode){
+        setNodeStore({executeNode:null})
         run();
     }
 })
