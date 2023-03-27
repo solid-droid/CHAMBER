@@ -93,10 +93,14 @@ const FlowNode = (props) => {
 
   }
 
-  const getXY = (e) => ({
-            x:e.clientX / layout.z, 
-            y:(e.clientY - 55) / layout.z
-          });
+  const getXY = (e) => {
+    const _top = $('#FlowEditor-app')[0].getBoundingClientRect().top;
+    const _left = $('#FlowEditor-app')[0].getBoundingClientRect().left;
+    return {
+          x:(e.clientX-_left) / layout.z, 
+          y:(e.clientY - _top) / layout.z
+        }
+    };
   const beginGhostConnection = e =>{
     $(`#${layout.id} .ghostSVG`).css({top:-layout.y/layout.z, left:-layout.x/layout.z});
     $(`#${layout.id} .ghostSVG`).css({width:`${100/layout.z}vw`, height: `${100/layout.z}vh`});
