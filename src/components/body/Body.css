@@ -1,11 +1,42 @@
-.body{
-    background-color: #282828;
-    height: calc(100vh - 34px);
-    overflow: hidden;
+.body {
+  background-color: #282828;
+  height: calc(100vh - 34px);
+  overflow: hidden;
 }
 
-.screen{
-    border: solid 1px;
-    width: 500px;
-    height: 100px;
+.screen {
+  border: solid 1px;
+  width: 500px;
+  height: 100px;
 }
+
+#startScreen {
+  position: absolute;
+  padding: 40px;
+  z-index: 1;
+  width: calc(100% - 80px);
+  height: calc(100% - 115px);
+  background-color: #141414;
+  color: #3f3f3f;
+}
+
+#startScreen h1, #startScreen h2, #startScreen h3 {
+  margin: 0;
+}
+
+#startScreen h1 span, #startScreen h2 span, #startScreen h3 span {
+  font-size: 18px;
+}
+
+#startScreen li {
+  font-size: 20px;
+}
+
+#startScreen .break {
+  height: 30px;
+}
+
+#startScreen div {
+  font-size: 20px;
+}
+/*# sourceMappingURL=Body.css.map */

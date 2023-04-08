@@ -12,7 +12,7 @@ import Controls from '../../screens/controls/Controls'
 
 export const Body = () => {
   const [menu, setMenu] = openMenu;
-  let layout, registerRenderer = {};
+  let layout, registerRenderer = {}, openViews = [];
   ///////////////////////
   function beginLayout(){
     const config = {
@@ -124,10 +124,16 @@ export const Body = () => {
       render(() => components[i], document.getElementById(`screen_${name}`));
       createEffect(()=>{
         if(menu[menuItems[i]]){
+          openViews[i]=true;
+          $('#startScreen').hide();
           registerRenderer[name]();
           addWindow(name);
         } else {
+          openViews[i] = false;
           closeWindow(name);
+          if(!openViews.some(x => x)){
+            $('#startScreen').show();
+          }
         }
       });
 
@@ -137,6 +143,30 @@ export const Body = () => {
 
   return (
   <>
-    <div class="body" id="layoutContainer"></div>
+    <div class="body" id="layoutContainer">
+      <div id="startScreen">
+        <h1>CHAMBER <span>v0.01 Alpha</span></h1>
+        <h3>Robotics Simulation and HMI Platform</h3>
+        <div class="break"></div>
+        <h2>Getting Started</h2>
+        <ul>
+          <li><b>Blueprint View</b> lets you create your robot workflow using the node editor.</li>
+          <li><b>Simulator View</b> lets you see live simulation of your robot before deploying.</li>
+          <li><b>Controls View</b> lets you control, record, debug and watch signal logs.</li>
+          <li><b>Signals View</b> lets you create signals for communicating with outside world (Output and Input signals).</li>
+          <li><b>Analytics View</b> lets you Analyse the data collected from your robot.</li>
+          <li><b>Workspace View</b> lets you save, export , import your project.</li>
+          <li><b>Market View</b> lets you import community created blueprints to your project.</li>
+        </ul>
+        <div class="break"></div>
+        <h2>Why Chamber ?</h2>
+        <ul>
+          <li>Robotics is already hard, mainly due to the hardware requirements and there's no easy way to simulate robots before buying the hardware. </li>
+          <li>CHAMBER as a platform is buid to make the simulation and software part simple and accesible for everyone.</li>
+        </ul>
+        {/* <div class="break"></div>
+        <h2>Get in touch : <span>Nikhil M Jeby</span></h2> */}
+      </div>
+    </div>
   </>)
 }
