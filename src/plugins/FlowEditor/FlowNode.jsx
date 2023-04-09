@@ -197,7 +197,13 @@ const FlowNode = (props) => {
 }
 
   return (
-      <div id={props.id} class="FlowNode" style={`left:${props.x || 0}px; top:${props.y || 0}px;`}>
+      <div id={props.id} class="FlowNode" style={`left:${props.x || 0}px; top:${props.y || 0}px;`} 
+      onMouseDown={e =>{
+        if(window.currentSelectedNode)
+          $('#'+window.currentSelectedNode).css({'z-index':2});
+        window.currentSelectedNode = e.currentTarget.id;
+        $('#'+window.currentSelectedNode).css({'z-index':3});
+      }}>
           <div class={`FN_head FN_node_${props.id}`}>
               {nodeConfigs.title}
           </div>
