@@ -1,4 +1,5 @@
 import { createSignal, createEffect, onMount } from "solid-js";
+import { Select, createOptions  } from "@thisbeyond/solid-select";
 
 const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
     const [inpType , setType] = createSignal('number');
@@ -72,12 +73,12 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
       updateNode(FlowStores, id, {value:e.target.value})
     }
     return <div class="nodeContNoDrag NodeContent sliderNode" style="margin-right:5px; margin-bottom:5px;">
-              <div class="sliderDisplayValue">{inpVal()}</div>
               <input type='range' min={inpMin()} max={inpMax()} value={inpVal()} step={inpStep()}
                      onChange={e => updateValue(e)}
                      oninput = {e => setVal(e.target.value)}
                      onBlur={() => layout?.viewer?.resume()}
               />
+              <div class="sliderDisplayValue">{inpVal()}</div>
           </div>
   }
 
@@ -106,29 +107,87 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
   }
 
   const javascript = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
-    const [inpType , setType] = createSignal('number');
     const [inpVal , setVal] = createSignal(0);
     createEffect(()=>{
       if(!popup.open && node.editedNode === id){
         const dat = nodeList().find(x => x.id == id);
-        setType(dat.type);
         setVal(dat.value);
       }
     })
     onMount(()=>{
         const dat = nodeList().find(x => x.id == id);
-        setType(dat.type);
         setVal(dat.value);
     });
+    
+    //create group workaround from solid-select.js library
+    const createGroupedOptions = (groups) => {
+      const values = groups.reduce((values, group) => {
+        values.push(
+          ...group.options.map((item) => ({ ...item, group: group.name }))
+        );
+        return values;
+      }, []);
+    
+      const props = createOptions(values, { key: "name" });
+      const originalOptions = props.options;
+    
+      props.options = (inputValue) => {
+        const options = originalOptions(inputValue);
+    
+        const grouped = options.reduce((result, item) => {
+          const group = item.value.group;
+          if (!result.has(group)) result.set(group, []);
+          result.get(group).push(item);
+          return result;
+        }, new Map());
+    
+        const groupedOptions = [];
+        for (const [groupName, options] of grouped.entries()) {
+          groupedOptions.push({
+            label: <span class="text-sm uppercase">{groupName}</span>,
+            value: groupName,
+            disabled: true,
+          });
+          groupedOptions.push(...options);
+        }
+    
+        return groupedOptions;
+      };
+    
+      return props;
+    };
+
+    const props = createGroupedOptions([
+      {
+        name: "Arithmetic Operations",
+        options: [
+          { name: "Sum" },
+          { name: "Difference" },
+          { name: "Multiply" },
+        ],
+      },
+      {
+        name: "State Management",
+        options: [
+          { name: "Static Variable" },
+          { name: "Trigger Variable"}
+        ],
+      },
+    ]);
+
     const updateValue = e => {
-      layout?.viewer?.pause()
-      updateNode(FlowStores, id, {value:e.target.value})
+      // updateNode(FlowStores, id, {value:e.target.value})
     }
-    return <div class="nodeContNoDrag NodeContent" style="margin-right:5px; margin-bottom:5px;">
-              <input type={inpType()} value={inpVal()} 
-                     onChange={e => updateValue(e)}
-                     onBlur={() => layout?.viewer?.resume()}
+    return <div class="nodeContNoDrag NodeContent scriptNode" style="margin-right:5px; margin-bottom:5px;">
+              <Select 
+              {...props}
+              class="customSelect"
+              value={inpVal()} 
+              onFocus={e => layout?.viewer?.pause()}
+              onBlur={e => layout?.viewer?.resume()}
+              onChange={e => updateValue(e)}
               />
+              <div class="scriptInfoButton" title="Open Script"><i class="fa-solid fa-file-code"></i></div>
           </div>
   }
 

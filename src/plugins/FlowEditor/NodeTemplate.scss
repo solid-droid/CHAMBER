@@ -1,6 +1,65 @@
+.scriptNode{
+    display: flex;
+    .scriptInfoButton{
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 1px;
+        cursor: pointer;
+        transition: 0.3s;
+        color: #cccccc;
+        &:hover{
+            color: rgb(243, 243, 243);
+        }
+    }
+}
 .NodeContent{
     input{
         width: 120px;
+    }
+    .customSelect{
+        .solid-select-container {
+            background-color: #9a9a9a;
+          }
+          .solid-select-list{
+            background-color: #4d4d4d;
+            max-height: 150px;
+            padding: 0;
+            padding-top: 5px;
+            padding-left: 5px;
+          }
+           .solid-select-control {
+            margin-top: 2px;
+            padding: 0;
+            padding-left: 5px;
+            height: 15px;
+          }
+          .solid-select-placeholder, .solid-select-single-value, .solid-select-input{
+            font-size: 12px;
+            display: flex;
+            align-items:baseline;
+            padding-left: 5px;
+            color: white;
+            height: 20px;
+          }
+          .solid-select-placeholder, .solid-select-single-value {
+            color: rgb(243, 243, 243);
+            background: #252525;
+          }
+          .solid-select-option{
+            height: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 10px;
+            padding: 0;
+            padding-bottom: 5px;
+          }
+          .solid-select-option:hover {
+            background-color: rgb(67, 67, 67);
+            color: #fff;
+          }
+           .solid-select-option[data-focused=true] {
+            background-color: rgb(67, 67, 67);
+          }
     }
 }
 

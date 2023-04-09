@@ -2,7 +2,7 @@ import { Body } from "./components/body/Body";
 import { Footer } from "./components/footer/Footer";
 import { Header } from "./components/header/Header";
 import { Popup } from "./components/popup/Popup";
-import "./App.css"
+import "./App.css";
 function App() {
   $(document).keydown(function(objEvent) {
     if (objEvent.keyCode == 9) {  //tab pressed

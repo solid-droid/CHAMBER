@@ -154,6 +154,7 @@ export const Body = () => {
           <li><b>Simulator View</b> lets you see live simulation of your robot before deploying.</li>
           <li><b>Controls View</b> lets you control, record, debug and watch signal logs.</li>
           <li><b>Signals View</b> lets you create signals for communicating with outside world (Output and Input signals).</li>
+          <li><b>Scripts View</b> lets you add custom javascript logic in blueprint.</li>
           <li><b>Analytics View</b> lets you Analyse the data collected from your robot.</li>
           <li><b>Workspace View</b> lets you save, export , import your project.</li>
           <li><b>Market View</b> lets you import community created blueprints to your project.</li>
@@ -161,8 +162,7 @@ export const Body = () => {
         <div class="break"></div>
         <h2>Why Chamber ?</h2>
         <ul>
-          <li>Robotics is already hard, mainly due to the hardware requirements and there's no easy way to simulate robots before buying the hardware. </li>
-          <li>CHAMBER as a platform is buid to make the simulation and software part simple and accesible for everyone.</li>
+          <li>CHAMBER as a platform helps you easily simulate robot workflows before buying robot hardware.</li>
         </ul>
         {/* <div class="break"></div>
         <h2>Get in touch : <span>Nikhil M Jeby</span></h2> */}

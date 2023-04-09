@@ -114,7 +114,15 @@ const NodeEditor = () => {
     'Javascript' : {
       inputs:['input'],
       outputs:['output'],
-      script:'',
+      UID:'',
+      value:'',
+      dataflow: 'control'
+    },
+    'Blueprint' : {
+      inputs:['input'],
+      outputs:['output'],
+      UID:'',
+      value:'',
       dataflow: 'control'
     },
     'Join' : {

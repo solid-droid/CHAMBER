@@ -12,6 +12,7 @@
     font-size: 15px;
     overflow: hidden;
     .defaultContent{
+        user-select: none;
         display: flex;
         grid-gap: 20px;
         .column{

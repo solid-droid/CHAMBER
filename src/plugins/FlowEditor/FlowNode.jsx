@@ -184,6 +184,7 @@ const FlowNode = (props) => {
     'HTML Widget': () => alert('custom'),
     
     'Javascript' : () => javascript(nodeList,node,popup,updateNode,props.id,FlowStores,layout),
+    'Blueprint' : () => javascript(nodeList,node,popup,updateNode,props.id,FlowStores,layout),
     'Box3D': () => {},
     'Sphere3D': () => {},
 

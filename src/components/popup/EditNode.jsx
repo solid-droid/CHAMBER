@@ -14,6 +14,7 @@ const widgets = {
     'HTML Widget': () => alert('custom'),
     
     'Javascript' : () =>  template.javascript(node,FlowStores,setNodeStore),
+    'Blueprint' : () =>  template.javascript(node,FlowStores,setNodeStore),
 
     'Join' : () =>  template.join(node,FlowStores,setNodeStore),
     'Split' : () =>  template.split(node,FlowStores,setNodeStore),

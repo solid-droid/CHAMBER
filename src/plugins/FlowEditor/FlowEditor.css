@@ -115,6 +115,7 @@
       -ms-flex-direction: column;
           flex-direction: column;
   margin-left: 7px;
+  margin-right: 5px;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: start;
