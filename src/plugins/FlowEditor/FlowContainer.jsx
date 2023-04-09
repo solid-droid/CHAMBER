@@ -68,7 +68,10 @@ const FlowContainer = (props) => {
     }
     
     const createPanZoomLayout = () => {
-        const viewer =  panzoom(document.querySelector(`#${id} .viewport`));
+        const viewer =  panzoom(document.querySelector(`#${id} .viewport`),{
+            maxZoom: 2,
+            minZoom: 0.5
+        });
         setLayout({viewer});
         layout.viewer.on("pan", e => {
             const transform = e.getTransform();

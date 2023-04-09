@@ -32,7 +32,6 @@
   max-height: 150px;
   padding: 0;
   padding-top: 5px;
-  padding-left: 5px;
 }
 
 .NodeContent .customSelect .solid-select-control {
@@ -71,6 +70,8 @@
   font-size: 10px;
   padding: 0;
   padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .NodeContent .customSelect .solid-select-option:hover {

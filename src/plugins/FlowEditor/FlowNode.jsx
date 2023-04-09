@@ -121,8 +121,10 @@ const FlowNode = (props) => {
   }
 
   const endGhostConnection = e => {
+    $('#FlowEditor-app_ghostSVG').hide();
     connection.arrow.remove();
     setConnection({selectedNode:null, arrow:null, fromXY:null});
+    $('#FlowEditor-app_ghostSVG').show();
   }
 
   const dropGhostConnection = e => {
