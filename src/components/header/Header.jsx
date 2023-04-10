@@ -18,14 +18,14 @@ export const Header = () => {
           <i class="fa-solid fa-diagram-project"></i>
         </div>
         <div class={menu.simulator ? 'MenuItem active' : 'MenuItem'} title='Simulator' onClick={() => setMenuState('simulator')}>
+          <i class="fa-solid fa-robot"></i>
+        </div>
+        <div class={menu.analytics ? 'MenuItem active' : 'MenuItem'} title='Analytics' onClick={() => setMenuState('analytics')}>
           <i class="fa-solid fa-cubes"></i>
         </div>
-        {/* <div class={menu.analytics ? 'MenuItem active' : 'MenuItem'} title='Analytics' onClick={() => setMenuState('analytics')}>
-          <i class="fa-solid fa-chart-pie"></i>
+        <div class={menu.scripts ? 'MenuItem active' : 'MenuItem'} title='Scripts' onClick={() => setMenuState('scripts')}>
+          <i class="fa-solid fa-file-code"></i>
         </div>
-        <div class={menu.market ? 'MenuItem active' : 'MenuItem'} title='Collection' onClick={() => setMenuState('market')}>
-          <i class="fa-solid fa-layer-group"></i>
-        </div> */}
       </div>  
 
       <div class="Menu MenuList">

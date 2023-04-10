@@ -9,6 +9,8 @@ import NodeEditor from '../../screens/nodeEditor/NodeEditor'
 import Connections from '../../screens/connections/Connections'
 import Simulation from '../../screens/simulation/Simulation'
 import Controls from '../../screens/controls/Controls'
+import Analytics from "../../screens/analytics/Analytics";
+import Scripts from "../../screens/scripts/Scripts";
 
 export const Body = () => {
   const [menu, setMenu] = openMenu;
@@ -41,6 +43,15 @@ export const Body = () => {
     registerRenderer['Simulator'] = _.once(() =>{
       registerWindow('Simulator' , 'simulator')
     });
+
+    registerRenderer['Analytics'] = _.once(() =>{
+      registerWindow('Analytics' , 'Analytics')
+    });
+
+    registerRenderer['Scripts'] = _.once(() =>{
+      registerWindow('Scripts' , 'Scripts')
+    });
+
     registerRenderer['Controls'] = _.once(() =>{
       registerWindow('Controls' , 'controls')
     });
@@ -99,6 +110,8 @@ export const Body = () => {
     'connections',
     'nodeEditor',
     'simulator',
+    'analytics',
+    'scripts',
     'controls',
   ];
 
@@ -107,6 +120,8 @@ export const Body = () => {
     <Connections/>,
     <NodeEditor/>,
     <Simulation/>,
+    <Analytics/>,
+    <Scripts/>,
     <Controls/>,
   ];
 
@@ -115,6 +130,8 @@ export const Body = () => {
   'Signals',
   'Blueprint',
   'Simulator',
+  'Analytics',
+  'Scripts',
   'Controls'];
     
   onMount(() =>{
@@ -150,19 +167,13 @@ export const Body = () => {
         <div class="break"></div>
         <h2>Getting Started</h2>
         <ul>
-          <li><b>Blueprint View</b> lets you create your robot workflow using the node editor.</li>
-          <li><b>Simulator View</b> lets you see live simulation of your robot before deploying.</li>
-          <li><b>Controls View</b> lets you control, record, debug and watch signal logs.</li>
-          <li><b>Signals View</b> lets you create signals for communicating with outside world (Output and Input signals).</li>
-          <li><b>Scripts View</b> lets you add custom javascript logic in blueprint.</li>
-          <li><b>Analytics View</b> lets you Analyse the data collected from your robot.</li>
-          <li><b>Workspace View</b> lets you save, export , import your project.</li>
-          <li><b>Market View</b> lets you import community created blueprints to your project.</li>
-        </ul>
-        <div class="break"></div>
-        <h2>Why Chamber ?</h2>
-        <ul>
-          <li>CHAMBER as a platform helps you easily simulate robot workflows before buying robot hardware.</li>
+          <li><span class="label">Workspace</span>- lets you save, export , import your project.</li>
+          <li><span class="label">Signals</span>- lets you create signals for communicating with outside world (Output and Input signals).</li>
+          <li><span class="label">Blueprint</span>- lets you create your robot workflow using the node editor.</li>
+          <li><span class="label">Simulator</span>- lets you see live simulation of your robot before deploying.</li>
+          <li><span class="label">Analytics</span>- lets you Analyse the data collected from your robot.</li>
+          <li><span class="label">Scripts</span>- lets you add custom javascript logic in blueprint.</li>
+          <li><span class="label">Controls</span>- lets you control, record, debug and watch signal logs.</li>
         </ul>
         {/* <div class="break"></div>
         <h2>Get in touch : <span>Nikhil M Jeby</span></h2> */}
