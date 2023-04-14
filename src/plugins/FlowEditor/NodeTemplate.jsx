@@ -1,5 +1,5 @@
 import { createSignal, createEffect, onMount } from "solid-js";
-import Dropdown from "../Dropdown/dropdown";
+import Dropdown from "../Dropdown/Dropdown";
 
 const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
     const [inpType , setType] = createSignal('number');
@@ -107,16 +107,16 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
   }
 
   const javascript = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
-    const [inpVal , setVal] = createSignal(0);
+    const [inpVal , setVal] = createSignal(undefined);
     createEffect(()=>{
       if(!popup.open && node.editedNode === id){
         const dat = nodeList().find(x => x.id == id);
-        setVal(dat.value);
+        setVal({name: 'Sum'});
       }
     })
     onMount(()=>{
         const dat = nodeList().find(x => x.id == id);
-        setVal(dat.value);
+        setVal({name: 'Sum'});
     });
     
     const options = [
@@ -140,7 +140,11 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
     const updateValue = e => {
       // updateNode(FlowStores, id, {value:e.target.value})
     }
-    return <div class="nodeContNoDrag NodeContent scriptNode" style="margin-right:5px; margin-bottom:5px;">
+    return <div class="nodeContNoDrag NodeContent scriptNode" 
+    style="
+    margin-right: 5px;
+    margin-bottom: 3px;
+    margin-top: 3px;">
               <Dropdown 
               options={options}
               value={inpVal()} 

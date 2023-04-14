@@ -1,10 +1,37 @@
 import {clearFlowEditor, rescaleSVG} from '../../plugins/FlowEditor/FlowScript'
 import { importJSON, updateMasterFile, clear } from '../../scripts/scripts'
 import { masterFile } from "../../scripts/store";
-
+import Dropdown from '../../plugins/Dropdown/Dropdown'
+import { createSignal } from 'solid-js';
 const NodeEditorToolbar = () => {
+  const [blueprint , setBlueprint] = createSignal({ name: "Sum" });
+  const options = [
+    {
+      name: "Blueprints",
+      options: [
+        { name: "Sum" },
+        { name: "Difference" },
+        { name: "Multiply" },
+      ],
+    }
+  ]
+
   return (
     <div class="NodeEditorToolbar">
+        <div class="toolBarButton" 
+            style="width: 150px;
+                   padding-right: 5px;" >
+              <Dropdown 
+                value={blueprint()}
+                options={options}
+                />
+        </div>
+        <div class="toolBarButton">
+            New
+        </div>
+        <div class="toolBarButton">
+            Save
+        </div>
         <div class="toolBarButton" onClick={() => clearFlowEditor()}>
             Clear
         </div>
@@ -17,9 +44,16 @@ const NodeEditorToolbar = () => {
         }}>
             Refresh
         </div>
+        <div class="toolBarButton">
+            Publish
+        </div>
+        <div class="toolBarButton">
+            Cloud
+        </div>
         <div class="toolBarButton" onClick={() => alert('Not ready')}>
             Help
         </div>
+
     </div>
   )
 }

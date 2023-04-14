@@ -44,10 +44,10 @@ function Dropdown(props) {
     <Select 
               {...Optionprop}
               class="customSelect"
-              value={props.value} 
-              onFocus={e => props.onFocus(e)}
-              onBlur={e => props.onBlur(e)}
-              onChange={e => props.onChange(e)}
+              initialValue={props.value} 
+              onFocus={e => props.onFocus && props.onFocus(e)}
+              onBlur={e => props.onBlur && props.onBlur(e)}
+              onChange={e => props.onChange && props.onChange(e)}
     />
   )
 }
