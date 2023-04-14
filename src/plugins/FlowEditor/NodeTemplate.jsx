@@ -1,5 +1,5 @@
 import { createSignal, createEffect, onMount } from "solid-js";
-import { Select, createOptions  } from "@thisbeyond/solid-select";
+import Dropdown from "../Dropdown/dropdown";
 
 const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
     const [inpType , setType] = createSignal('number');
@@ -119,45 +119,7 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
         setVal(dat.value);
     });
     
-    //create group workaround from solid-select.js library
-    const createGroupedOptions = (groups) => {
-      const values = groups.reduce((values, group) => {
-        values.push(
-          ...group.options.map((item) => ({ ...item, group: group.name }))
-        );
-        return values;
-      }, []);
-    
-      const props = createOptions(values, { key: "name" });
-      const originalOptions = props.options;
-    
-      props.options = (inputValue) => {
-        const options = originalOptions(inputValue);
-    
-        const grouped = options.reduce((result, item) => {
-          const group = item.value.group;
-          if (!result.has(group)) result.set(group, []);
-          result.get(group).push(item);
-          return result;
-        }, new Map());
-    
-        const groupedOptions = [];
-        for (const [groupName, options] of grouped.entries()) {
-          groupedOptions.push({
-            label: <span class="text-sm uppercase">{groupName}</span>,
-            value: groupName,
-            disabled: true,
-          });
-          groupedOptions.push(...options);
-        }
-    
-        return groupedOptions;
-      };
-    
-      return props;
-    };
-
-    const props = createGroupedOptions([
+    const options = [
       {
         name: "Arithmetic Operations",
         options: [
@@ -173,15 +135,14 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
           { name: "Trigger Variable"}
         ],
       },
-    ]);
+    ]
 
     const updateValue = e => {
       // updateNode(FlowStores, id, {value:e.target.value})
     }
     return <div class="nodeContNoDrag NodeContent scriptNode" style="margin-right:5px; margin-bottom:5px;">
-              <Select 
-              {...props}
-              class="customSelect"
+              <Dropdown 
+              options={options}
               value={inpVal()} 
               onFocus={e => layout?.viewer?.pause()}
               onBlur={e => layout?.viewer?.resume()}

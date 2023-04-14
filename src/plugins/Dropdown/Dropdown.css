@@ -1,0 +1,61 @@
+.customSelect .solid-select-container {
+  background-color: #9a9a9a;
+}
+
+.customSelect .solid-select-list {
+  display: block;
+  background-color: #4d4d4d;
+  max-height: 150px;
+  padding: 0;
+  padding-top: 5px;
+}
+
+.customSelect .solid-select-control {
+  margin-top: 2px;
+  padding: 0;
+  padding-left: 5px;
+  height: 15px;
+}
+
+.customSelect .solid-select-placeholder, .customSelect .solid-select-single-value, .customSelect .solid-select-input {
+  font-size: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  padding-left: 5px;
+  color: white;
+  height: 20px;
+}
+
+.customSelect .solid-select-placeholder, .customSelect .solid-select-single-value {
+  color: #f3f3f3;
+  background: #252525;
+}
+
+.customSelect .solid-select-option {
+  height: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 10px;
+  padding: 0;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.customSelect .solid-select-option:hover {
+  background-color: #434343;
+  color: #fff;
+}
+
+.customSelect .solid-select-option[data-focused=true] {
+  background-color: #434343;
+}
+/*# sourceMappingURL=Dropdown.css.map */
