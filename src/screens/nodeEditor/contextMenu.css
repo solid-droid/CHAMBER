@@ -59,7 +59,7 @@
   position: absolute;
   width: 100%;
   background: #333333;
-  height: 25px;
+  height: 30px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -75,6 +75,11 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+
+.NodeEditorToolbar .dropdownToolBar {
+  min-width: 150px;
+  padding-right: 5px;
 }
 
 .NodeEditorToolbar .toolBarButton {

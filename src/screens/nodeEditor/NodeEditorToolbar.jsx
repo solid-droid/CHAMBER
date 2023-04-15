@@ -18,9 +18,7 @@ const NodeEditorToolbar = () => {
 
   return (
     <div class="NodeEditorToolbar">
-        <div class="toolBarButton" 
-            style="width: 150px;
-                   padding-right: 5px;" >
+        <div class="toolBarButton dropdownToolBar" >
               <Dropdown 
                 value={blueprint()}
                 options={options}
@@ -45,10 +43,10 @@ const NodeEditorToolbar = () => {
             Refresh
         </div>
         <div class="toolBarButton">
-            Publish
+            Export
         </div>
         <div class="toolBarButton">
-            Cloud
+            Import
         </div>
         <div class="toolBarButton" onClick={() => alert('Not ready')}>
             Help

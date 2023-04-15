@@ -1,5 +1,54 @@
 #ScriptEditor {
   height: 100%;
-  padding-top: 26px;
+  padding-top: 33px;
+}
+
+.helperFullSize {
+  height: calc(100% - 100px);
+  overflow: hidden;
+}
+
+.helperMinSize {
+  height: 25px;
+  -ms-grid-rows: 25px;
+      grid-template-rows: 25px;
+  overflow: hidden;
+}
+
+#ScriptHelper {
+  position: absolute;
+  right: 20px;
+  bottom: 5px;
+  width: 220px;
+  padding: 5px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 25px 25px 0.5fr 25px 1fr;
+      grid-template-rows: 25px 25px 0.5fr 25px 1fr;
+  background-color: #484848;
+  border-radius: 5px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#ScriptHelper .textArea {
+  width: calc(100% - 5px);
+  height: calc(100% - 5px);
+  resize: none;
+}
+
+#ScriptHelper .h2 {
+  font-size: 15px;
+}
+
+#ScriptHelper .h1 {
+  font-weight: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-right: 5px;
 }
 /*# sourceMappingURL=Scripts.css.map */

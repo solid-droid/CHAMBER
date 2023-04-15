@@ -1,12 +1,7 @@
 import { createSignal } from 'solid-js'
 import Dropdown from '../../plugins/Dropdown/Dropdown'
+import { runCurrentCode } from './scriptHelper'
 const ScriptEditorToolbar = () => {
-  let helpMethods =  [
-    'getInputs() => Use this method to get inputs from Blueprint',
-    'setOutput(value) => Use this method to output a value to Blueprint',
-    'storeValue(key, value , blueprint = false) => variable store - global/blueprint level.',
-    'getValue(key, value, blueprint = false) => access stored values from global/blueprint.'
-  ]
   let [script, setScript] = createSignal({ name: "Difference" })
   const options = [
     {
@@ -28,9 +23,7 @@ const ScriptEditorToolbar = () => {
   return (
     <>
         <div class="NodeEditorToolbar">
-            <div class="toolBarButton" 
-            style="width: 150px;
-                   padding-right: 5px;" >
+            <div class="toolBarButton dropdownToolBar">
               <Dropdown 
                 value = {script()}
                 options={options}
@@ -42,19 +35,16 @@ const ScriptEditorToolbar = () => {
             <div class="toolBarButton" >
               Save
             </div>
-            <div class="toolBarButton" >
-              Publish
+            <div class="toolBarButton" onClick={()=>runCurrentCode()}>
+              Run
             </div>
             <div class="toolBarButton" >
-              Cloud
+              Export
             </div>
-            <div class="toolBarButton" onClick={() => alert(`
-            ///Inbuilt Methods///
-            getInputs()
-            setOutput(value)
-            storeValue(key, value , blueprint = false)
-            getValue(key, value, blueprint = false)
-            `)}>
+            <div class="toolBarButton" >
+              Import
+            </div>
+            <div class="toolBarButton" onClick={() => alert(`Type Chamber`)}>
                 Help
             </div>
         </div>

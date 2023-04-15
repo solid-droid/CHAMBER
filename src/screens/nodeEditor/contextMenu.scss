@@ -44,13 +44,17 @@
     position: absolute;
     width: 100%;
     background: #333333;
-    height: 25px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: left;
     overflow-x: auto;
     overflow-y:visible;
     user-select: none; 
+    .dropdownToolBar{
+        min-width: 150px;
+        padding-right: 5px;
+    }
     .toolBarButton{
         margin-left: 3px;
         padding-right: 5px;
