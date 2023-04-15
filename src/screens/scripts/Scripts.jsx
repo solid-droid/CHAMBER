@@ -101,7 +101,7 @@ function Scripts() {
           let helperItems = {
             input :  '<div><span style="color:#64daff;">Chamber.input()</span></div><div><span style="color:#999999;">get inputs from Blueprint</span></div>',
             output:  '<div><span style="color:#64daff;">Chamber.output(value)</span></div><div><span style="color:#999999;">output a value to Blueprint</span></div>',
-            store:  '<div><span style="color:#64daff;">Chamber.store(key, value global = false)</span></div><div><span style="color:#999999;">variable store - global/blueprint level.</span></div>',
+            store:  '<div><span style="color:#64daff;">Chamber.store(key, value, global = false)</span></div><div><span style="color:#999999;">variable store - global/blueprint level.</span></div>',
             get:  '<div><span style="color:#64daff;">Chamber.get(key, global = false)</span></div><div><span style="color:#999999;">access stored values from global/blueprint.</span></div>',
             wait:  '<div><span style="color:#64daff;">Chamber.wait(ms)</span></div><div><span style="color:#999999;">delay execution for given ms</span></div>',
           }
