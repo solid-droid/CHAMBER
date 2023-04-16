@@ -15,8 +15,8 @@ const ScriptEditorToolbar = () => {
     {
       name: "State Management",
       options: [
-        { name: "Static Variable" },
-        { name: "Trigger Variable"}
+        { name: "addToStore" },
+        { name: "getFromStore"}
       ],
     },
   ]

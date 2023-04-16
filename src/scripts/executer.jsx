@@ -54,6 +54,7 @@ const execute = async () => {
             },
             'Javascript': async ()=>{
                 const code = getCode(node.value.name, node.value.id);
+                value = Array.isArray(value) ? value : [];
                 const output = await runCodeForExecuter(code , value, null);
                 return output;
             }

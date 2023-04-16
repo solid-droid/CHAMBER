@@ -4,14 +4,14 @@ import { masterFile } from "../../scripts/store";
 import Dropdown from '../../plugins/Dropdown/Dropdown'
 import { createSignal } from 'solid-js';
 const NodeEditorToolbar = () => {
-  const [blueprint , setBlueprint] = createSignal({ name: "Sum" });
+  const [blueprint , setBlueprint] = createSignal({ name: "dummy1" });
   const options = [
     {
       name: "Blueprints",
       options: [
-        { name: "Sum" },
-        { name: "Difference" },
-        { name: "Multiply" },
+        { name: "dummy1" },
+        { name: "dummy2" },
+        { name: "dummy3" },
       ],
     }
   ]

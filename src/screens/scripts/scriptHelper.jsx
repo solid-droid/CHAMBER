@@ -40,22 +40,31 @@ async function runCodeForExecuter(code, input, blueprint){
         await new Promise(r => setTimeout(r, 5));
     }
     if(_output.error){
-        setTerminal({echo: 'script error: '+ value});
+        setTerminal({echo: 'script error: '+ _output.value});
         return null;
     }
     return _output.value;
 }
 
 let systemCode = {
-    Sum: 
+Sum: 
 `let inputs = Chamber.input()[0];
 if(typeof inputs == 'object'){
     let sum = _.values(inputs).reduce(function(a,b){return a+b },0);
-    Chamber.output(sum)
+    Chamber.output([sum])
 } else{
-    Chamber.output(inputs)
+    Chamber.output([inputs])
 }
-`
+`,
+addToStore:
+`let value = Chamber.input()[0];
+Chamber.store('myVariable', value);
+Chamber.output([value || 0]);
+`,
+getFromStore:
+`let value = Chamber.get('myVariable');
+Chamber.output([value || 0]);
+`,
 }
 function getCode(name, id){
     if(id){

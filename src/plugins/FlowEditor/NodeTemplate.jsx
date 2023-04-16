@@ -131,8 +131,8 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
       {
         name: "State Management",
         options: [
-          { name: "Static Variable" },
-          { name: "Trigger Variable"}
+          { name: "addToStore" },
+          { name: "getFromStore"}
         ],
       },
     ]
