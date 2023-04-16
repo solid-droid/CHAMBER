@@ -111,12 +111,12 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
     createEffect(()=>{
       if(!popup.open && node.editedNode === id){
         const dat = nodeList().find(x => x.id == id);
-        setVal({name: 'Sum'});
+        setVal(dat.value);
       }
     })
     onMount(()=>{
         const dat = nodeList().find(x => x.id == id);
-        setVal({name: 'Sum'});
+        setVal(dat.value);
     });
     
     const options = [
@@ -138,7 +138,7 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
     ]
 
     const updateValue = e => {
-      // updateNode(FlowStores, id, {value:e.target.value})
+      updateNode(FlowStores, id, {value:{name : e.name}})
     }
     return <div class="nodeContNoDrag NodeContent scriptNode" 
     style="

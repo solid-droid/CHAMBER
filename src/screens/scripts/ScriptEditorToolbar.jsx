@@ -1,8 +1,8 @@
-import { createSignal } from 'solid-js'
 import Dropdown from '../../plugins/Dropdown/Dropdown'
 import { runCurrentCode } from './scriptHelper'
+import { selectedScript } from './scriptStore'
 const ScriptEditorToolbar = () => {
-  let [script, setScript] = createSignal({ name: "Difference" })
+  let [script, setScript] = selectedScript;
   const options = [
     {
       name: "Arithmetic Operations",
@@ -25,8 +25,9 @@ const ScriptEditorToolbar = () => {
         <div class="NodeEditorToolbar">
             <div class="toolBarButton dropdownToolBar">
               <Dropdown 
-                value = {script()}
+                value = {{name:script.name,id:script.id}}
                 options={options}
+                onChange={e => setScript({name : e.name, id: e.id})}
                 />
             </div>
             <div class="toolBarButton" >

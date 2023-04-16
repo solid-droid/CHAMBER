@@ -45,11 +45,11 @@ export const Body = () => {
     });
 
     registerRenderer['Analytics'] = _.once(() =>{
-      registerWindow('Analytics' , 'Analytics')
+      registerWindow('Analytics' , 'analytics')
     });
 
     registerRenderer['Scripts'] = _.once(() =>{
-      registerWindow('Scripts' , 'Scripts')
+      registerWindow('Scripts' , 'scripts')
     });
 
     registerRenderer['Controls'] = _.once(() =>{

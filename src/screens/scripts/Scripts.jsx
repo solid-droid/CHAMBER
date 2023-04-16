@@ -4,7 +4,8 @@ import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
-import { currentScript, debuggerInput, debuggerOutput } from "./scriptStore";
+import { currentScript, debuggerInput, debuggerOutput, selectedScript } from "./scriptStore";
+import { getCode } from "./scriptHelper";
 import {openMenu} from '../../scripts/store';
 import { createEffect, createSignal } from "solid-js";
 import './Scripts.css';
@@ -30,6 +31,7 @@ self.MonacoEnvironment = {
 
 
 function Scripts() {
+    const [script] = selectedScript;
     const [menu] = openMenu;
     let editorDOM, outputDOM, scriptEditor;
     const [minimizeHelper , setMinimizeHelper] = createSignal(true);
@@ -43,9 +45,20 @@ function Scripts() {
         }
       });
 
+    createEffect(() => {
+      outputDOM.value = debuggerOutput[0]();
+    });
+
+    createEffect(()=>{
+      script.name;
+      script.id;
+      scriptEditor?.getModel().setValue(getCode(script.name,script.id));
+    })
+
     function init(){
+        const code = getCode(script.name,script.id);
         scriptEditor = editor.create(editorDOM, {
-            value:currentScript[0](),
+            value:code,
             language: "javascript",
             automaticLayout: true,
             theme:'vs-dark'
@@ -142,14 +155,12 @@ function Scripts() {
         });
     }
 
-    createEffect(() => {
-      outputDOM.value = debuggerOutput[0]();
-    });
+
     return (
     <>
         <ScriptEditorToolbar></ScriptEditorToolbar>
         <div id="ScriptEditor" ref={editorDOM}></div>
-        <div id="ScriptHelper" class={minimizeHelper() ? 'helperMinSize': 'helperFullSize'}>
+        <div id="ScriptHelper" class={minimizeHelper() ? 'helperMinSize': 'helperFullSize'}  style={menu.scripts ? 'display:grid;' : 'display:none;'}>
           <div class="h1" onClick={e => setMinimizeHelper(x => !x)}>
             <div>Debugger</div>
             <div><i class={minimizeHelper() ?"fa-solid fa-square-caret-up" : "fa-solid fa-square-caret-down"}></i></div>

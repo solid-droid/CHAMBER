@@ -115,7 +115,7 @@ const NodeEditor = () => {
       inputs:['input'],
       outputs:['output'],
       UID:'',
-      value:'',
+      value:{name:'Sum'},
       dataflow: 'control'
     },
     'Blueprint' : {

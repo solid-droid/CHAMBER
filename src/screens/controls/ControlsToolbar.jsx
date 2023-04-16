@@ -1,7 +1,7 @@
 import { terminalSignal } from "../../scripts/store"
 import { run, pause } from "../../scripts/executer";
 import Dropdown from '../../plugins/Dropdown/Dropdown'
-import { createSignal } from 'solid-js';
+
 const ControlsToolbar = () => {
   const [terminal , setTerminal] = terminalSignal;
   const fr = new FileReader();
@@ -12,17 +12,6 @@ const ControlsToolbar = () => {
     $('#selectedLog')[0].value = '';
   }
 
-  const [blueprint , setBlueprint] = createSignal({ name: "Sum" });
-  const options = [
-    {
-      name: "Blueprints",
-      options: [
-        { name: "Sum" },
-        { name: "Difference" },
-        { name: "Multiply" },
-      ],
-    }
-  ]
 
   const importProject = () => {
     const files = document.getElementById('selectedLog').files;
@@ -32,18 +21,6 @@ const ControlsToolbar = () => {
   }
   return (
     <div class="NodeEditorToolbar">
-       <div class="toolBarButton dropdownToolBar">
-              <Dropdown 
-                value={blueprint()}
-                options={options}
-                />
-        </div>
-        <div class="toolBarButton" onClick={() => run()}>
-            Play
-        </div>
-        <div class="toolBarButton" onClick={() => pause()}>
-            Pause
-        </div>
         <div class="toolBarButton" onClick={() => setTerminal({export:true})}>
             Export
         </div>
