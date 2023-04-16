@@ -27,9 +27,6 @@ const NodeEditorToolbar = () => {
         <div class="toolBarButton">
             New
         </div>
-        <div class="toolBarButton">
-            Save
-        </div>
         <div class="toolBarButton" onClick={() => clearFlowEditor()}>
             Clear
         </div>

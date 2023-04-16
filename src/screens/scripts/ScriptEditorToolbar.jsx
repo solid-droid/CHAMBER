@@ -33,9 +33,6 @@ const ScriptEditorToolbar = () => {
             <div class="toolBarButton" >
               New
             </div>
-            <div class="toolBarButton" >
-              Save
-            </div>
             <div class="toolBarButton" onClick={()=>runCurrentCode()}>
               Run
             </div>

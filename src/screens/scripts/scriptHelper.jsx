@@ -56,6 +56,15 @@ if(typeof inputs == 'object'){
     Chamber.output([inputs])
 }
 `,
+Multiply:
+`let inputs = Chamber.input()[0];
+if(typeof inputs == 'object'){
+    let sum = _.values(inputs).reduce(function(a,b){return a*b },1);
+    Chamber.output([sum])
+} else{
+    Chamber.output([inputs])
+}
+`,
 addToStore:
 `let value = Chamber.input()[0];
 Chamber.store('myVariable', value);
