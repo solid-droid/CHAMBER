@@ -48,10 +48,6 @@ const NodeEditorToolbar = () => {
         <div class="toolBarButton">
             Import
         </div>
-        <div class="toolBarButton" onClick={() => alert('Not ready')}>
-            Help
-        </div>
-
     </div>
   )
 }

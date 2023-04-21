@@ -30,9 +30,6 @@ const ControlsToolbar = () => {
         <div class="toolBarButton" onClick={() => setTerminal({clear : true})}>
             Clear
         </div>
-        <div class="toolBarButton" onClick={() => alert('Not ready')}>
-            Help
-        </div>
         <input ref={ref.file} type="file" id="selectedLog" value="Import" onInput={importProject} hidden/>
     </div>
   )

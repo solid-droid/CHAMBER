@@ -39,13 +39,10 @@ const ScriptEditorToolbar = () => {
               Run
             </div>
             <div class="toolBarButton" >
-              Export
+              Publish
             </div>
             <div class="toolBarButton" >
               Import
-            </div>
-            <div class="toolBarButton" onClick={() => alert(`Type Chamber`)}>
-                Help
             </div>
         </div>
     </>
