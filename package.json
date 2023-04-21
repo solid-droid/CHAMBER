@@ -25,6 +25,7 @@
     "monaco-editor": "^0.37.1",
     "moveable": "^0.37.0",
     "panzoom": "^9.4.3",
+    "quickjs-emscripten": "^0.22.0",
     "solid-js": "^1.5.1",
     "stats.js": "^0.17.0",
     "underscore": "^1.13.6"

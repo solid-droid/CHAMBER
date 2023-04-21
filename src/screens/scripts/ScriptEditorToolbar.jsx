@@ -8,7 +8,6 @@ const ScriptEditorToolbar = () => {
       name: "Arithmetic Operations",
       options: [
         { name: "Sum" },
-        { name: "Difference" },
         { name: "Multiply" },
       ],
     },
@@ -32,6 +31,9 @@ const ScriptEditorToolbar = () => {
             </div>
             <div class="toolBarButton" >
               New
+            </div>
+            <div class="toolBarButton" >
+              Delete
             </div>
             <div class="toolBarButton" onClick={()=>runCurrentCode()}>
               Run

@@ -31,12 +31,18 @@ self.MonacoEnvironment = {
 
 
 function Scripts() {
-    const [script] = selectedScript;
+    const [script, setScript] = selectedScript;
     const [menu] = openMenu;
     let editorDOM, outputDOM, scriptEditor;
     const [minimizeHelper , setMinimizeHelper] = createSignal(true);
     createEffect(()=>{
         if(menu.scripts){
+          if(!script.name){
+            setScript({name:'Sum'});
+            currentScript[1](getCode('Sum'));
+          }
+
+
           if(!scriptEditor)
             init();
         } else {

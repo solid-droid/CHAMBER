@@ -1,28 +1,65 @@
-import {safeEval} from '../../scripts/safeEval';
+import quickJS from '../../scripts/quickJShelper';
 import { currentScript, debuggerInput, debuggerOutput } from './scriptStore';
 import { terminalSignal } from "../../scripts/store";
 const [terminal, setTerminal] = terminalSignal;
 
+const systemCode = {
+    Sum: 
+`const inputs = JSON.parse(Chamber.input())[0];
+const sum = Object.values(inputs).reduce((a,b) => a+b ,0);
+Chamber.output([sum])
+`,
+    Multiply:
+`const inputs = JSON.parse(Chamber.input())[0];
+const product = Object.values(inputs).reduce((a,b) => a*b ,1);
+Chamber.output([product])
+`,
+    addToStore:
+`let value = JSON.parse(Chamber.input())[0];
+Chamber.store('myVariable', value);
+Chamber.output([value || 0]);
+`,
+getFromStore:
+`let value = Chamber.get('myVariable');
+Chamber.output([value || 0]);
+`,
+    }
+
 function runCurrentCode(){
     debuggerOutput[1]('');
-    let engine = new safeEval(currentScript[0]());
+    let engine = new quickJS(currentScript[0]());
     engine.getOutput(newOutput => setDebuggerOutput(newOutput));
     engine.setInput(debuggerInput[0]())
     engine.run();
+    // --------------------------------------------
+    // debuggerOutput[1]('');
+    // let engine = new safeEval(currentScript[0]());
+    // engine.getOutput(newOutput => setDebuggerOutput(newOutput));
+    // engine.setInput(debuggerInput[0]())
+    // engine.run();
 }
+
+
+const stringify = (obj, indent = 2) => 
+  JSON.stringify(obj, (key, value) => {
+    if (Array.isArray(value) && !value.some(x => x && typeof x === 'object')) {
+      return `\uE000${JSON.stringify(value.map(v => typeof v === 'string' ? v.replace(/"/g, '\uE001') : v))}\uE000`;
+    }
+    return value;
+  }, indent).replace(/"\uE000([^\uE000]+)\uE000"/g, match => match.substr(2, match.length - 4).replace(/\\"/g, '"').replace(/\uE001/g, '\\\"'));
+
 
 function setDebuggerOutput(newOutput){
     if(!newOutput.error){
         if(typeof newOutput.value === 'object')
-        newOutput.value = JSON.stringify(newOutput.value, null, 4);
-
+        newOutput.value = stringify(newOutput.value);
         debuggerOutput[1](oldOutput => {
             if(oldOutput === '')
-                return 'output: '+newOutput.value;
+                return newOutput.value;
 
             if(newOutput.value.includes('\n'))
-                newOutput.value = '\n'+newOutput.value;
-            return oldOutput+'\noutput: '+newOutput.value;
+                newOutput.value = newOutput.value;
+            return oldOutput+'\n---------------------\n'+newOutput.value;
         });
     } else {
         debuggerOutput[1]('error: '+newOutput.value);
@@ -31,10 +68,10 @@ function setDebuggerOutput(newOutput){
 }
 
 async function runCodeForExecuter(code, input, blueprint){
-    let engine = new safeEval(code,blueprint);
+    let engine = new quickJS(code,blueprint);
     let _output;
     engine.getOutput(newOutput => _output = newOutput);
-    engine.setInput(JSON.stringify(input));
+    engine.setInput(input);
     engine.run();
     while(!_output){
         await new Promise(r => setTimeout(r, 5));
@@ -46,35 +83,6 @@ async function runCodeForExecuter(code, input, blueprint){
     return _output.value;
 }
 
-let systemCode = {
-Sum: 
-`let inputs = Chamber.input()[0];
-if(typeof inputs == 'object'){
-    let sum = _.values(inputs).reduce(function(a,b){return a+b },0);
-    Chamber.output([sum])
-} else{
-    Chamber.output([inputs])
-}
-`,
-Multiply:
-`let inputs = Chamber.input()[0];
-if(typeof inputs == 'object'){
-    let sum = _.values(inputs).reduce(function(a,b){return a*b },1);
-    Chamber.output([sum])
-} else{
-    Chamber.output([inputs])
-}
-`,
-addToStore:
-`let value = Chamber.input()[0];
-Chamber.store('myVariable', value);
-Chamber.output([value || 0]);
-`,
-getFromStore:
-`let value = Chamber.get('myVariable');
-Chamber.output([value || 0]);
-`,
-}
 function getCode(name, id){
     if(id){
 

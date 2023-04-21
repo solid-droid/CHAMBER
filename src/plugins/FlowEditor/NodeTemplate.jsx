@@ -108,9 +108,11 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
 
   const javascript = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
     const [inpVal , setVal] = createSignal(undefined);
+    let defaultSet = false;
     createEffect(()=>{
       if(!popup.open && node.editedNode === id){
         const dat = nodeList().find(x => x.id == id);
+        defaultSet = true;
         setVal(dat.value);
       }
     })
@@ -124,7 +126,6 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
         name: "Arithmetic Operations",
         options: [
           { name: "Sum" },
-          { name: "Difference" },
           { name: "Multiply" },
         ],
       },
@@ -138,7 +139,9 @@ const inputBox = (nodeList,node,popup,updateNode,id,FlowStores,layout) => {
     ]
 
     const updateValue = e => {
-      updateNode(FlowStores, id, {value:{name : e.name}})
+      if(!defaultSet)
+        updateNode(FlowStores, id, {value:{name : e.name}})
+      defaultSet = false;
     }
     return <div class="nodeContNoDrag NodeContent scriptNode" 
     style="
