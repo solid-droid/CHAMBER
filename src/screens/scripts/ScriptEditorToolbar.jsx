@@ -44,6 +44,10 @@ const ScriptEditorToolbar = () => {
             <div class="toolBarButton" >
               Import
             </div>
+            <div class="toolBarNotification" >
+              <div class="statusIcon disabled"></div>
+              <div>Auto save disabled</div>
+            </div>
         </div>
     </>
     

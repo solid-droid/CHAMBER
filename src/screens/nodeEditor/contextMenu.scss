@@ -71,4 +71,20 @@
             color: rgb(185, 185, 185);
         }
     }
+    .toolBarNotification{
+        position: absolute;
+        right: 10px;
+        font-size: 14px;
+        color: #b7b7b7;
+        display: flex;
+        align-items: baseline;
+        grid-gap:5px;
+        .statusIcon{
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            background: rgb(152, 27, 27);
+        }
+    }
+
 }

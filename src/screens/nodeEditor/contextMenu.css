@@ -104,4 +104,25 @@
   background-color: #4f4f4f;
   color: #b9b9b9;
 }
+
+.NodeEditorToolbar .toolBarNotification {
+  position: absolute;
+  right: 10px;
+  font-size: 14px;
+  color: #b7b7b7;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  grid-gap: 5px;
+}
+
+.NodeEditorToolbar .toolBarNotification .statusIcon {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: #981b1b;
+}
 /*# sourceMappingURL=contextMenu.css.map */
