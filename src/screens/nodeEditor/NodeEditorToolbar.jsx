@@ -25,6 +25,9 @@ const NodeEditorToolbar = () => {
                 />
         </div>
         <div class="toolBarButton">
+            Options
+        </div>
+        <div class="toolBarButton">
             New
         </div>
         <div class="toolBarButton" >

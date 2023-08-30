@@ -46,7 +46,6 @@ const ScriptEditorToolbar = () => {
             </div>
             <div class="toolBarNotification" >
               <div class="statusIcon disabled"></div>
-              <div>Auto save disabled</div>
             </div>
         </div>
     </>
